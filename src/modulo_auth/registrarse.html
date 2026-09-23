@@ -4,18 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Iniciar sesión | La Fonda</title>
-=======
-    <title>Registro | Sabor y Estilo</title>
->>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="/styles/registrarse.css">
 </head>
 
 <body>
     <div id="global-nav"></div>
-<<<<<<< HEAD
     <main class="hero">
         <div class="container">
             <div class="login-card">
@@ -36,95 +31,18 @@
                     <button type="submit" class="btn-order" style="width:100%;border:none;cursor:pointer;">Iniciar
                         Sesión</button>
                 </form>
-=======
-
-    <main class="hero">
-        <div class="container">
-            <div class="login-card">
-                <h2 class="hero-title" style="font-size: 2.5rem; text-align: center;">Bienvenido</h2>
-                <p style="text-align: center; color: var(--text-gray); margin-bottom: 30px;">Ingresa tus datos para
-                    disfrutar de beneficios exclusivos.</p>
-
-                <form class="auth-form" id="login-form">
-                    <div class="input-group">
-                        <label>
-                            <input type="email" id="login-email" placeholder="tu@email.com" required>
-                            Correo Electrónico
-                        </label>
-                    </div>
-
-                    <div class="input-group">
-                        <label>
-                            <input type="password" id="login-password" placeholder="********" required>
-                            Contraseña
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn-order" style="width: 100%; border: none; cursor: pointer;">
-                        Iniciar Sesión
-                    </button>
-                </form>
-
->>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
                 <div class="form-footer">
                     <p>¿No tienes cuenta? <a href="registro-nuevo.html" class="highlight">Regístrate aquí</a></p>
                 </div>
             </div>
         </div>
     </main>
-<<<<<<< HEAD
     <div id="global-footer"></div>
     <script src="/scripts/config.js"></script>
     <script src="/scripts/db.js"></script>
     <script src="/scripts/auth.js"></script>
     <script src="/scripts/load-layout.js"></script>
     <script src="/scripts/login.js"></script>
-=======
-
-    <div id="global-footer"></div>
-
-    <script src="/scripts/load-layout.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const loginForm = document.getElementById('login-form');
-
-            loginForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const email = document.getElementById('login-email').value.trim();
-                const password = document.getElementById('login-password').value.trim();
-
-                if (!email.includes('@') || !email.includes('.')) {
-                    alert('Por favor, ingresa un correo electrónico válido (debe contener @ y .)');
-                    return;
-                }
-
-                if (password.length < 4) {
-                    alert('La contraseña debe tener al menos 4 caracteres');
-                    return;
-                }
-
-                const nombreUsuario = email.split('@')[0];
-                const userData = {
-                    nombre: nombreUsuario.charAt(0).toUpperCase() + nombreUsuario.slice(1),
-                    email: email,
-                    loginTime: new Date().toISOString()
-                };
-
-                localStorage.setItem('sabor_estilo_user', JSON.stringify(userData));
-
-                alert('✅ ¡Bienvenido ' + userData.nombre + '! Has iniciado sesión correctamente.');
-
-                const referrer = document.referrer || '/index.html';
-                if (referrer.includes('/src/') && !referrer.includes('registrarse')) {
-                    window.location.href = referrer;
-                } else {
-                    window.location.href = '/index.html';
-                }
-            });
-        });
-    </script>
->>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
 </body>
 
 </html>
