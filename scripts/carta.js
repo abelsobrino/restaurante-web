@@ -495,31 +495,733 @@ async function checkout(event) {
 function showPaymentModal(onPay) {
   const overlay = document.createElement("div");
   overlay.className = "welcome-overlay";
-  overlay.innerHTML = `<div class="welcome-card payment-card"><h3>💳 Pago web</h3><p>Simulación académica: no se envían datos a una pasarela real.</p><form id="demo-pay-form"><div class="input-group"><label>Número de tarjeta<input id="demo-card" inputmode="numeric" placeholder="4111 1111 1111 1111" required></label></div><div class="payment-two"><div class="input-group"><label>Vence<input placeholder="MM/AA" required></label></div><div class="input-group"><label>CVV<input type="password" maxlength="4" required></label></div></div><div class="payment-actions"><button type="button" class="btn-secondary" id="cancel-pay">Cancelar</button><button type="submit" class="btn-order">Pagar y registrar</button></div></form></div>`;
+  overlay.style.zIndex = "5500";
+
+  const session = LaFondaAuth.getSession();
+
+  const clientName =
+    `${session?.nombre || ""} ${session?.apellido || ""}`.trim() ||
+    document.getElementById("customer-name")?.value.trim() ||
+    "Cliente";
+
+  const subtotal = state.cart.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0,
+  );
+
+  const discount = Number(state.coupon?.descuento || 0);
+  const delivery = Number(state.deliveryEstimate || 0);
+
+  const total = Math.max(0, subtotal - discount + delivery);
+
+  overlay.innerHTML = `
+        <div class="welcome-card payment-card"
+             style="
+                max-width:420px;
+                border:1px solid #00a650;
+                background:#121212;
+                text-align:left;
+             ">
+
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                margin-bottom:15px;
+            ">
+                <span style="font-size:1.5rem;">💳</span>
+
+                <h3 style="
+                    color:#00a650;
+                    margin:0;
+                    font-size:1.15rem;
+                ">
+                    Pasarela Mercado Pago
+                </h3>
+            </div>
+
+            <div style="
+                text-align:center;
+                margin-bottom:15px;
+                padding:10px;
+                background:rgba(0,166,80,0.10);
+                border-radius:6px;
+            ">
+                <p style="
+                    color:#00a650;
+                    font-weight:bold;
+                    margin:0;
+                ">
+                    👤 ${escapeHtml(clientName)}
+                </p>
+            </div>
+
+            <form id="demo-pay-form"
+                  style="
+                    display:flex;
+                    flex-direction:column;
+                    gap:12px;
+                  ">
+
+                <div class="input-group">
+                    <label style="
+                        font-size:0.75rem;
+                        color:#aaa;
+                        display:block;
+                        margin-bottom:4px;
+                    ">
+                        Número de Tarjeta
+                    </label>
+
+                    <input
+                        type="text"
+                        id="demo-card"
+                        inputmode="numeric"
+                        placeholder="1111 1111 1111 1111"
+                        maxlength="19"
+                        required
+                        style="
+                            width:100%;
+                            padding:10px;
+                            background:#222;
+                            border:1px solid #444;
+                            color:#fff;
+                            border-radius:6px;
+                            box-sizing:border-box;
+                        "
+                    >
+                </div>
+
+                <div style="display:flex; gap:10px;">
+
+                    <div style="flex:1;">
+                        <label style="
+                            font-size:0.75rem;
+                            color:#aaa;
+                            display:block;
+                            margin-bottom:4px;
+                        ">
+                            F. Vencimiento
+                        </label>
+
+                        <input
+                            type="text"
+                            id="demo-expiry"
+                            inputmode="numeric"
+                            placeholder="MM/AA"
+                            maxlength="5"
+                            required
+                            style="
+                                width:100%;
+                                padding:10px;
+                                background:#222;
+                                border:1px solid #444;
+                                color:#fff;
+                                border-radius:6px;
+                                box-sizing:border-box;
+                            "
+                        >
+                    </div>
+
+                    <div style="flex:1;">
+                        <label style="
+                            font-size:0.75rem;
+                            color:#aaa;
+                            display:block;
+                            margin-bottom:4px;
+                        ">
+                            CVV
+                        </label>
+
+                        <input
+                            type="password"
+                            id="demo-cvv"
+                            inputmode="numeric"
+                            placeholder="•••"
+                            maxlength="4"
+                            required
+                            style="
+                                width:100%;
+                                padding:10px;
+                                background:#222;
+                                border:1px solid #444;
+                                color:#fff;
+                                border-radius:6px;
+                                box-sizing:border-box;
+                            "
+                        >
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label style="
+                        font-size:0.75rem;
+                        color:#aaa;
+                        display:block;
+                        margin-bottom:4px;
+                    ">
+                        Nombre del Titular
+                    </label>
+
+                    <input
+                        type="text"
+                        id="demo-card-name"
+                        value="${escapeHtml(clientName.toUpperCase())}"
+                        placeholder="Como figura en la tarjeta"
+                        required
+                        style="
+                            width:100%;
+                            padding:10px;
+                            background:#222;
+                            border:1px solid #aaa;
+                            color:#fff;
+                            border-radius:6px;
+                            box-sizing:border-box;
+                            text-transform:uppercase;
+                        "
+                    >
+                </div>
+
+                <div style="
+                    background:rgba(0,0,0,0.30);
+                    padding:10px;
+                    border-radius:6px;
+                    font-size:0.8rem;
+                    border:1px solid #222;
+                    margin-top:5px;
+                ">
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        color:#888;
+                        margin-bottom:4px;
+                    ">
+                        <span>Subtotal:</span>
+                        <span>${money(subtotal)}</span>
+                    </div>
+
+                    ${
+                      discount > 0
+                        ? `
+                            <div style="
+                                display:flex;
+                                justify-content:space-between;
+                                color:#ff6b6b;
+                                margin-bottom:4px;
+                            ">
+                                <span>Descuento:</span>
+                                <span>-${money(discount)}</span>
+                            </div>
+                            `
+                        : ""
+                    }
+
+                    ${
+                      delivery > 0
+                        ? `
+                            <div style="
+                                display:flex;
+                                justify-content:space-between;
+                                color:#aaa;
+                                margin-bottom:4px;
+                            ">
+                                <span>Delivery:</span>
+                                <span>${money(delivery)}</span>
+                            </div>
+                            `
+                        : ""
+                    }
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        font-weight:bold;
+                        color:#fff;
+                        font-size:0.9rem;
+                    ">
+                        <span>Total a debitar:</span>
+
+                        <span style="color:#00a650;">
+                            ${money(total)}
+                        </span>
+                    </div>
+                </div>
+
+                <div style="
+                    display:flex;
+                    gap:10px;
+                    margin-top:10px;
+                ">
+                    <button
+                        type="button"
+                        id="cancel-pay"
+                        style="
+                            flex:1;
+                            background:transparent;
+                            border:1px solid #555;
+                            color:#aaa;
+                            padding:10px;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-weight:bold;
+                        "
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="btn-pay-now"
+                        style="
+                            flex:2;
+                            background:#00a650;
+                            color:#fff;
+                            font-weight:bold;
+                            border:none;
+                            padding:10px;
+                            border-radius:6px;
+                            cursor:pointer;
+                        "
+                    >
+                        PAGAR AHORA
+                    </button>
+                </div>
+            </form>
+        </div>
+    `;
+
   document.body.appendChild(overlay);
-  overlay.querySelector("#cancel-pay").onclick = () => overlay.remove();
-  overlay.querySelector("#demo-pay-form").onsubmit = async (e) => {
-    e.preventDefault();
-    const digits = overlay.querySelector("#demo-card").value.replace(/\D/g, "");
-    if (digits.length !== 16)
-      return toast("La tarjeta simulada debe tener 16 dígitos", "error");
+
+  const card = overlay.querySelector("#demo-card");
+  const expiry = overlay.querySelector("#demo-expiry");
+  const cvv = overlay.querySelector("#demo-cvv");
+  const cardName = overlay.querySelector("#demo-card-name");
+
+  card.addEventListener("input", () => {
+    const digits = card.value.replace(/\D/g, "").slice(0, 16);
+
+    card.value = digits.replace(/(\d{4})(?=\d)/g, "$1 ");
+  });
+
+  expiry.addEventListener("input", () => {
+    const digits = expiry.value.replace(/\D/g, "").slice(0, 4);
+
+    expiry.value =
+      digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+  });
+
+  cvv.addEventListener("input", () => {
+    cvv.value = cvv.value.replace(/\D/g, "").slice(0, 4);
+  });
+
+  cardName.addEventListener("input", () => {
+    cardName.value = cardName.value.toUpperCase();
+  });
+
+  overlay.querySelector("#cancel-pay").onclick = () => {
     overlay.remove();
+    toast("Pago cancelado", "error");
+  };
+
+  overlay.querySelector("#demo-pay-form").onsubmit = async (event) => {
+    event.preventDefault();
+
+    const digits = card.value.replace(/\D/g, "");
+    const cvvDigits = cvv.value.replace(/\D/g, "");
+
+    let validExpiry = false;
+
+    if (/^\d{2}\/\d{2}$/.test(expiry.value)) {
+      const [month, year] = expiry.value.split("/").map(Number);
+
+      const now = new Date();
+      const currentMonth = now.getMonth() + 1;
+      const currentYear = now.getFullYear() % 100;
+
+      validExpiry =
+        month >= 1 &&
+        month <= 12 &&
+        (year > currentYear || (year === currentYear && month >= currentMonth));
+    }
+
+    if (digits.length !== 16) {
+      card.style.borderColor = "#ff3333";
+      return toast("La tarjeta debe tener 16 dígitos", "error");
+    }
+
+    card.style.borderColor = "#00a650";
+
+    if (!validExpiry) {
+      expiry.style.borderColor = "#ff3333";
+      return toast("La fecha de vencimiento no es válida", "error");
+    }
+
+    expiry.style.borderColor = "#00a650";
+
+    if (cvvDigits.length < 3 || cvvDigits.length > 4) {
+      cvv.style.borderColor = "#ff3333";
+
+      return toast("El CVV debe tener 3 o 4 dígitos", "error");
+    }
+
+    cvv.style.borderColor = "#00a650";
+
+    if (cardName.value.trim().length < 3) {
+      cardName.style.borderColor = "#ff3333";
+
+      return toast("Ingresa el nombre del titular", "error");
+    }
+
+    overlay.remove();
+
     await onPay();
   };
 }
 
 function renderReceipt(result, session, receiptType) {
+  const fecha = new Date();
+
+  const fechaTexto = fecha.toLocaleDateString("es-PE");
+  const horaTexto = fecha.toLocaleTimeString("es-PE");
+
+  const subtotal = state.cart.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0,
+  );
+
+  const descuento = Number(result.descuento ?? state.coupon?.descuento ?? 0);
+
+  const delivery = Number(result.costo_envio ?? state.deliveryEstimate ?? 0);
+
+  const total = Number(
+    result.total ?? Math.max(0, subtotal - descuento + delivery),
+  );
+
+  const opGravada = total / 1.18;
+  const igv = total - opGravada;
+
+  const deliveryType =
+    document.getElementById("delivery-type")?.value || "recojo";
+
+  const address =
+    document.getElementById("customer-address")?.value.trim() || "";
+
+  const company = document.getElementById("legal-company")?.value.trim() || "";
+
+  const ruc = document.getElementById("legal-ruc")?.value.trim() || "";
+
+  const clientName =
+    `${session?.nombre || ""} ${session?.apellido || ""}`.trim();
+
+  const codigoNumerico =
+    String(result.codigo || Date.now()).replace(/\D/g, "") ||
+    String(Date.now());
+
+  const serie =
+    `${receiptType === "factura" ? "FFF" : "BBB"}-` +
+    codigoNumerico.slice(-6).padStart(6, "0");
+
   const items = state.cart
     .map(
-      (i) =>
-        `<tr><td>${i.qty}× ${escapeHtml(i.name)}</td><td>${money(i.price * i.qty)}</td></tr>`,
+      (item) => `
+                <li class="flex-space item-row">
+                    <span>
+                        ${item.qty} x ${escapeHtml(item.name)}
+                    </span>
+
+                    <span>
+                        ${money(item.price * item.qty)}
+                    </span>
+                </li>
+            `,
     )
     .join("");
-  const html = `<!doctype html><html><head><meta charset="utf-8"><title>${result.codigo}</title><style>body{font-family:monospace;padding:25px;color:#111}.ticket{max-width:430px;margin:auto}.center{text-align:center}table{width:100%;border-collapse:collapse}td{padding:5px 0;border-bottom:1px dashed #aaa}td:last-child{text-align:right}.total{font-size:18px;font-weight:bold}.btn{width:100%;padding:10px;margin-top:20px;background:#111;color:#fff;border:0}@media print{.btn{display:none}}</style></head><body><div class="ticket"><h2 class="center">LA FONDA</h2><p class="center">${receiptType.toUpperCase()} · ${result.codigo}</p><p>Cliente: ${escapeHtml(session.nombre)} ${escapeHtml(session.apellido || "")}</p><p>Fecha: ${new Date().toLocaleString("es-PE")}</p><table>${items}</table><p>Descuento: -${money(result.descuento)}</p><p>Delivery: ${money(result.costo_envio)}</p><p class="total">TOTAL: ${money(result.total)}</p><p>Estado: ${escapeHtml(result.estado)}</p><button class="btn" onclick="print()">IMPRIMIR COMPROBANTE</button></div></body></html>`;
-  const w = window.open("", "_blank");
-  if (w) {
-    w.document.write(html);
-    w.document.close();
+
+  const html = `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+
+            <title>
+                ${receiptType.toUpperCase()} - ${serie}
+            </title>
+
+            <style>
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    font-family:
+                        "Courier New",
+                        Courier,
+                        monospace;
+
+                    margin: 0;
+                    padding: 20px;
+                    color: #111;
+                    background: #fff;
+                    font-size: 13px;
+                }
+
+                .ticket {
+                    width: 100%;
+                    max-width: 380px;
+                    margin: auto;
+                    padding: 10px;
+                }
+
+                .center {
+                    text-align: center;
+                }
+
+                .bold {
+                    font-weight: bold;
+                }
+
+                .separator {
+                    border-top: 1px dashed #333;
+                    margin: 12px 0;
+                }
+
+                .flex-space {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 15px;
+                }
+
+                .items-list {
+                    padding: 0;
+                    list-style: none;
+                    margin: 5px 0;
+                }
+
+                .item-row {
+                    margin-bottom: 7px;
+                }
+
+                .total {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-top: 7px;
+                }
+
+                .btn-print {
+                    width: 100%;
+                    padding: 11px;
+                    margin-top: 18px;
+
+                    background: #000;
+                    color: #fff;
+
+                    border: none;
+                    cursor: pointer;
+
+                    font-family: inherit;
+                    font-weight: bold;
+                }
+
+                @media print {
+                    .btn-print {
+                        display: none;
+                    }
+
+                    body {
+                        padding: 0;
+                    }
+                }
+            </style>
+        </head>
+
+        <body>
+
+            <div class="ticket">
+
+                <h2
+                    class="center"
+                    style="margin-bottom:4px;"
+                >
+                    🍕 LA FONDA
+                </h2>
+
+                <p
+                    class="center"
+                    style="
+                        margin-top:0;
+                        font-size:11px;
+                    "
+                >
+                    LA FONDA S.A.C.
+                    <br>
+                    LIMA - PERÚ
+                </p>
+
+                <div class="separator"></div>
+
+                <p
+                    class="bold center"
+                    style="
+                        font-size:14px;
+                        margin:5px 0;
+                    "
+                >
+                    ${receiptType.toUpperCase()} ELECTRÓNICA
+                </p>
+
+                <p
+                    class="center"
+                    style="margin:0;"
+                >
+                    <b>SERIE:</b>
+                    ${serie}
+                </p>
+
+                <div class="separator"></div>
+
+                <p>
+                    <b>FECHA EMISIÓN:</b>
+                    ${fechaTexto} ${horaTexto}
+                </p>
+
+                <p>
+                    <b>CLIENTE:</b>
+                    ${
+                      receiptType === "factura"
+                        ? escapeHtml(company)
+                        : escapeHtml(clientName)
+                    }
+                </p>
+
+                ${
+                  receiptType === "factura"
+                    ? `
+                            <p>
+                                <b>RUC:</b>
+                                ${escapeHtml(ruc)}
+                            </p>
+                        `
+                    : ""
+                }
+
+                <p>
+                    <b>ENTREGA:</b>
+                    ${
+                      deliveryType === "delivery"
+                        ? "Delivery"
+                        : "Recojo en tienda"
+                    }
+                </p>
+
+                ${
+                  deliveryType === "delivery" && address
+                    ? `
+                            <p>
+                                <b>DIRECCIÓN:</b>
+                                ${escapeHtml(address)}
+                            </p>
+                        `
+                    : ""
+                }
+
+                <div class="separator"></div>
+
+                <p class="bold">
+                    DETALLE DEL PEDIDO:
+                </p>
+
+                <ul class="items-list">
+                    ${items}
+                </ul>
+
+                <div class="separator"></div>
+
+                ${
+                  descuento > 0
+                    ? `
+                            <div class="flex-space">
+                                <span>DESCUENTO:</span>
+                                <span>
+                                    -${money(descuento)}
+                                </span>
+                            </div>
+                        `
+                    : ""
+                }
+
+                ${
+                  delivery > 0
+                    ? `
+                            <div class="flex-space">
+                                <span>DELIVERY:</span>
+                                <span>
+                                    ${money(delivery)}
+                                </span>
+                            </div>
+                        `
+                    : ""
+                }
+
+                <div class="flex-space">
+                    <span>OP. GRAVADA:</span>
+
+                    <span>
+                        ${money(opGravada)}
+                    </span>
+                </div>
+
+                <div class="flex-space">
+                    <span>I.G.V. (18%):</span>
+
+                    <span>
+                        ${money(igv)}
+                    </span>
+                </div>
+
+                <div class="flex-space total">
+                    <span>TOTAL A PAGAR:</span>
+
+                    <span>
+                        ${money(total)}
+                    </span>
+                </div>
+
+                <div class="separator"></div>
+
+                <p
+                    class="center"
+                    style="
+                        font-size:11px;
+                        font-style:italic;
+                    "
+                >
+                    Representación impresa de la
+                    ${receiptType}.
+                    <br>
+                    ¡Gracias por tu preferencia!
+                </p>
+
+                <button
+                    class="btn-print"
+                    onclick="window.print()"
+                >
+                    IMPRIMIR COMPROBANTE
+                </button>
+
+            </div>
+
+        </body>
+        </html>
+    `;
+
+  const receiptWindow = window.open("", "_blank");
+
+  if (receiptWindow) {
+    receiptWindow.document.open();
+    receiptWindow.document.write(html);
+    receiptWindow.document.close();
   }
 }
 
