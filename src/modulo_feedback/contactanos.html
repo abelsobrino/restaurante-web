@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos | Sabor y Estilo</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/contactanos.css">
+</head>
+
+<body>
+    <div id="global-nav"></div>
+
+    <main>
+        <section class="contact-section">
+            <div class="container contact-grid">
+
+                <div class="contact-info">
+                    <h1 class="form-title">Contáctanos</h1>
+                    <p class="contact-subtitle">¿Tienes alguna duda, queja o sugerencia? Déjanos tu mensaje y nuestro
+                        equipo te responderá lo antes posible.</p>
+
+                    <div class="info-extra">
+<<<<<<< HEAD
+                        <p><strong>📍 Ubicación:</strong> LA FONDA, Chaclacayo, Lima 15472, Perú
+                        </p>
+                        <p><strong>⏰ Horario:</strong> Lun a Dom: 12:00 PM - 11:00 PM</p>
+                        <p><strong>📞 Teléfono:</strong> +51 987 654 321</p>
+                        <p><strong>📧 Email:</strong> contacto@lafonda.com</p>
+=======
+                        <p><strong>📍 Ubicación:</strong> Jockey Plaza - Av. Javier Prado Este 4200, Santiago de Surco
+                        </p>
+                        <p><strong>⏰ Horario:</strong> Lun a Dom: 12:00 PM - 11:00 PM</p>
+                        <p><strong>📞 Teléfono:</strong> +51 987 654 321</p>
+                        <p><strong>📧 Email:</strong> contacto@saboryestilo.com</p>
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+                    </div>
+
+                    <div class="mapa-mini">
+                        <iframe
+<<<<<<< HEAD
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249670.92109832214!2d-77.1431136918964!3d-12.104748669150277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105e98091ba3567%3A0xb1b435c863911330!2sLA%20FONDA%20-%20FAST%20FOOD!5e0!3m2!1ses!2spe!4v1790134643217!5m2!1ses!2spe"
+                            width="100%" height="300" style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin" title="Ubicación de La Fonda - Fast Food">
+=======
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.356703565837!2d-76.9857923!3d-12.0922009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c91d1df0db33%3A0xb9473a0fef7adfd3!2sJockey%20Plaza!5e0!3m2!1ses!2spe!4v1700000000000"
+                            width="100%"
+                            height="200"
+                            style="border:0; border-radius: 8px;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Mapa de ubicación de Sabor y Estilo - Jockey Plaza">
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <div class="tabs-container">
+                        <button class="tab-btn active" data-tab="tab-contacto">📩 Contacto</button>
+                        <button class="tab-btn" data-tab="tab-reservas">📅 Reservar Mesa</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-contacto">
+                        <form class="contact-form" id="contact-form">
+                            <div class="input-group">
+                                <label>
+                                    <input type="text" id="contact-nombre" placeholder="Ingresa tus nombres completos"
+                                        required>
+                                    Nombres Completos
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <input type="email" id="contact-email" placeholder="ejemplo@correo.com" required>
+                                    Correo Electrónico
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <select id="contact-tipo" required>
+                                        <option value="" disabled selected>Selecciona una opción</option>
+                                        <option value="sugerencia">Sugerencia</option>
+                                        <option value="queja">Queja / Reclamo</option>
+                                        <option value="felicitacion">Felicitaciones</option>
+                                        <option value="consulta">Consulta</option>
+                                    </select>
+                                    Tipo de mensaje
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <textarea id="contact-mensaje" rows="4" placeholder="Cuéntanos más..."
+                                        required></textarea>
+                                    Tu mensaje
+                                </label>
+                            </div>
+                            <button type="submit" class="btn-order">Enviar Comentario</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" id="tab-reservas">
+                        <form class="contact-form" id="reserva-form">
+                            <div class="input-group">
+                                <label>
+                                    <input type="text" id="res-nombre" placeholder="Tu nombre completo" required>
+                                    Nombre Completo
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <input type="email" id="res-email" placeholder="tu@email.com" required>
+                                    Correo Electrónico
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <input type="tel" id="res-telefono" placeholder="+51 987 654 321" required>
+                                    Teléfono / WhatsApp
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <input type="date" id="res-fecha" required>
+                                    Fecha de Reserva
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <input type="time" id="res-hora" required min="12:00" max="23:00">
+                                    Hora (12:00 PM - 11:00 PM)
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <input type="number" id="res-sillas" min="1" max="20" value="2" required>
+                                    Número de Sillas
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    <textarea id="res-descripcion" rows="3"
+                                        placeholder="Ocasión especial, preferencias, etc."></textarea>
+                                    Descripción / Comentarios
+                                </label>
+                            </div>
+                            <button type="submit" class="btn-order">Reservar Ahora</button>
+                        </form>
+                    </div>
+
+                    <div id="mis-reservas-section" style="margin-top: 30px; display: none;">
+                        <hr style="border-color: rgba(255,255,255,0.06); margin-bottom: 20px;">
+                        <h3 style="color: var(--accent); margin-bottom: 15px;">📋 Mis Reservas</h3>
+                        <div id="mis-reservas-list" class="reservas-list"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/scripts/load-layout.js"></script>
+    <script src="/scripts/reservas.js"></script>
+    <script>
+<<<<<<< HEAD
+        document.addEventListener('DOMContentLoaded', function () {
+=======
+        document.addEventListener('DOMContentLoaded', function() {
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+<<<<<<< HEAD
+                tab.addEventListener('click', function () {
+=======
+                tab.addEventListener('click', function() {
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    this.classList.add('active');
+                    const target = document.getElementById(this.dataset.tab);
+                    if (target) target.classList.add('active');
+                });
+            });
+
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+<<<<<<< HEAD
+                contactForm.addEventListener('submit', function (e) {
+=======
+                contactForm.addEventListener('submit', function(e) {
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+                    e.preventDefault();
+
+                    const nombre = document.getElementById('contact-nombre').value.trim();
+                    const email = document.getElementById('contact-email').value.trim();
+                    const tipo = document.getElementById('contact-tipo').value;
+                    const mensaje = document.getElementById('contact-mensaje').value.trim();
+
+                    if (!nombre || !email || !tipo || !mensaje) {
+                        alert('Por favor, completa todos los campos obligatorios.');
+                        return;
+                    }
+
+                    if (!email.includes('@') || !email.includes('.')) {
+                        alert('Por favor, ingresa un correo electrónico válido.');
+                        return;
+                    }
+
+                    alert('✅ ¡Mensaje enviado con éxito! Te responderemos a la brevedad.');
+                    contactForm.reset();
+                });
+            }
+
+            const fechaInput = document.getElementById('res-fecha');
+            if (fechaInput) {
+                const hoy = new Date().toISOString().split('T')[0];
+                fechaInput.setAttribute('min', hoy);
+            }
+
+            const horaInput = document.getElementById('res-hora');
+            if (horaInput) {
+                horaInput.setAttribute('min', '12:00');
+                horaInput.setAttribute('max', '23:00');
+            }
+        });
+    </script>
+</body>
+
+</html>

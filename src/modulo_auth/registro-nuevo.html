@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>Crear Cuenta | La Fonda</title>
+=======
+    <title>Crear Cuenta | Sabor y Estilo</title>
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/nuevoregistro.css">
+</head>
+
+<body>
+    <div id="global-nav"></div>
+<<<<<<< HEAD
+    <main class="hero">
+        <div class="container">
+            <div class="login-card">
+                <h2 class="hero-title" style="font-size:2.5rem;text-align:center;">Únete a <span
+                        class="highlight">Nosotros</span></h2>
+                <p style="text-align:center;color:var(--text-gray);margin-bottom:25px;">Crea tu cuenta directamente en
+                    nuestra base de datos. No enviamos correo de verificación.</p>
+                <form class="auth-form" id="register-form">
+                    <div class="input-group"><label><input type="text" id="reg-nombre" placeholder="Juan"
+                                required>Nombre</label></div>
+                    <div class="input-group"><label><input type="text" id="reg-apellido" placeholder="Pérez"
+                                required>Apellido</label></div>
+                    <div class="input-group"><label><input type="email" id="reg-email" placeholder="correo@ejemplo.com"
+                                autocomplete="email" required>Correo Electrónico</label></div>
+                    <div class="input-group"><label><input type="tel" id="reg-telefono" placeholder="987654321">Teléfono
+                            / WhatsApp</label></div>
+                    <div class="input-group"><label><input type="password" id="reg-password"
+                                placeholder="Mínimo 6 caracteres" minlength="6" required>Contraseña</label></div>
+                    <div class="input-group"><label><input type="password" id="reg-password2"
+                                placeholder="Repite tu contraseña" minlength="6" required>Confirmar contraseña</label>
+                    </div>
+                    <p id="register-status"
+                        style="min-height:22px;color:var(--text-gray);font-size:.85rem;margin-bottom:12px;"></p>
+                    <button type="submit" class="btn-order" style="width:100%;border:none;cursor:pointer;">Crear
+                        Cuenta</button>
+                </form>
+                <div class="form-footer">
+                    <p>¿Ya tienes cuenta? <a href="registrarse.html" class="highlight">Inicia sesión</a></p>
+=======
+
+    <main class="hero">
+        <div class="container">
+            <div class="login-card">
+                <h2 class="hero-title" style="font-size: 2.5rem; text-align: center;">Únete a <span
+                        class="highlight">Nosotros</span></h2>
+                <p style="text-align: center; color: var(--text-gray); margin-bottom: 25px;">Crea tu cuenta y obtén un
+                    10% de descuento en tu primera pizza.</p>
+
+                <form class="auth-form" id="register-form">
+                    <div class="input-group">
+                        <label>
+                            <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                            Nombre Completo
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <input type="email" id="reg-email" placeholder="correo@ejemplo.com" required>
+                            Correo Electrónico
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <input type="tel" id="reg-telefono" placeholder="+51 987 654 321">
+                            Teléfono / WhatsApp
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required>
+                            Contraseña
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-order"
+                        style="width: 100%; border: none; cursor: pointer; margin-top: 10px;">
+                        Crear mi Cuenta
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>¿Ya tienes cuenta? <a href="registrarse.html" class="highlight">Inicia sesión aquí</a></p>
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+                </div>
+            </div>
+        </div>
+    </main>
+<<<<<<< HEAD
+    <div id="global-footer"></div>
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/db.js"></script>
+    <script src="/scripts/auth.js"></script>
+    <script src="/scripts/load-layout.js"></script>
+    <script src="/scripts/register.js"></script>
+=======
+
+    <div id="global-footer"></div>
+
+    <script src="/scripts/load-layout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const registerForm = document.getElementById('register-form');
+
+            registerForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const nombre = document.getElementById('reg-nombre').value.trim();
+                const email = document.getElementById('reg-email').value.trim();
+                const telefono = document.getElementById('reg-telefono').value.trim();
+                const password = document.getElementById('reg-password').value.trim();
+
+                if (nombre.length < 3) {
+                    alert('Por favor, ingresa tu nombre completo (mínimo 3 caracteres)');
+                    return;
+                }
+
+                if (!email.includes('@') || !email.includes('.')) {
+                    alert('Por favor, ingresa un correo electrónico válido (debe contener @ y .)');
+                    return;
+                }
+
+                if (password.length < 8) {
+                    alert('La contraseña debe tener al menos 8 caracteres');
+                    return;
+                }
+
+                const userData = {
+                    nombre: nombre,
+                    email: email,
+                    telefono: telefono || 'No registrado',
+                    loginTime: new Date().toISOString()
+                };
+
+                localStorage.setItem('sabor_estilo_user', JSON.stringify(userData));
+
+                alert('✅ ¡Cuenta creada exitosamente! Bienvenido ' + nombre);
+
+                window.location.href = '/index.html';
+            });
+        });
+    </script>
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+</body>
+
+</html>

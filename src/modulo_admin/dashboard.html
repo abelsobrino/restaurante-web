@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | La Fonda</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/admin.css">
+</head>
+
+<body>
+    <div id="global-nav"></div>
+    <main class="container admin-shell">
+        <div class="admin-heading">
+            <div>
+                <p class="admin-eyebrow">PANEL WEB</p>
+                <h1 class="hero-title">Administración</h1>
+                <p class="admin-muted">Los cambios de nombre, precio y disponibilidad se aplican sobre
+                    <strong>platos</strong>, la misma tabla que usa Desktop.
+                </p>
+            </div>
+            <a href="/src/modulo_auth/elegir-modo.html" class="admin-view-client">Cambiar vista</a>
+        </div>
+
+        <nav class="admin-tabs" id="admin-tabs">
+            <button class="active" data-panel="stats">Resumen</button>
+            <button data-panel="platos">Platos</button>
+            <button data-panel="combos">Combos</button>
+            <button data-panel="cupones">Cupones</button>
+            <button data-panel="contenido">Contenido</button>
+            <button data-panel="delivery">Delivery</button>
+        </nav>
+        <p id="admin-status" class="admin-status"></p>
+
+        <section class="admin-panel active" id="panel-stats">
+            <div class="admin-toolbar">
+                <h2>Ventas y rendimiento</h2>
+                <div class="period-buttons"><button class="active" data-period="DIA">Hoy</button><button
+                        data-period="SEMANA">Semana</button><button data-period="MES">Mes</button></div>
+            </div>
+            <div class="stats-grid">
+                <article><span>Ventas</span><strong id="stat-ventas">0</strong></article>
+                <article><span>Total</span><strong id="stat-total">S/ 0.00</strong></article>
+                <article><span>Ticket promedio</span><strong id="stat-ticket">S/ 0.00</strong></article>
+                <article><span>Web / Presencial</span><strong id="stat-origen">0 / 0</strong></article>
+            </div>
+            <div class="admin-two-cols">
+                <div class="admin-card">
+                    <h3>Platos más vendidos</h3>
+                    <div id="top-platos" class="admin-list"></div>
+                </div>
+                <div class="admin-card">
+                    <h3>Últimas ventas</h3>
+                    <div id="latest-sales" class="admin-table-wrap"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="panel-platos">
+            <div class="admin-toolbar">
+                <div>
+                    <h2>Platos</h2>
+                    <p class="admin-muted">Los que vienen del Desktop aparecen aquí. Sin foto no salen en la carta
+                        pública.</p>
+                </div>
+                <div class="admin-filter-buttons"><button class="active" data-dish-filter="all">Todos</button><button
+                        data-dish-filter="pending">Sin imagen</button><button
+                        data-dish-filter="published">Publicados</button><button data-dish-filter="off">No
+                        disponibles</button></div>
+            </div>
+            <div class="admin-two-cols admin-editor-layout">
+                <div class="admin-card">
+                    <div id="admin-dishes" class="admin-dish-list"></div>
+                </div>
+                <form class="admin-card admin-form" id="dish-form">
+                    <input type="hidden" id="dish-id">
+                    <h3 id="dish-form-title">Nuevo plato</h3>
+                    <label>Nombre<input id="dish-name" required></label>
+                    <label>Descripción<textarea id="dish-description" rows="3"></textarea></label>
+                    <div class="admin-form-grid"><label>Precio<input id="dish-price" type="number" step="0.01"
+                                min="0.01" required></label><label>Tiempo (min)<input id="dish-time" type="number"
+                                min="0"></label></div>
+                    <label>Categoría<select id="dish-category" required></select></label>
+                    <label class="check-row"><input id="dish-available" type="checkbox" checked> Disponible</label>
+                    <label>Imagen principal<input id="dish-image" type="file" accept="image/*"><small>Si el plato ya
+                            existe en Desktop, basta con editarlo y agregar su foto.</small></label>
+                    <img id="dish-preview" class="admin-preview" hidden alt="Vista previa">
+                    <div class="admin-form-actions"><button type="button" id="dish-new"
+                            class="btn-secondary-admin">Limpiar</button><button class="btn-order" type="submit">Guardar
+                            plato</button></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="panel-combos">
+            <div class="admin-toolbar">
+                <div>
+                    <h2>Combos</h2>
+                    <p class="admin-muted">Arrastra platos al constructor, define el nuevo precio y programa sus días.
+                    </p>
+                </div>
+            </div>
+            <div class="admin-two-cols admin-editor-layout">
+                <div class="admin-card">
+                    <h3>Platos disponibles</h3><input id="combo-search" class="admin-search"
+                        placeholder="Buscar plato...">
+                    <div id="combo-source" class="combo-source"></div>
+                </div>
+                <form class="admin-card admin-form" id="combo-form">
+                    <input type="hidden" id="combo-id">
+                    <h3>Constructor de combo</h3>
+                    <div id="combo-dropzone" class="combo-dropzone">Arrastra platos aquí</div>
+                    <div id="combo-selected" class="combo-selected"></div>
+                    <label>Nombre<input id="combo-name" required></label>
+                    <label>Descripción<textarea id="combo-description" rows="2"></textarea></label>
+                    <div class="admin-form-grid"><label>Precio del combo<input id="combo-price" type="number" min="0.01"
+                                step="0.01" required></label><label>Precio regular<input id="combo-regular" readonly
+                                value="S/ 0.00"></label></div>
+                    <label>Imagen<input id="combo-image" type="file" accept="image/*"><small>Sin imagen puede guardarse,
+                            pero no se publica.</small></label>
+                    <label class="check-row"><input id="combo-active" type="checkbox" checked> Activo</label>
+                    <div class="admin-form-grid"><label>Desde<input id="combo-date-start"
+                                type="date"></label><label>Hasta<input id="combo-date-end"
+                                type="date"></label><label>Hora inicio<input id="combo-time-start"
+                                type="time"></label><label>Hora fin<input id="combo-time-end" type="time"></label></div>
+                    <div><span class="admin-label">Días</span>
+                        <div class="weekday-row" id="combo-days"><label><input type="checkbox" value="1"
+                                    checked>Lun</label><label><input type="checkbox" value="2"
+                                    checked>Mar</label><label><input type="checkbox" value="3"
+                                    checked>Mié</label><label><input type="checkbox" value="4"
+                                    checked>Jue</label><label><input type="checkbox" value="5"
+                                    checked>Vie</label><label><input type="checkbox" value="6"
+                                    checked>Sáb</label><label><input type="checkbox" value="7" checked>Dom</label></div>
+                    </div>
+                    <div class="admin-form-actions"><button type="button" id="combo-new"
+                            class="btn-secondary-admin">Nuevo</button><button class="btn-order" type="submit">Guardar
+                            combo</button></div>
+                    <div id="combo-existing" class="admin-list"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="panel-cupones">
+            <div class="admin-two-cols admin-editor-layout">
+                <div class="admin-card">
+                    <h2>Cupones</h2>
+                    <div id="coupon-list" class="admin-list"></div>
+                </div>
+                <form class="admin-card admin-form" id="coupon-form">
+                    <input type="hidden" id="coupon-id">
+                    <h3>Crear / editar cupón</h3>
+                    <label>Código<input id="coupon-code" required placeholder="FONDA20"></label>
+                    <label>Descripción<input id="coupon-description" placeholder="20% por lanzamiento"></label>
+                    <div class="admin-form-grid"><label>Tipo<select id="coupon-type">
+                                <option value="PORCENTAJE">Porcentaje</option>
+                                <option value="MONTO">Monto fijo</option>
+                            </select></label><label>Valor<input id="coupon-value" type="number" min="0.01" step="0.01"
+                                required></label></div>
+                    <div class="admin-form-grid"><label>Mínimo compra<input id="coupon-min" type="number" min="0"
+                                step="0.01" value="0"></label><label>Límite usos<input id="coupon-limit" type="number"
+                                min="1" placeholder="Sin límite"></label></div>
+                    <div class="admin-form-grid"><label>Inicio<input id="coupon-start"
+                                type="datetime-local"></label><label>Fin<input id="coupon-end"
+                                type="datetime-local"></label></div>
+                    <label class="check-row"><input id="coupon-visible" type="checkbox"> Mostrar públicamente</label>
+                    <label class="check-row"><input id="coupon-active" type="checkbox" checked> Activo</label>
+                    <div class="admin-form-actions"><button type="button" id="coupon-new"
+                            class="btn-secondary-admin">Nuevo</button><button class="btn-order" type="submit">Guardar
+                            cupón</button></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="panel-contenido">
+            <div class="admin-two-cols">
+                <div class="admin-card">
+                    <h2>Fotos de clientes</h2>
+                    <p class="admin-muted">Aprueba las que quieras mostrar en el collage.</p>
+                    <div id="gallery-admin" class="moderation-grid"></div>
+                </div>
+                <div class="admin-card">
+                    <h2>Reseñas</h2>
+                    <p class="admin-muted">Las nuevas reseñas quedan pendientes hasta tu revisión.</p>
+                    <div id="reviews-admin" class="admin-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="panel-delivery">
+            <form class="admin-card admin-form delivery-form" id="delivery-form">
+                <h2>Configuración de Delivery</h2>
+                <p class="admin-muted">Coloca las coordenadas exactas del restaurante. El cliente seleccionará su pin y
+                    el servidor volverá a calcular la distancia.</p>
+                <label class="check-row"><input id="delivery-active" type="checkbox"> Delivery activo</label>
+                <div class="admin-form-grid"><label>Latitud<input id="delivery-lat" type="number"
+                            step="0.000001"></label><label>Longitud<input id="delivery-lng" type="number"
+                            step="0.000001"></label></div>
+                <div class="admin-form-grid"><label>Precio por km<input id="delivery-price" type="number" step="0.01"
+                            min="0"></label><label>Tarifa mínima<input id="delivery-min" type="number" step="0.01"
+                            min="0"></label><label>Radio máximo (km)<input id="delivery-radius" type="number" step="0.1"
+                            min="0.1"></label></div>
+                <button class="btn-order" type="submit">Guardar configuración</button>
+            </form>
+        </section>
+    </main>
+    <div id="global-footer"></div>
+
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/db.js"></script>
+    <script src="/scripts/auth.js"></script>
+    <script src="/scripts/image-utils.js"></script>
+    <script src="/scripts/load-layout.js"></script>
+    <script src="/scripts/admin/admin.js"></script>
+</body>
+
+</html>

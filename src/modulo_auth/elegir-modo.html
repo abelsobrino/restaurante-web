@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegir vista | La Fonda</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/registrarse.css">
+</head>
+
+<body>
+    <div id="global-nav"></div>
+    <main class="hero">
+        <div class="container">
+            <div class="login-card admin-mode-card">
+                <p class="admin-mode-kicker">SESIÓN DE ADMINISTRADOR</p>
+                <h1 class="hero-title" style="font-size:2.4rem;text-align:center;">¿Cómo quieres <span
+                        class="highlight">ingresar?</span></h1>
+                <p style="text-align:center;color:var(--text-gray);margin:0 auto 28px;max-width:560px;">Puedes
+                    administrar la web o entrar como visitante para revisar cómo se ven la carta, las promociones, las
+                    reseñas y la galería recién publicadas.</p>
+                <div class="admin-mode-grid">
+                    <button id="mode-admin" class="admin-mode-option">
+                        <span class="admin-mode-icon"></span>
+                        <strong>Entrar como Admin</strong>
+                        <small>Platos, imágenes, combos, cupones, galería, reseñas, delivery y estadísticas.</small>
+                    </button>
+                    <button id="mode-client" class="admin-mode-option">
+                        <span class="admin-mode-icon"></span>
+                        <strong>Ver como Cliente</strong>
+                        <small>Revisa exactamente lo que ve el público sin perder tu sesión administrativa.</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="global-footer"></div>
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/db.js"></script>
+    <script src="/scripts/auth.js"></script>
+    <script src="/scripts/load-layout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!LaFondaAuth.isAdmin()) { window.location.href = '/index.html'; return; }
+            document.getElementById('mode-admin').onclick = () => { LaFondaAuth.setMode('ADMIN'); window.location.href = '/src/modulo_admin/dashboard.html'; };
+            document.getElementById('mode-client').onclick = () => { LaFondaAuth.setMode('CLIENTE'); window.location.href = '/index.html'; };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>Galería | La Fonda</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/galeria-styles.css">
+</head>
+
+<body>
+    <div id="global-nav"></div>
+    <main class="container gallery-main">
+        <header class="gallery-header" style="margin-bottom:40px;">
+            <h1 class="hero-title">Nuestra <span class="highlight">Galería</span></h1>
+            <p class="hero-description">Fotos seleccionadas por el administrador y compartidas por nuestros clientes.
+            </p>
+        </header>
+        <section class="gallery-grid" id="gallery-grid">
+            <div class="gallery-empty">Cargando publicaciones...</div>
+        </section>
+
+        <section class="gallery-action" style="margin-top:80px;padding-bottom:60px;">
+            <div class="login-card" style="max-width:800px;margin:0 auto;">
+                <h2 style="margin-bottom:20px;text-align:center;">¿Tienes una <span class="highlight">Foto</span> con
+                    nosotros?</h2>
+                <p style="text-align:center;color:var(--text-gray);margin-bottom:25px;">Envíala para revisión. Solo
+                    aparecerá en el collage si el administrador la aprueba.</p>
+                <form class="auth-form" id="gallery-upload-form"
+                    style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div class="input-group"><label><input type="text" id="gallery-name" placeholder="Tu nombre"
+                                required>Nombre</label></div>
+                    <div class="input-group"><label><input type="text" id="gallery-instagram" placeholder="@usuario">Tu
+                            Instagram (Opcional)</label></div>
+                    <div class="input-group" style="grid-column:span 2;"><label><input type="file" id="gallery-file"
+                                accept="image/*" style="border:1px dashed var(--accent);padding:20px;cursor:pointer;"
+                                required>Sube tu imagen</label></div>
+                    <img id="gallery-preview" class="gallery-upload-preview" hidden alt="Vista previa">
+                    <p id="gallery-form-status" style="grid-column:span 2;color:var(--text-gray);min-height:20px;"></p>
+                    <button type="submit" class="btn-order" style="grid-column:span 2;">ENVIAR FOTO</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <div id="global-footer"></div>
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/db.js"></script>
+    <script src="/scripts/auth.js"></script>
+    <script src="/scripts/image-utils.js"></script>
+    <script src="/scripts/load-layout.js"></script>
+    <script src="/scripts/galeria.js"></script>
+=======
+    <title>Galería | Sabor y Estilo</title>
+    <link rel="stylesheet" href="/styles/style.css">
+<link rel="stylesheet" href="/styles/galeria-styles.css">
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+<main class="container">
+        <header class="gallery-header" style="margin-bottom: 40px;">
+            <h1 class="hero-title">Nuestra <span class="highlight">Galería</span></h1>
+            <p class="hero-description">Momentos capturados en nuestra cocina.</p>
+        </header>
+        <section class="gallery-grid">
+            <div class="gallery-item">
+                <img src="/assets/galeria_image/Ambiente_pizzeria.webp" alt="1">
+                <div class="gallery-overlay"><span>Ambiente</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="/assets/galeria_image/Platillos_pizzeria.webp" alt="2">
+                <div class="gallery-overlay"><span>Platillos</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="/assets/galeria_image/Cocina_pizzeria.webp" alt="3">
+                <div class="gallery-overlay"><span>Cocina</span></div>
+            </div>
+
+            <div class="gallery-item wide-item">
+                <img src="/assets/galeria_image/Eventos_pizzeria.webp" alt="Eventos">
+                <div class="gallery-overlay"><span>Eventos Especiales</span></div>
+            </div>
+        </section>
+
+        <section class="gallery-action" style="margin-top: 80px; padding-bottom: 60px;">
+            <div class="login-card" style="max-width: 800px; margin: 0 auto;">
+                <h2 style="margin-bottom: 20px; text-align: center;">¿Tienes una <span class="highlight">Foto</span> con nosotros?</h2>
+                <p style="text-align: center; color: var(--text-gray); margin-bottom: 25px;">
+                    Sube tu mejor foto en nuestro local y podrías aparecer en nuestra gallery oficial.
+                </p>
+
+                <form class="auth-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="input-group">
+                        <label>
+                              <input type="text" placeholder="Tu nombre">Nombre
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label>
+                            <input type="text" placeholder="@usuario">Tu Instagram (Opcional)
+                        </label>
+                    </div>
+                    <div class="input-group" style="grid-column: span 2;">
+                        <label>
+                             <input type="file" style="border: 1px dashed var(--accent); padding: 20px; cursor: pointer;">Sube tu imagen
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-order" style="grid-column: span 2;">ENVIAR FOTO</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/scripts/load-layout.js"></script>
+     <script src="/scripts/galeria.js"></script>
+>>>>>>> c8b62a804c19c83f54665f6bc11a424065d038ce
+</body>
+
+</html>
