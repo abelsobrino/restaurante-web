@@ -1,0 +1,218 @@
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+>
+
+<header class="main-header">
+
+    <div class="container header-container">
+
+        <div class="logo">
+            <a
+                href="/index.html"
+                class="logo-link"
+                aria-label="Ir al inicio"
+            >
+                <img
+                    src="/imagenes/logo/logo.webp"
+                    alt="La Fonda"
+                    class="logo-img"
+                >
+            </a>
+        </div>
+
+        <nav class="main-nav">
+
+            <button
+                type="button"
+                class="nav-toggle"
+                id="nav-btn-toggle"
+                aria-label="Abrir menú"
+                aria-expanded="false"
+            >
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <ul
+                class="nav-list"
+                id="nav-menu-list"
+            >
+
+                <li>
+                    <a
+                        href="/paginas/nosotros/"
+                        class="nav-link"
+                        id="nav-nosotros"
+                    >
+                        SOBRE NOSOTROS
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="/paginas/menu/carta/"
+                        class="nav-link"
+                        id="nav-carta"
+                    >
+                        CARTA
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="/paginas/menu/galeria/"
+                        class="nav-link"
+                        id="nav-galeria"
+                    >
+                        GALERÍA
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="/paginas/resenas/"
+                        class="nav-link"
+                        id="nav-resenas"
+                    >
+                        RESEÑAS
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="/paginas/contacto/"
+                        class="nav-link"
+                        id="nav-contactanos"
+                    >
+                        CONTÁCTANOS
+                    </a>
+                </li>
+
+                <li
+                    id="nav-admin-item"
+                    hidden
+                >
+                    <a
+                        href="/paginas/administrador/panel/"
+                        class="nav-link"
+                    >
+                        ADMIN
+                    </a>
+                </li>
+
+                <li class="nav-user-item">
+
+                    <button
+                        type="button"
+                        class="nav-user-btn"
+                        id="nav-user-btn"
+                        aria-label="Mi cuenta"
+                        aria-expanded="false"
+                    >
+                        <span class="user-icon">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+
+                        <span
+                            class="user-label"
+                            id="user-display-name"
+                        >
+                            Cuenta
+                        </span>
+
+                        <span class="user-arrow">
+                            <i class="fa-solid fa-caret-down"></i>
+                        </span>
+                    </button>
+
+                    <ul
+                        class="user-dropdown"
+                        id="user-dropdown"
+                    >
+
+                        <li>
+                            <a
+                                href="/paginas/acceso/iniciar-sesion/"
+                                id="dropdown-profile"
+                            >
+                                <i class="fa-regular fa-user"></i>
+                                <span>Iniciar sesión</span>
+                            </a>
+                        </li>
+
+                        <li
+                            id="dropdown-pedidos-row"
+                            hidden
+                        >
+                            <a
+                                href="/paginas/pedidos/mis-pedidos/"
+                                id="dropdown-pedidos"
+                            >
+                                <i class="fa-solid fa-box"></i>
+                                <span>Mis pedidos</span>
+                            </a>
+                        </li>
+
+                        <li
+                            id="dropdown-reservas-row"
+                            hidden
+                        >
+                            <a
+                                href="/paginas/reservas/mis-reservas/"
+                                id="dropdown-reservas"
+                            >
+                                <i class="fa-regular fa-calendar"></i>
+                                <span>Mis reservas</span>
+                            </a>
+                        </li>
+
+                        <li
+                            id="dropdown-mode-row"
+                            hidden
+                        >
+                            <a
+                                href="/paginas/acceso/elegir-modo/"
+                                id="dropdown-mode"
+                            >
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                                <span>Cambiar vista</span>
+                            </a>
+                        </li>
+
+                        <li
+                            id="dropdown-divider-row"
+                            hidden
+                        >
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li
+                            id="dropdown-logout-row"
+                            hidden
+                        >
+                            <a
+                                href="#"
+                                id="dropdown-logout"
+                                class="logout-link"
+                            >
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span>Cerrar sesión</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </div>
+
+</header>

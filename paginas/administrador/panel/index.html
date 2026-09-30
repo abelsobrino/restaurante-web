@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Administración | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/componentes/menu/menu.css"
+    >
+
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+
+        <section class="admin-section">
+
+            <div class="container admin-layout">
+
+                <div id="admin-menu"></div>
+
+                <div class="admin-content">
+
+                    <header class="admin-heading">
+
+                        <div>
+
+                            <p class="admin-eyebrow">
+                                PANEL WEB
+                            </p>
+
+                            <h1>
+                                Resumen
+                            </h1>
+
+                            <p class="admin-muted">
+                                Consulta las ventas y el
+                                rendimiento general de La Fonda.
+                            </p>
+
+                        </div>
+
+                        <div class="period-buttons">
+
+                            <button
+                                type="button"
+                                class="active"
+                                data-period="DIA"
+                            >
+                                Hoy
+                            </button>
+
+                            <button
+                                type="button"
+                                data-period="SEMANA"
+                            >
+                                Semana
+                            </button>
+
+                            <button
+                                type="button"
+                                data-period="MES"
+                            >
+                                Mes
+                            </button>
+
+                        </div>
+
+                    </header>
+
+                    <p
+                        id="admin-status"
+                        class="admin-status"
+                    ></p>
+
+                    <section class="stats-grid">
+
+                        <article>
+
+                            <span>
+                                Ventas
+                            </span>
+
+                            <strong id="stat-ventas">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Total vendido
+                            </span>
+
+                            <strong id="stat-total">
+                                S/ 0.00
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Ticket promedio
+                            </span>
+
+                            <strong id="stat-ticket">
+                                S/ 0.00
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Web / Presencial
+                            </span>
+
+                            <strong id="stat-origen">
+                                0 / 0
+                            </strong>
+
+                        </article>
+
+                    </section>
+
+                    <section class="admin-two-cols">
+
+                        <article class="admin-card">
+
+                            <h3>
+                                Platos más vendidos
+                            </h3>
+
+                            <div
+                                id="top-platos"
+                                class="admin-list"
+                            >
+
+                                <div class="empty-admin">
+                                    Cargando...
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        <article class="admin-card">
+
+                            <h3>
+                                Últimas ventas
+                            </h3>
+
+                            <div
+                                id="latest-sales"
+                                class="admin-table-wrap"
+                            >
+
+                                <div class="empty-admin">
+                                    Cargando...
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/image-utils.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/administrador/admin.js"
+    ></script>
+
+    <script
+        src="/paginas/administrador/panel/panel.js"
+    ></script>
+
+</body>
+
+</html>

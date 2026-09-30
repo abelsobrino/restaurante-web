@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Iniciar Sesión | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/acceso/iniciar-sesion/iniciar-sesion.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="acceso">
+
+        <section class="acceso-seccion">
+
+            <div class="container">
+
+                <div class="acceso-card">
+
+                    <div class="acceso-encabezado">
+
+                        <p class="acceso-kicker">
+                            BIENVENIDO DE NUEVO
+                        </p>
+
+                        <h1>
+                            Iniciar
+                            <span class="highlight">
+                                Sesión
+                            </span>
+                        </h1>
+
+                        <p>
+                            Ingresa con el correo y contraseña
+                            registrados en La Fonda.
+                        </p>
+
+                    </div>
+
+                    <form
+                        id="login-form"
+                        class="acceso-formulario"
+                    >
+
+                        <div class="acceso-campo">
+
+                            <label for="login-email">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                id="login-email"
+                                placeholder="correo@ejemplo.com"
+                                autocomplete="email"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="acceso-campo">
+
+                            <label for="login-password">
+                                Contraseña
+                            </label>
+
+                            <div class="campo-password">
+
+                                <input
+                                    type="password"
+                                    id="login-password"
+                                    placeholder="Mínimo 6 caracteres"
+                                    autocomplete="current-password"
+                                    minlength="6"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    id="mostrar-password"
+                                    class="mostrar-password"
+                                    aria-label="Mostrar contraseña"
+                                >
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <p
+                            id="login-status"
+                            class="acceso-estado"
+                        ></p>
+
+                        <button
+                            type="submit"
+                            id="login-boton"
+                            class="acceso-boton"
+                        >
+                            Iniciar sesión
+                        </button>
+
+                    </form>
+
+                    <div class="acceso-footer">
+
+                        <p>
+                            ¿No tienes una cuenta?
+
+                            <a
+                                href="/paginas/acceso/registrarse/"
+                            >
+                                Regístrate aquí
+                            </a>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/acceso/iniciar-sesion/iniciar-sesion.js"
+    ></script>
+
+</body>
+
+</html>

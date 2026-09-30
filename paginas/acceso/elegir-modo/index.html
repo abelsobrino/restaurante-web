@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Elegir Vista | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/acceso/elegir-modo/elegir-modo.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="modo">
+
+        <section class="modo-seccion">
+
+            <div class="container">
+
+                <div class="modo-card">
+
+                    <div class="modo-encabezado">
+
+                        <p class="modo-kicker">
+                            SESIÓN DE ADMINISTRADOR
+                        </p>
+
+                        <h1>
+                            ¿Cómo quieres
+                            <span class="highlight">
+                                ingresar?
+                            </span>
+                        </h1>
+
+                        <p>
+                            Puedes ingresar al panel de administración
+                            o visualizar la web como la vería un cliente,
+                            sin cerrar tu sesión administrativa.
+                        </p>
+
+                    </div>
+
+                    <div class="modo-grid">
+
+                        <button
+                            type="button"
+                            id="mode-admin"
+                            class="modo-opcion"
+                        >
+
+                            <span class="modo-icono">
+                                <i class="fa-solid fa-gear"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Entrar como Administrador
+                                </strong>
+
+                                <p>
+                                    Gestiona platos, promociones,
+                                    galería, reseñas, cupones,
+                                    delivery y estadísticas.
+                                </p>
+
+                                <span class="modo-accion">
+                                    Ir al panel →
+                                </span>
+
+                            </div>
+
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mode-client"
+                            class="modo-opcion"
+                        >
+
+                            <span class="modo-icono">
+                                <i class="fa-solid fa-utensils"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Ver como Cliente
+                                </strong>
+
+                                <p>
+                                    Revisa la carta, galería,
+                                    reseñas y experiencia pública
+                                    sin perder tu sesión.
+                                </p>
+
+                                <span class="modo-accion">
+                                    Ver la web →
+                                </span>
+
+                            </div>
+
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="modo-estado"
+                        class="modo-estado"
+                    ></p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/acceso/elegir-modo/elegir-modo.js"
+    ></script>
+
+</body>
+
+</html>

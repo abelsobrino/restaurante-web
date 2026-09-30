@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Contenido | Administración La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/componentes/menu/menu.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/contenido/contenido.css"
+    >
+
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+
+        <section class="admin-section">
+
+            <div class="container admin-layout">
+
+                <div id="admin-menu"></div>
+
+                <div class="admin-content">
+
+                    <header class="admin-heading">
+
+                        <div>
+
+                            <p class="admin-eyebrow">
+                                MODERACIÓN
+                            </p>
+
+                            <h1>
+                                Contenido
+                            </h1>
+
+                            <p class="admin-muted">
+                                Administra las fotografías enviadas
+                                por los clientes y las reseñas que
+                                aparecerán públicamente en La Fonda.
+                            </p>
+
+                        </div>
+
+                    </header>
+
+                    <p
+                        id="admin-status"
+                        class="admin-status"
+                    ></p>
+
+                    <section
+                        id="contenido-resumen"
+                        class="contenido-resumen"
+                        hidden
+                    >
+
+                        <article>
+
+                            <span>
+                                Fotos
+                            </span>
+
+                            <strong id="contenido-fotos-total">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Fotos publicadas
+                            </span>
+
+                            <strong id="contenido-fotos-publicadas">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Reseñas
+                            </span>
+
+                            <strong id="contenido-resenas-total">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Reseñas públicas
+                            </span>
+
+                            <strong id="contenido-resenas-publicadas">
+                                0
+                            </strong>
+
+                        </article>
+
+                    </section>
+
+                    <nav class="contenido-subnav">
+
+                        <button
+                            type="button"
+                            class="active"
+                            data-contenido-section="galeria"
+                        >
+                            <i class="fa-regular fa-images"></i> Galería
+
+                            <span id="badge-galeria">
+                                0
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            data-contenido-section="resenas"
+                        >
+                            <i class="fa-solid fa-star"></i> Reseñas
+
+                            <span id="badge-resenas">
+                                0
+                            </span>
+                        </button>
+
+                    </nav>
+
+                    <section
+                        id="contenido-section-galeria"
+                        class="contenido-section active"
+                    >
+
+                        <div class="contenido-toolbar">
+
+                            <div>
+
+                                <h2>
+                                    Galería
+                                </h2>
+
+                                <p class="admin-muted">
+                                    Revisa las fotografías enviadas
+                                    por los clientes antes de
+                                    mostrarlas públicamente.
+                                </p>
+
+                            </div>
+
+                            <div class="contenido-filtros">
+
+                                <input
+                                    id="gallery-search"
+                                    type="search"
+                                    placeholder="Buscar autor, título..."
+                                >
+
+                                <select id="gallery-filter">
+
+                                    <option value="TODOS">
+                                        Todos
+                                    </option>
+
+                                    <option value="PENDIENTE">
+                                        Pendientes
+                                    </option>
+
+                                    <option value="PUBLICADA">
+                                        Publicadas
+                                    </option>
+
+                                    <option value="RECHAZADA">
+                                        Rechazadas
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="gallery-admin"
+                            class="moderation-gallery"
+                        >
+
+                            <div class="empty-admin">
+                                Cargando fotografías...
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <section
+                        id="contenido-section-resenas"
+                        class="contenido-section"
+                    >
+
+                        <div class="contenido-toolbar">
+
+                            <div>
+
+                                <h2>
+                                    Reseñas
+                                </h2>
+
+                                <p class="admin-muted">
+                                    Decide qué reseñas podrán
+                                    mostrarse en la página pública.
+                                </p>
+
+                            </div>
+
+                            <div class="contenido-filtros">
+
+                                <input
+                                    id="review-search"
+                                    type="search"
+                                    placeholder="Buscar autor o comentario..."
+                                >
+
+                                <select id="review-filter">
+
+                                    <option value="TODOS">
+                                        Todas
+                                    </option>
+
+                                    <option value="PENDIENTE">
+                                        Pendientes
+                                    </option>
+
+                                    <option value="PUBLICADA">
+                                        Publicadas
+                                    </option>
+
+                                    <option value="OCULTA">
+                                        Ocultas
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="reviews-admin"
+                            class="moderation-reviews"
+                        >
+
+                            <div class="empty-admin">
+                                Cargando reseñas...
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <div
+        id="photo-modal"
+        class="photo-modal"
+        aria-hidden="true"
+    >
+
+        <div class="photo-modal-card">
+
+            <button
+                type="button"
+                id="photo-modal-close"
+                class="photo-modal-close"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+            <img
+                id="photo-modal-image"
+                alt="Fotografía enviada"
+            >
+
+            <div class="photo-modal-info">
+
+                <strong id="photo-modal-author">
+                    -
+                </strong>
+
+                <span id="photo-modal-instagram">
+                    -
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/administrador/admin.js"
+    ></script>
+
+    <script
+        src="/paginas/administrador/contenido/contenido.js"
+    ></script>
+
+</body>
+
+</html>

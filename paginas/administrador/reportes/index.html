@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes | Administración La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+    <link rel="stylesheet" href="/paginas/administrador/admin.css">
+    <link rel="stylesheet" href="/paginas/administrador/componentes/menu/menu.css">
+    <link rel="stylesheet" href="/paginas/administrador/reportes/reportes.css">
+</head>
+<body>
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+        <section class="admin-section">
+            <div class="container admin-layout">
+                <div id="admin-menu"></div>
+
+                <div class="admin-content reporte-imprimible">
+                    <header class="admin-heading reporte-heading">
+                        <div>
+                            <p class="admin-eyebrow">ANÁLISIS</p>
+                            <h1>Reportes de ventas</h1>
+                            <p class="admin-muted">
+                                Consulta indicadores de ventas disponibles en el sistema y exporta la vista actual sin modificar la base de datos.
+                            </p>
+                        </div>
+
+                        <div class="reporte-acciones no-print">
+                            <button type="button" id="reporte-csv" class="reporte-btn-secundario">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>Exportar CSV</span>
+                            </button>
+                            <button type="button" id="reporte-imprimir" class="reporte-btn-principal">
+                                <i class="fa-solid fa-print"></i>
+                                <span>Imprimir</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <p id="admin-status" class="admin-status"></p>
+
+                    <div class="reporte-toolbar no-print">
+                        <span>Período</span>
+                        <div class="period-buttons" id="reporte-periodos">
+                            <button type="button" class="active" data-report-period="DIA">Día</button>
+                            <button type="button" data-report-period="SEMANA">Semana</button>
+                            <button type="button" data-report-period="MES">Mes</button>
+                        </div>
+                    </div>
+
+                    <section class="stats-grid reporte-stats">
+                        <article>
+                            <span>Ventas</span>
+                            <strong id="reporte-ventas">0</strong>
+                        </article>
+                        <article>
+                            <span>Total</span>
+                            <strong id="reporte-total">S/ 0.00</strong>
+                        </article>
+                        <article>
+                            <span>Ticket promedio</span>
+                            <strong id="reporte-ticket">S/ 0.00</strong>
+                        </article>
+                        <article>
+                            <span>Web / Presencial</span>
+                            <strong id="reporte-origen">0 / 0</strong>
+                        </article>
+                    </section>
+
+                    <section class="admin-two-cols reporte-grid">
+                        <article class="admin-card">
+                            <div class="reporte-card-heading">
+                                <div>
+                                    <p class="admin-eyebrow">DEMANDA</p>
+                                    <h2>Platos más vendidos</h2>
+                                </div>
+                                <i class="fa-solid fa-ranking-star"></i>
+                            </div>
+                            <div id="reporte-top" class="reporte-top-lista">
+                                <div class="empty-admin">Cargando...</div>
+                            </div>
+                        </article>
+
+                        <article class="admin-card">
+                            <div class="reporte-card-heading">
+                                <div>
+                                    <p class="admin-eyebrow">MOVIMIENTOS</p>
+                                    <h2>Últimas ventas</h2>
+                                </div>
+                                <i class="fa-solid fa-receipt"></i>
+                            </div>
+                            <div id="reporte-ventas-tabla" class="admin-table-wrap">
+                                <div class="empty-admin">Cargando...</div>
+                            </div>
+                        </article>
+                    </section>
+
+                    <p class="reporte-pie">
+                        Reporte generado con la información devuelta por el módulo de estadísticas de La Fonda.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="global-footer" class="no-print"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+    <script src="/paginas/administrador/admin.js"></script>
+    <script src="/paginas/administrador/reportes/reportes.js"></script>
+</body>
+</html>

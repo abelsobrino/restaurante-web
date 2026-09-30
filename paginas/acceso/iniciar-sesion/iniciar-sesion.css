@@ -1,0 +1,316 @@
+
+
+.acceso {
+    min-height: 100vh;
+
+    padding-top:
+        var(--alto-navbar);
+}
+
+.acceso-seccion {
+    min-height:
+        calc(
+            100vh -
+            var(--alto-navbar)
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+        60px 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 180, 0, 0.04),
+            transparent 65%
+        );
+}
+
+.acceso-card {
+    width: 100%;
+
+    max-width: 460px;
+
+    margin: auto;
+
+    padding:
+        42px 38px;
+
+    background:
+        #0d0d0d;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 45px
+        rgba(0, 0, 0, 0.65);
+}
+
+.acceso-encabezado {
+    margin-bottom: 30px;
+
+    text-align: center;
+}
+
+.acceso-kicker {
+    margin-bottom: 9px;
+
+    color:
+        var(--amarillo);
+
+    font-size: 0.74rem;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.acceso-encabezado h1 {
+    margin-bottom: 12px;
+
+    color:
+        var(--blanco);
+
+    font-size: 2.4rem;
+    font-weight: 800;
+}
+
+.acceso-encabezado p {
+    color:
+        var(--gris);
+
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+}
+
+.acceso-formulario {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.acceso-campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.acceso-campo input {
+    width: 100%;
+
+    padding:
+        13px 14px;
+
+    background:
+        #191919;
+
+    color:
+        var(--blanco);
+
+    border:
+        1px solid
+        #333;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 0.92rem;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.acceso-campo input:focus {
+    background:
+        #202020;
+
+    border-color:
+        var(--amarillo);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 180, 0, 0.08);
+}
+
+.campo-password {
+    position: relative;
+}
+
+.campo-password input {
+    padding-right: 48px;
+}
+
+.mostrar-password {
+    position: absolute;
+
+    right: 8px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+
+    background:
+        transparent;
+
+    color:
+        var(--gris);
+
+    cursor: pointer;
+
+    font-size: 0.95rem;
+}
+
+.acceso-estado {
+    min-height: 20px;
+
+    margin:
+        -5px 0 0;
+
+    color:
+        var(--gris);
+
+    text-align: center;
+
+    font-size: 0.82rem;
+}
+
+.acceso-estado.error {
+    color:
+        #ff7373;
+}
+
+.acceso-estado.exito {
+    color:
+        #73d693;
+}
+
+.acceso-boton {
+    width: 100%;
+
+    padding:
+        14px 20px;
+
+    background:
+        var(--amarillo);
+
+    color:
+        var(--negro);
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.acceso-boton:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(255, 180, 0, 0.18);
+}
+
+.acceso-boton:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.acceso-footer {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    text-align: center;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+}
+
+.acceso-footer p {
+    color:
+        var(--gris);
+
+    font-size: 0.85rem;
+}
+
+.acceso-footer a {
+    color:
+        var(--amarillo);
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+.acceso-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+
+    .acceso-seccion {
+        min-height: auto;
+
+        padding:
+            45px 0;
+    }
+
+    .acceso-card {
+        padding:
+            32px 20px;
+    }
+
+    .acceso-encabezado h1 {
+        font-size: 2rem;
+    }
+
+}

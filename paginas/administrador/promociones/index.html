@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Promociones | Administración La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/componentes/menu/menu.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/promociones/promociones.css"
+    >
+
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+
+        <section class="admin-section">
+
+            <div class="container admin-layout">
+
+                <div id="admin-menu"></div>
+
+                <div class="admin-content">
+
+                    <header class="admin-heading">
+
+                        <div>
+
+                            <p class="admin-eyebrow">
+                                MARKETING
+                            </p>
+
+                            <h1>
+                                Promociones
+                            </h1>
+
+                            <p class="admin-muted">
+                                Crea y administra cupones de descuento
+                                para los pedidos realizados desde
+                                la plataforma web.
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="coupon-new-top"
+                            class="promocion-nuevo"
+                        >
+                            + Nuevo cupón
+                        </button>
+
+                    </header>
+
+                    <p
+                        id="admin-status"
+                        class="admin-status"
+                    ></p>
+
+                    <section
+                        id="coupon-summary"
+                        class="promociones-resumen"
+                        hidden
+                    >
+
+                        <article>
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong id="coupon-total">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Activos
+                            </span>
+
+                            <strong id="coupon-active-count">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Públicos
+                            </span>
+
+                            <strong id="coupon-public-count">
+                                0
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Usos
+                            </span>
+
+                            <strong id="coupon-uses-count">
+                                0
+                            </strong>
+
+                        </article>
+
+                    </section>
+
+                    <div class="promociones-toolbar">
+
+                        <div class="promociones-busqueda">
+
+                            <span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <input
+                                type="search"
+                                id="coupon-search"
+                                placeholder="Buscar por código o descripción..."
+                            >
+
+                        </div>
+
+                        <select id="coupon-filter">
+
+                            <option value="TODOS">
+                                Todos
+                            </option>
+
+                            <option value="ACTIVOS">
+                                Activos
+                            </option>
+
+                            <option value="INACTIVOS">
+                                Inactivos
+                            </option>
+
+                            <option value="PUBLICOS">
+                                Públicos
+                            </option>
+
+                            <option value="OCULTOS">
+                                Ocultos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="promociones-layout">
+
+                        <article class="admin-card">
+
+                            <div class="promociones-card-heading">
+
+                                <div>
+
+                                    <p class="admin-eyebrow">
+                                        CUPONES
+                                    </p>
+
+                                    <h2>
+                                        Cupones registrados
+                                    </h2>
+
+                                    <p class="admin-muted">
+                                        Selecciona un cupón para
+                                        editar sus condiciones.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="coupon-list"
+                                class="coupon-list"
+                            >
+
+                                <div class="empty-admin">
+                                    Cargando cupones...
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        <form
+                            id="coupon-form"
+                            class="admin-card promocion-form"
+                        >
+
+                            <input
+                                type="hidden"
+                                id="coupon-id"
+                            >
+
+                            <div class="promociones-form-heading">
+
+                                <div>
+
+                                    <p class="admin-eyebrow">
+                                        EDITOR
+                                    </p>
+
+                                    <h2 id="coupon-form-title">
+                                        Nuevo cupón
+                                    </h2>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    id="coupon-new"
+                                    class="promocion-limpiar"
+                                >
+                                    Limpiar
+                                </button>
+
+                            </div>
+
+                            <label>
+
+                                Código
+
+                                <input
+                                    id="coupon-code"
+                                    type="text"
+                                    maxlength="30"
+                                    placeholder="FONDA20"
+                                    autocomplete="off"
+                                    required
+                                >
+
+                                <small>
+                                    El código se convertirá
+                                    automáticamente a mayúsculas.
+                                </small>
+
+                            </label>
+
+                            <label>
+
+                                Descripción
+
+                                <input
+                                    id="coupon-description"
+                                    type="text"
+                                    maxlength="180"
+                                    placeholder="20% por lanzamiento"
+                                >
+
+                            </label>
+
+                            <div class="promocion-form-grid">
+
+                                <label>
+
+                                    Tipo
+
+                                    <select id="coupon-type">
+
+                                        <option value="PORCENTAJE">
+                                            Porcentaje
+                                        </option>
+
+                                        <option value="MONTO">
+                                            Monto fijo
+                                        </option>
+
+                                    </select>
+
+                                </label>
+
+                                <label>
+
+                                    Valor
+
+                                    <div class="coupon-value-wrapper">
+
+                                        <span id="coupon-value-prefix">
+                                            %
+                                        </span>
+
+                                        <input
+                                            id="coupon-value"
+                                            type="number"
+                                            min="0.01"
+                                            step="0.01"
+                                            placeholder="20"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                            <div class="promocion-form-grid">
+
+                                <label>
+
+                                    Compra mínima
+
+                                    <input
+                                        id="coupon-min"
+                                        type="number"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                    >
+
+                                </label>
+
+                                <label>
+
+                                    Límite de usos
+
+                                    <input
+                                        id="coupon-limit"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        placeholder="Sin límite"
+                                    >
+
+                                    <small>
+                                        Déjalo vacío si no
+                                        tendrá límite.
+                                    </small>
+
+                                </label>
+
+                            </div>
+
+                            <div class="promocion-form-grid">
+
+                                <label>
+
+                                    Fecha de inicio
+
+                                    <input
+                                        id="coupon-start"
+                                        type="datetime-local"
+                                    >
+
+                                </label>
+
+                                <label>
+
+                                    Fecha de fin
+
+                                    <input
+                                        id="coupon-end"
+                                        type="datetime-local"
+                                    >
+
+                                </label>
+
+                            </div>
+
+                            <div class="promocion-opciones">
+
+                                <label class="promocion-check">
+
+                                    <input
+                                        id="coupon-visible"
+                                        type="checkbox"
+                                    >
+
+                                    <span>
+
+                                        <strong>
+                                            Mostrar públicamente
+                                        </strong>
+
+                                        <small>
+                                            El cliente podrá verlo
+                                            como promoción.
+                                        </small>
+
+                                    </span>
+
+                                </label>
+
+                                <label class="promocion-check">
+
+                                    <input
+                                        id="coupon-active"
+                                        type="checkbox"
+                                        checked
+                                    >
+
+                                    <span>
+
+                                        <strong>
+                                            Cupón activo
+                                        </strong>
+
+                                        <small>
+                                            Permite que pueda
+                                            utilizarse.
+                                        </small>
+
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                            <div class="coupon-preview">
+
+                                <p class="admin-eyebrow">
+                                    VISTA PREVIA
+                                </p>
+
+                                <div class="coupon-preview-card">
+
+                                    <span class="coupon-preview-icon">
+                                        %
+                                    </span>
+
+                                    <div>
+
+                                        <strong id="coupon-preview-code">
+                                            FONDA20
+                                        </strong>
+
+                                        <p id="coupon-preview-description">
+                                            Tu promoción aparecerá aquí.
+                                        </p>
+
+                                    </div>
+
+                                    <span
+                                        id="coupon-preview-value"
+                                        class="coupon-preview-value"
+                                    >
+                                        20%
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="promocion-form-actions">
+
+                                <button
+                                    type="button"
+                                    id="coupon-cancel"
+                                    class="promocion-secundario"
+                                >
+                                    Cancelar edición
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    id="coupon-save"
+                                    class="promocion-guardar"
+                                >
+                                    Guardar cupón
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/administrador/admin.js"
+    ></script>
+
+    <script
+        src="/paginas/administrador/promociones/promociones.js"
+    ></script>
+
+</body>
+
+</html>

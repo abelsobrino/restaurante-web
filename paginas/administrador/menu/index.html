@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Menú | Administración La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/componentes/menu/menu.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/menu/menu.css"
+    >
+
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+
+        <section class="admin-section">
+
+            <div class="container admin-layout">
+
+                <div id="admin-menu"></div>
+
+                <div class="admin-content">
+
+                    <header class="admin-heading">
+
+                        <div>
+
+                            <p class="admin-eyebrow">
+                                CATÁLOGO
+                            </p>
+
+                            <h1>
+                                Menú
+                            </h1>
+
+                            <p class="admin-muted">
+                                Administra los platos y combos
+                                disponibles en la plataforma web.
+                            </p>
+
+                        </div>
+
+                    </header>
+
+                    <p
+                        id="admin-status"
+                        class="admin-status"
+                    ></p>
+
+                    <nav class="menu-subnav">
+
+                        <button
+                            type="button"
+                            class="active"
+                            data-menu-section="platos"
+                        >
+                            <i class="fa-solid fa-burger"></i> Platos
+                        </button>
+
+                        <button
+                            type="button"
+                            data-menu-section="combos"
+                        >
+                            <i class="fa-solid fa-box-open"></i> Combos
+                        </button>
+
+                    </nav>
+
+                    <section
+                        id="menu-section-platos"
+                        class="menu-section active"
+                    >
+
+                        <div class="admin-toolbar">
+
+                            <div>
+
+                                <h2>
+                                    Platos
+                                </h2>
+
+                                <p class="admin-muted">
+                                    Los platos existentes en el
+                                    sistema aparecen aquí. Un plato
+                                    sin imagen no se publica en la
+                                    carta web.
+                                </p>
+
+                            </div>
+
+                            <div class="admin-filter-buttons">
+
+                                <button
+                                    type="button"
+                                    class="active"
+                                    data-dish-filter="all"
+                                >
+                                    Todos
+                                </button>
+
+                                <button
+                                    type="button"
+                                    data-dish-filter="pending"
+                                >
+                                    Sin imagen
+                                </button>
+
+                                <button
+                                    type="button"
+                                    data-dish-filter="published"
+                                >
+                                    Publicados
+                                </button>
+
+                                <button
+                                    type="button"
+                                    data-dish-filter="off"
+                                >
+                                    No disponibles
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-editor-grid">
+
+                            <article class="admin-card">
+
+                                <div class="menu-card-heading">
+
+                                    <div>
+
+                                        <h3>
+                                            Platos registrados
+                                        </h3>
+
+                                        <p class="admin-muted">
+                                            Selecciona uno para
+                                            editar sus datos.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    id="admin-dishes"
+                                    class="admin-dish-list"
+                                >
+
+                                    <div class="empty-admin">
+                                        Cargando platos...
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                            <form
+                                class="admin-card admin-form"
+                                id="dish-form"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    id="dish-id"
+                                >
+
+                                <div class="menu-form-heading">
+
+                                    <div>
+
+                                        <p class="admin-eyebrow">
+                                            EDITOR
+                                        </p>
+
+                                        <h3 id="dish-form-title">
+                                            Nuevo plato
+                                        </h3>
+
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        id="dish-new"
+                                        class="admin-small-button"
+                                    >
+                                        + Nuevo
+                                    </button>
+
+                                </div>
+
+                                <label>
+
+                                    Nombre
+
+                                    <input
+                                        id="dish-name"
+                                        maxlength="120"
+                                        required
+                                    >
+
+                                </label>
+
+                                <label>
+
+                                    Descripción
+
+                                    <textarea
+                                        id="dish-description"
+                                        rows="4"
+                                        maxlength="600"
+                                    ></textarea>
+
+                                </label>
+
+                                <div class="admin-form-grid">
+
+                                    <label>
+
+                                        Precio
+
+                                        <input
+                                            id="dish-price"
+                                            type="number"
+                                            step="0.01"
+                                            min="0.01"
+                                            required
+                                        >
+
+                                    </label>
+
+                                    <label>
+
+                                        Tiempo (min)
+
+                                        <input
+                                            id="dish-time"
+                                            type="number"
+                                            min="0"
+                                        >
+
+                                    </label>
+
+                                </div>
+
+                                <label>
+
+                                    Categoría
+
+                                    <select
+                                        id="dish-category"
+                                        required
+                                    ></select>
+
+                                </label>
+
+                                <label class="check-row">
+
+                                    <input
+                                        id="dish-available"
+                                        type="checkbox"
+                                        checked
+                                    >
+
+                                    Disponible
+
+                                </label>
+
+                                <div class="admin-note">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    El stock operativo diario se administra desde el sistema de escritorio.
+                                    Esta pantalla solo modifica los datos del catálogo.
+                                </div>
+
+                                <label>
+
+                                    Imagen principal
+
+                                    <input
+                                        id="dish-image"
+                                        type="file"
+                                        accept="image/*"
+                                    >
+
+                                    <small>
+                                        Si el plato ya existe,
+                                        puedes agregar o reemplazar
+                                        su imagen desde aquí.
+                                    </small>
+
+                                </label>
+
+                                <img
+                                    id="dish-preview"
+                                    class="admin-preview"
+                                    hidden
+                                    alt="Vista previa del plato"
+                                >
+
+                                <div class="admin-form-actions">
+
+                                    <button
+                                        type="button"
+                                        id="dish-clear"
+                                        class="admin-secondary-button"
+                                    >
+                                        Limpiar
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        class="admin-primary-button"
+                                    >
+                                        Guardar plato
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </section>
+
+                    <section
+                        id="menu-section-combos"
+                        class="menu-section"
+                    >
+
+                        <div class="admin-toolbar">
+
+                            <div>
+
+                                <h2>
+                                    Combos
+                                </h2>
+
+                                <p class="admin-muted">
+                                    Combina platos, define el precio
+                                    promocional y configura cuándo
+                                    estará disponible.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-editor-grid">
+
+                            <article class="admin-card">
+
+                                <div class="menu-card-heading">
+
+                                    <div>
+
+                                        <h3>
+                                            Platos disponibles
+                                        </h3>
+
+                                        <p class="admin-muted">
+                                            Arrastra un plato o haz
+                                            doble clic para agregarlo.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    id="combo-search"
+                                    class="admin-search"
+                                    placeholder="Buscar plato..."
+                                >
+
+                                <div
+                                    id="combo-source"
+                                    class="combo-source"
+                                >
+
+                                    <div class="empty-admin">
+                                        Cargando platos...
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                            <form
+                                class="admin-card admin-form"
+                                id="combo-form"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    id="combo-id"
+                                >
+
+                                <div class="menu-form-heading">
+
+                                    <div>
+
+                                        <p class="admin-eyebrow">
+                                            CONSTRUCTOR
+                                        </p>
+
+                                        <h3>
+                                            Crear / editar combo
+                                        </h3>
+
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        id="combo-new"
+                                        class="admin-small-button"
+                                    >
+                                        + Nuevo
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    id="combo-dropzone"
+                                    class="combo-dropzone"
+                                >
+                                    Arrastra platos aquí
+                                </div>
+
+                                <div
+                                    id="combo-selected"
+                                    class="combo-selected"
+                                ></div>
+
+                                <label>
+
+                                    Nombre
+
+                                    <input
+                                        id="combo-name"
+                                        maxlength="120"
+                                        required
+                                    >
+
+                                </label>
+
+                                <label>
+
+                                    Descripción
+
+                                    <textarea
+                                        id="combo-description"
+                                        rows="3"
+                                        maxlength="600"
+                                    ></textarea>
+
+                                </label>
+
+                                <div class="admin-form-grid">
+
+                                    <label>
+
+                                        Precio del combo
+
+                                        <input
+                                            id="combo-price"
+                                            type="number"
+                                            min="0.01"
+                                            step="0.01"
+                                            required
+                                        >
+
+                                    </label>
+
+                                    <label>
+
+                                        Precio regular
+
+                                        <input
+                                            id="combo-regular"
+                                            readonly
+                                            value="S/ 0.00"
+                                        >
+
+                                    </label>
+
+                                </div>
+
+                                <label>
+
+                                    Imagen
+
+                                    <input
+                                        id="combo-image"
+                                        type="file"
+                                        accept="image/*"
+                                    >
+
+                                    <small>
+                                        Sin imagen el combo puede
+                                        guardarse, pero no se publicará
+                                        en la carta.
+                                    </small>
+
+                                </label>
+
+                                <label class="check-row">
+
+                                    <input
+                                        id="combo-active"
+                                        type="checkbox"
+                                        checked
+                                    >
+
+                                    Combo activo
+
+                                </label>
+
+                                <div class="menu-programacion">
+
+                                    <h4>
+                                        Programación
+                                    </h4>
+
+                                    <div class="admin-form-grid">
+
+                                        <label>
+
+                                            Desde
+
+                                            <input
+                                                id="combo-date-start"
+                                                type="date"
+                                            >
+
+                                        </label>
+
+                                        <label>
+
+                                            Hasta
+
+                                            <input
+                                                id="combo-date-end"
+                                                type="date"
+                                            >
+
+                                        </label>
+
+                                        <label>
+
+                                            Hora inicio
+
+                                            <input
+                                                id="combo-time-start"
+                                                type="time"
+                                            >
+
+                                        </label>
+
+                                        <label>
+
+                                            Hora fin
+
+                                            <input
+                                                id="combo-time-end"
+                                                type="time"
+                                            >
+
+                                        </label>
+
+                                    </div>
+
+                                    <div>
+
+                                        <span class="admin-label">
+                                            Días
+                                        </span>
+
+                                        <div
+                                            class="weekday-row"
+                                            id="combo-days"
+                                        >
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="1"
+                                                    checked
+                                                >
+                                                Lun
+                                            </label>
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="2"
+                                                    checked
+                                                >
+                                                Mar
+                                            </label>
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="3"
+                                                    checked
+                                                >
+                                                Mié
+                                            </label>
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="4"
+                                                    checked
+                                                >
+                                                Jue
+                                            </label>
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="5"
+                                                    checked
+                                                >
+                                                Vie
+                                            </label>
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="6"
+                                                    checked
+                                                >
+                                                Sáb
+                                            </label>
+
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value="7"
+                                                    checked
+                                                >
+                                                Dom
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="admin-form-actions">
+
+                                    <button
+                                        type="button"
+                                        id="combo-clear"
+                                        class="admin-secondary-button"
+                                    >
+                                        Limpiar
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        class="admin-primary-button"
+                                    >
+                                        Guardar combo
+                                    </button>
+
+                                </div>
+
+                                <div class="menu-combos-guardados">
+
+                                    <h3>
+                                        Combos guardados
+                                    </h3>
+
+                                    <div
+                                        id="combo-existing"
+                                        class="admin-list"
+                                    >
+
+                                        <div class="empty-admin">
+                                            Cargando combos...
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/image-utils.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/administrador/admin.js"
+    ></script>
+
+    <script
+        src="/paginas/administrador/menu/menu.js"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,409 @@
+
+
+.reserva {
+    min-height: 100vh;
+
+    padding-top:
+        var(--alto-navbar);
+}
+
+.reserva-seccion {
+    padding:
+        70px 0;
+}
+
+.reserva-grid {
+    display: grid;
+
+    grid-template-columns:
+        0.9fr
+        1.1fr;
+
+    gap: 65px;
+
+    align-items: start;
+}
+
+.reserva-info {
+    padding-top: 25px;
+}
+
+.reserva-kicker {
+    margin-bottom: 10px;
+
+    color:
+        var(--amarillo);
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.reserva-titulo {
+    margin-bottom: 18px;
+
+    color:
+        var(--blanco);
+
+    font-size: 3.3rem;
+    font-weight: 800;
+
+    line-height: 1.1;
+}
+
+.reserva-descripcion {
+    max-width: 520px;
+
+    margin-bottom: 32px;
+
+    color:
+        var(--gris);
+
+    font-size: 1rem;
+
+    line-height: 1.7;
+}
+
+.reserva-detalles {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-bottom: 30px;
+}
+
+.reserva-detalle {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        16px 18px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 10px;
+}
+
+.reserva-detalle-icono {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        rgba(255, 180, 0, 0.1);
+
+    border-radius: 8px;
+
+    font-size: 1.1rem;
+}
+
+.reserva-detalle small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.7rem;
+
+    text-transform: uppercase;
+}
+
+.reserva-detalle strong {
+    color:
+        var(--blanco);
+
+    font-size: 0.9rem;
+}
+
+.reserva-enlace {
+    color:
+        var(--amarillo);
+
+    text-decoration: none;
+
+    font-size: 0.88rem;
+    font-weight: 700;
+
+    transition:
+        opacity 0.2s ease;
+}
+
+.reserva-enlace:hover {
+    opacity: 0.75;
+}
+
+.reserva-formulario-card {
+    padding:
+        35px;
+
+    background:
+        #0d0d0d;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.5);
+}
+
+.reserva-formulario-encabezado {
+    margin-bottom: 27px;
+}
+
+.reserva-formulario-encabezado h2 {
+    color:
+        var(--blanco);
+
+    font-size: 1.7rem;
+}
+
+.reserva-campo {
+    margin-bottom: 18px;
+}
+
+.reserva-campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+.reserva-campo label span {
+    margin-left: 4px;
+
+    opacity: 0.65;
+
+    font-size: 0.65rem;
+
+    font-weight: 400;
+}
+
+.reserva-campo input,
+.reserva-campo textarea {
+    width: 100%;
+
+    padding:
+        12px 14px;
+
+    background:
+        #191919;
+
+    color:
+        var(--blanco);
+
+    border:
+        1px solid
+        #333;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 0.92rem;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.reserva-campo textarea {
+    min-height: 105px;
+
+    resize: vertical;
+}
+
+.reserva-campo input:focus,
+.reserva-campo textarea:focus {
+    background:
+        #202020;
+
+    border-color:
+        var(--amarillo);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 180, 0, 0.07);
+}
+
+.reserva-doble {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 16px;
+}
+
+.reserva-contador {
+    margin-top: 5px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.7rem;
+
+    text-align: right;
+}
+
+.reserva-estado {
+    min-height: 21px;
+
+    margin-bottom: 13px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.84rem;
+
+    text-align: center;
+}
+
+.reserva-estado.exito {
+    color:
+        #70d591;
+}
+
+.reserva-estado.error {
+    color:
+        #ff7676;
+}
+
+.reserva-boton {
+    width: 100%;
+
+    padding:
+        14px 25px;
+
+    background:
+        var(--amarillo);
+
+    color:
+        var(--negro);
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.reserva-boton:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(255, 180, 0, 0.16);
+}
+
+.reserva-boton:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+@media (max-width: 900px) {
+
+    .reserva-grid {
+        grid-template-columns:
+            1fr;
+
+        gap: 40px;
+    }
+
+    .reserva-info {
+        text-align: center;
+    }
+
+    .reserva-descripcion {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .reserva-detalles {
+        max-width: 550px;
+
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 30px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .reserva-seccion {
+        padding:
+            45px 0;
+    }
+
+    .reserva-titulo {
+        font-size: 2.3rem;
+    }
+
+    .reserva-info {
+        text-align: left;
+    }
+
+    .reserva-formulario-card {
+        padding:
+            25px 18px;
+    }
+
+    .reserva-doble {
+        grid-template-columns:
+            1fr;
+    }
+
+}

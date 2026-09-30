@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión | Administración La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+    <link rel="stylesheet" href="/paginas/administrador/admin.css">
+    <link rel="stylesheet" href="/paginas/administrador/componentes/menu/menu.css">
+    <link rel="stylesheet" href="/paginas/administrador/gestion/gestion.css">
+</head>
+<body>
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+        <section class="admin-section">
+            <div class="container admin-layout">
+                <div id="admin-menu"></div>
+
+                <div class="admin-content">
+                    <header class="admin-heading">
+                        <div>
+                            <p class="admin-eyebrow">OPERACIÓN COMPARTIDA</p>
+                            <h1>Gestión</h1>
+                            <p class="admin-muted">
+                                Vista de compatibilidad entre la web y el sistema de escritorio. El stock diario e inventario se administran desde el escritorio para evitar dos fuentes de stock distintas.
+                            </p>
+                        </div>
+
+                        <button type="button" id="gestion-recargar" class="gestion-btn-secundario">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>Actualizar datos</span>
+                        </button>
+                    </header>
+
+                    <p id="admin-status" class="admin-status"></p>
+
+                    <section class="gestion-aviso admin-card">
+                        <i class="fa-solid fa-database"></i>
+                        <div>
+                            <h2>Una sola autoridad para el stock</h2>
+                            <p>
+                                La web no modifica stock operativo. Las cantidades preparadas, ingredientes y stock diario continúan siendo responsabilidad del sistema de escritorio y de PostgreSQL. Aquí solo se consulta el estado que los RPC actuales exponen.
+                            </p>
+                        </div>
+                    </section>
+
+                    <section class="gestion-resumen" aria-label="Resumen de catálogo">
+                        <article>
+                            <span class="gestion-resumen-icono"><i class="fa-solid fa-utensils"></i></span>
+                            <div><small>Platos</small><strong id="gestion-total">0</strong></div>
+                        </article>
+                        <article>
+                            <span class="gestion-resumen-icono"><i class="fa-solid fa-eye"></i></span>
+                            <div><small>Publicados</small><strong id="gestion-publicados">0</strong></div>
+                        </article>
+                        <article>
+                            <span class="gestion-resumen-icono"><i class="fa-solid fa-eye-slash"></i></span>
+                            <div><small>No publicados</small><strong id="gestion-ocultos">0</strong></div>
+                        </article>
+                        <article>
+                            <span class="gestion-resumen-icono"><i class="fa-solid fa-arrows-rotate"></i></span>
+                            <div><small>Stock diario expuesto</small><strong id="gestion-stock-confirmado">0</strong></div>
+                        </article>
+                    </section>
+
+                    <section class="admin-card gestion-card">
+                        <div class="gestion-toolbar">
+                            <div class="gestion-busqueda-wrap">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input id="gestion-busqueda" type="search" placeholder="Buscar plato o categoría...">
+                            </div>
+
+                            <select id="gestion-filtro" aria-label="Filtrar platos">
+                                <option value="TODOS">Todos</option>
+                                <option value="PUBLICADO">Publicados</option>
+                                <option value="OCULTO">No publicados</option>
+                                <option value="CONFIRMADO">Con stock diario expuesto</option>
+                                <option value="NO_EXPUESTO">Stock no expuesto a web</option>
+                            </select>
+                        </div>
+
+                        <div class="admin-table-wrap gestion-tabla-wrap">
+                            <table class="admin-table gestion-tabla">
+                                <thead>
+                                    <tr>
+                                        <th>Plato</th>
+                                        <th>Categoría</th>
+                                        <th>Publicación</th>
+                                        <th>Disponibilidad web</th>
+                                        <th>Fuente</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gestion-stock-body">
+                                    <tr><td colspan="5" class="gestion-cargando">Cargando información...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="gestion-nota admin-card">
+                        <div class="gestion-nota-icono"><i class="fa-solid fa-desktop"></i></div>
+                        <div>
+                            <h3>Qué debes hacer con el stock</h3>
+                            <p>
+                                Configura y actualiza el stock diario desde el sistema de escritorio. La web intentará leer ese mismo stock en modo consulta con los permisos actuales de Supabase; si la lectura está protegida, PostgreSQL seguirá validándolo al registrar el pedido. La web no enviará valores de stock paralelos.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/stock.js"></script>
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+    <script src="/paginas/administrador/admin.js"></script>
+    <script src="/paginas/administrador/gestion/gestion.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mis Pedidos | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/pedidos/mis-pedidos/mis-pedidos.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="mis-pedidos">
+
+        <section class="pedidos-presentacion">
+
+            <div class="container">
+
+                <div class="pedidos-encabezado">
+
+                    <div>
+
+                        <p class="pedidos-kicker">
+                            TU HISTORIAL
+                        </p>
+
+                        <h1 class="pedidos-titulo">
+                            Mis
+                            <span class="highlight">
+                                Pedidos
+                            </span>
+                        </h1>
+
+                        <p class="pedidos-descripcion">
+                            Consulta tus pedidos realizados
+                            desde la web y revisa sus productos,
+                            estado, entrega y total.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="/paginas/menu/carta/"
+                        class="pedidos-nuevo"
+                    >
+                        + Nuevo pedido
+                    </a>
+
+                </div>
+
+                <div
+                    id="pedidos-resumen"
+                    class="pedidos-resumen"
+                    hidden
+                >
+
+                    <article class="pedido-resumen-card">
+
+                        <span>
+                            Pedidos
+                        </span>
+
+                        <strong id="pedidos-total">
+                            0
+                        </strong>
+
+                    </article>
+
+                    <article class="pedido-resumen-card">
+
+                        <span>
+                            Completados
+                        </span>
+
+                        <strong id="pedidos-completados">
+                            0
+                        </strong>
+
+                    </article>
+
+                    <article class="pedido-resumen-card">
+
+                        <span>
+                            Total gastado
+                        </span>
+
+                        <strong id="pedidos-gastado">
+                            S/ 0.00
+                        </strong>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="pedidos-contenido">
+
+            <div class="container">
+
+                <div
+                    id="pedidos-filtros"
+                    class="pedidos-filtros"
+                    hidden
+                >
+
+                    <div>
+
+                        <label for="pedidos-filtro-estado">
+                            Mostrar
+                        </label>
+
+                        <select id="pedidos-filtro-estado">
+
+                            <option value="TODOS">
+                                Todos los pedidos
+                            </option>
+
+                            <option value="PENDIENTE">
+                                Pendientes
+                            </option>
+
+                            <option value="PREPARANDO">
+                                Preparando
+                            </option>
+
+                            <option value="LISTO">
+                                Listos
+                            </option>
+
+                            <option value="COMPLETADO">
+                                Completados
+                            </option>
+
+                            <option value="CANCELADO">
+                                Cancelados
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="pedidos-list"
+                    class="pedidos-list"
+                >
+
+                    <div class="pedidos-vacio">
+
+                        <span class="pedidos-vacio-icono">
+                            <i class="fa-solid fa-receipt"></i>
+                        </span>
+
+                        <p>
+                            Cargando tus pedidos...
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/pedidos/mis-pedidos/mis-pedidos.js"
+    ></script>
+
+</body>
+
+</html>

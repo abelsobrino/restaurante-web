@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Configuración | Administración La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin=""
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/componentes/menu/menu.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/administrador/configuracion/configuracion.css"
+    >
+
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="admin-page">
+
+        <section class="admin-section">
+
+            <div class="container admin-layout">
+
+                <div id="admin-menu"></div>
+
+                <div class="admin-content">
+
+                    <header class="admin-heading">
+
+                        <div>
+
+                            <p class="admin-eyebrow">
+                                SISTEMA
+                            </p>
+
+                            <h1>
+                                Configuración
+                            </h1>
+
+                            <p class="admin-muted">
+                                Configura la ubicación del restaurante
+                                y las reglas utilizadas para calcular
+                                el servicio de delivery.
+                            </p>
+
+                        </div>
+
+                    </header>
+
+                    <p
+                        id="admin-status"
+                        class="admin-status"
+                    ></p>
+
+                    <section
+                        id="delivery-summary"
+                        class="config-summary"
+                        hidden
+                    >
+
+                        <article>
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <strong id="summary-status">
+                                -
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Precio / km
+                            </span>
+
+                            <strong id="summary-price">
+                                S/ 0.00
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Tarifa mínima
+                            </span>
+
+                            <strong id="summary-min">
+                                S/ 0.00
+                            </strong>
+
+                        </article>
+
+                        <article>
+
+                            <span>
+                                Radio máximo
+                            </span>
+
+                            <strong id="summary-radius">
+                                0 km
+                            </strong>
+
+                        </article>
+
+                    </section>
+
+                    <section class="config-grid">
+
+                        <form
+                            id="delivery-form"
+                            class="admin-card config-form"
+                        >
+
+                            <div class="config-card-heading">
+
+                                <div>
+
+                                    <p class="admin-eyebrow">
+                                        DELIVERY
+                                    </p>
+
+                                    <h2>
+                                        Configuración del servicio
+                                    </h2>
+
+                                    <p class="admin-muted">
+                                        Estos valores son utilizados
+                                        por la carta web para calcular
+                                        el costo de envío.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <label class="config-switch">
+
+                                <input
+                                    type="checkbox"
+                                    id="delivery-active"
+                                >
+
+                                <span class="config-switch-control"></span>
+
+                                <span>
+
+                                    <strong>
+                                        Delivery activo
+                                    </strong>
+
+                                    <small>
+                                        Permite que los clientes
+                                        seleccionen envío a domicilio.
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                            <div class="config-group">
+
+                                <div class="config-group-heading">
+
+                                    <div>
+
+                                        <h3>
+                                            Ubicación del restaurante
+                                        </h3>
+
+                                        <p>
+                                            Haz clic sobre el mapa o
+                                            escribe las coordenadas.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="config-form-grid">
+
+                                    <label>
+
+                                        Latitud
+
+                                        <input
+                                            id="delivery-lat"
+                                            type="number"
+                                            step="0.000001"
+                                            min="-90"
+                                            max="90"
+                                            placeholder="-12.000000"
+                                        >
+
+                                    </label>
+
+                                    <label>
+
+                                        Longitud
+
+                                        <input
+                                            id="delivery-lng"
+                                            type="number"
+                                            step="0.000001"
+                                            min="-180"
+                                            max="180"
+                                            placeholder="-77.000000"
+                                        >
+
+                                    </label>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    id="delivery-center-map"
+                                    class="config-secondary-button"
+                                >
+                                    <i class="fa-solid fa-location-dot"></i> Mostrar coordenadas en mapa
+                                </button>
+
+                            </div>
+
+                            <div class="config-group">
+
+                                <div class="config-group-heading">
+
+                                    <div>
+
+                                        <h3>
+                                            Tarifas
+                                        </h3>
+
+                                        <p>
+                                            Define cómo se calculará
+                                            el costo para el cliente.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="config-form-grid">
+
+                                    <label>
+
+                                        Precio por km
+
+                                        <div class="config-money-field">
+
+                                            <span>
+                                                S/
+                                            </span>
+
+                                            <input
+                                                id="delivery-price"
+                                                type="number"
+                                                min="0"
+                                                step="0.01"
+                                                required
+                                            >
+
+                                        </div>
+
+                                    </label>
+
+                                    <label>
+
+                                        Tarifa mínima
+
+                                        <div class="config-money-field">
+
+                                            <span>
+                                                S/
+                                            </span>
+
+                                            <input
+                                                id="delivery-min"
+                                                type="number"
+                                                min="0"
+                                                step="0.01"
+                                                required
+                                            >
+
+                                        </div>
+
+                                    </label>
+
+                                </div>
+
+                                <label>
+
+                                    Radio máximo de atención
+
+                                    <div class="config-unit-field">
+
+                                        <input
+                                            id="delivery-radius"
+                                            type="number"
+                                            min="0.1"
+                                            step="0.1"
+                                            required
+                                        >
+
+                                        <span>
+                                            km
+                                        </span>
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                            <div class="config-calculator">
+
+                                <div>
+
+                                    <strong>
+                                        Ejemplo de cálculo
+                                    </strong>
+
+                                    <small>
+                                        Ingresa una distancia para
+                                        comprobar la tarifa resultante.
+                                    </small>
+
+                                </div>
+
+                                <div class="config-calculator-row">
+
+                                    <div class="config-unit-field">
+
+                                        <input
+                                            id="delivery-example-distance"
+                                            type="number"
+                                            min="0"
+                                            step="0.1"
+                                            value="3"
+                                        >
+
+                                        <span>
+                                            km
+                                        </span>
+
+                                    </div>
+
+                                    <strong id="delivery-example-price">
+                                        S/ 0.00
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <button
+                                type="submit"
+                                id="delivery-save"
+                                class="config-save-button"
+                            >
+                                Guardar configuración
+                            </button>
+
+                        </form>
+
+                        <aside class="admin-card config-map-card">
+
+                            <div class="config-card-heading">
+
+                                <div>
+
+                                    <p class="admin-eyebrow">
+                                        UBICACIÓN
+                                    </p>
+
+                                    <h2>
+                                        Punto del restaurante
+                                    </h2>
+
+                                    <p class="admin-muted">
+                                        El servidor utilizará estas
+                                        coordenadas para calcular la
+                                        distancia hasta el cliente.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="admin-delivery-map"
+                                class="config-map"
+                            ></div>
+
+                            <div class="config-location-data">
+
+                                <div>
+
+                                    <span>
+                                        Latitud
+                                    </span>
+
+                                    <strong id="map-lat">
+                                        -
+                                    </strong>
+
+                                </div>
+
+                                <div>
+
+                                    <span>
+                                        Longitud
+                                    </span>
+
+                                    <strong id="map-lng">
+                                        -
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="config-map-note">
+
+                                <span>
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </span>
+
+                                <p>
+                                    Haz clic en cualquier punto del
+                                    mapa para mover el marcador.
+                                    Las coordenadas del formulario
+                                    se actualizarán automáticamente.
+                                </p>
+
+                            </div>
+
+                        </aside>
+
+                    </section>
+
+                    <section class="admin-card config-horario-card">
+
+                        <div class="config-card-heading">
+
+                            <div>
+
+                                <p class="admin-eyebrow">
+                                    HORARIO
+                                </p>
+
+                                <h2>
+                                    Horario de atención
+                                </h2>
+
+                                <p class="admin-muted">
+                                    Define cuándo se permiten pedidos desde la web.
+                                    Fuera del horario los clientes podrán ver la carta,
+                                    pero no agregar productos ni finalizar pedidos.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <form id="horario-form" class="config-horario-form">
+
+                            <label class="config-switch">
+
+                                <input
+                                    type="checkbox"
+                                    id="horario-activo"
+                                >
+
+                                <span class="config-switch-control"></span>
+
+                                <span>
+                                    <strong>Controlar horario de atención</strong>
+                                    <small>
+                                        Si está desactivado, la tienda se considera
+                                        disponible las 24 horas.
+                                    </small>
+                                </span>
+
+                            </label>
+
+                            <div class="admin-table-wrap">
+
+                                <table class="admin-table config-horario-table">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Día</th>
+                                            <th>Abre</th>
+                                            <th>Cierra</th>
+                                            <th>Cerrado</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="horario-dias-body"></tbody>
+
+                                </table>
+
+                            </div>
+
+                            <button
+                                type="submit"
+                                id="horario-save"
+                                class="config-save-button"
+                            >
+                                Guardar horario
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin=""
+    ></script>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/administrador/admin.js"
+    ></script>
+
+    <script
+        src="/paginas/administrador/configuracion/configuracion.js"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Pago | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/pagos/pasarela/pasarela.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="pago">
+
+        <section class="pago-seccion">
+
+            <div class="container">
+
+                <div class="pago-encabezado">
+
+                    <div>
+
+                        <p class="pago-kicker">
+                            FINALIZA TU PEDIDO
+                        </p>
+
+                        <h1>
+                            Pasarela de
+                            <span class="highlight">
+                                Pago
+                            </span>
+                        </h1>
+
+                        <p>
+                            Revisa el resumen e ingresa los
+                            datos necesarios para confirmar
+                            tu pedido.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="/paginas/pedidos/carrito/"
+                        class="pago-volver"
+                    >
+                        ← Volver al carrito
+                    </a>
+
+                </div>
+
+                <div class="pago-layout">
+
+                    <section class="pago-card">
+
+                        <div class="pago-card-encabezado">
+
+                            <div class="pago-icono">
+                                <i class="fa-regular fa-credit-card"></i>
+                            </div>
+
+                            <div>
+
+                                <p class="pago-kicker">
+                                    PAGO CON TARJETA
+                                </p>
+
+                                <h2>
+                                    Datos de pago
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                        <div class="pago-aviso">
+
+                            <span>
+                                <i class="fa-solid fa-circle-info"></i>
+                            </span>
+
+                            <p>
+                                Pasarela simulada para fines del
+                                proyecto. No ingreses datos de una
+                                tarjeta bancaria real.
+                            </p>
+
+                        </div>
+
+                        <div class="pago-cliente">
+
+                            <span>
+                                Cliente
+                            </span>
+
+                            <strong id="pago-cliente">
+                                -
+                            </strong>
+
+                        </div>
+
+                        <form id="pago-form">
+
+                            <div class="pago-campo">
+
+                                <label for="pago-tarjeta">
+                                    Número de tarjeta
+                                </label>
+
+                                <div class="pago-input-icono">
+
+                                    <input
+                                        type="text"
+                                        id="pago-tarjeta"
+                                        inputmode="numeric"
+                                        autocomplete="cc-number"
+                                        placeholder="1234 5678 9012 3456"
+                                        maxlength="19"
+                                        required
+                                    >
+
+                                    <span>
+                                        <i class="fa-regular fa-credit-card"></i>
+                                    </span>
+
+                                </div>
+
+                                <small>
+                                    16 dígitos
+                                </small>
+
+                            </div>
+
+                            <div class="pago-doble">
+
+                                <div class="pago-campo">
+
+                                    <label for="pago-vencimiento">
+                                        Vencimiento
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="pago-vencimiento"
+                                        inputmode="numeric"
+                                        autocomplete="cc-exp"
+                                        placeholder="MM/AA"
+                                        maxlength="5"
+                                        required
+                                    >
+
+                                </div>
+
+                                <div class="pago-campo">
+
+                                    <label for="pago-cvv">
+                                        CVV
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        id="pago-cvv"
+                                        inputmode="numeric"
+                                        autocomplete="cc-csc"
+                                        placeholder="•••"
+                                        maxlength="4"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="pago-campo">
+
+                                <label for="pago-titular">
+                                    Nombre del titular
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="pago-titular"
+                                    autocomplete="cc-name"
+                                    placeholder="NOMBRE COMO FIGURA EN LA TARJETA"
+                                    maxlength="100"
+                                    required
+                                >
+
+                            </div>
+
+                            <p
+                                id="pago-estado"
+                                class="pago-estado"
+                            ></p>
+
+                            <button
+                                type="submit"
+                                id="pago-boton"
+                                class="pago-boton"
+                            >
+                                Pagar ahora
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                    <aside class="pago-resumen">
+
+                        <p class="pago-kicker">
+                            RESUMEN
+                        </p>
+
+                        <h2>
+                            Tu pedido
+                        </h2>
+
+                        <div
+                            id="pago-productos"
+                            class="pago-productos"
+                        ></div>
+
+                        <div class="pago-datos">
+
+                            <div>
+
+                                <span>
+                                    Entrega
+                                </span>
+
+                                <strong id="pago-entrega">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div
+                                id="pago-direccion-fila"
+                                hidden
+                            >
+
+                                <span>
+                                    Dirección
+                                </span>
+
+                                <strong id="pago-direccion">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Comprobante
+                                </span>
+
+                                <strong id="pago-comprobante">
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="pago-precios">
+
+                            <div>
+
+                                <span>
+                                    Subtotal
+                                </span>
+
+                                <strong id="pago-subtotal">
+                                    S/ 0.00
+                                </strong>
+
+                            </div>
+
+                            <div
+                                id="pago-descuento-fila"
+                                hidden
+                            >
+
+                                <span>
+                                    Descuento
+                                </span>
+
+                                <strong
+                                    id="pago-descuento"
+                                    class="pago-descuento"
+                                >
+                                    -S/ 0.00
+                                </strong>
+
+                            </div>
+
+                            <div
+                                id="pago-delivery-fila"
+                                hidden
+                            >
+
+                                <span>
+                                    Delivery
+                                </span>
+
+                                <strong id="pago-delivery">
+                                    S/ 0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="pago-total">
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <strong id="pago-total">
+                                    S/ 0.00
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="pago-seguridad">
+
+                            <span>
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+
+                            <p>
+                                Los datos ingresados en esta
+                                simulación no se almacenan en
+                                la base de datos.
+                            </p>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/stock.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/pagos/pasarela/pasarela.js"
+    ></script>
+
+</body>
+
+</html>

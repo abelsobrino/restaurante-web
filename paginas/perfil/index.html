@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi Perfil | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/perfil/perfil.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="perfil">
+
+        <section class="perfil-seccion">
+
+            <div class="container">
+
+                <div class="perfil-encabezado">
+
+                    <div>
+
+                        <p class="perfil-kicker">
+                            MI CUENTA
+                        </p>
+
+                        <h1>
+                            Mi
+                            <span class="highlight">
+                                Perfil
+                            </span>
+                        </h1>
+
+                        <p>
+                            Consulta la información de tu cuenta
+                            y accede rápidamente a tus pedidos
+                            y reservas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="perfil-layout">
+
+                    <section class="perfil-card perfil-identidad">
+
+                        <div class="perfil-avatar" id="perfil-avatar">
+                            U
+                        </div>
+
+                        <h2 id="perfil-nombre">
+                            Usuario
+                        </h2>
+
+                        <p id="perfil-email">
+                            correo@ejemplo.com
+                        </p>
+
+                        <span
+                            id="perfil-rol"
+                            class="perfil-rol"
+                        >
+                            Cliente
+                        </span>
+
+                        <div
+                            id="perfil-modo-contenedor"
+                            class="perfil-modo"
+                            hidden
+                        >
+
+                            <span>
+                                Vista actual
+                            </span>
+
+                            <strong id="perfil-modo">
+                                -
+                            </strong>
+
+                        </div>
+
+                    </section>
+
+                    <section class="perfil-card perfil-datos">
+
+                        <div class="perfil-card-titulo">
+
+                            <div>
+
+                                <p class="perfil-kicker">
+                                    INFORMACIÓN
+                                </p>
+
+                                <h2>
+                                    Datos personales
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                        <div class="perfil-datos-grid">
+
+                            <div class="perfil-dato">
+
+                                <span>
+                                    Nombre
+                                </span>
+
+                                <strong id="dato-nombre">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div class="perfil-dato">
+
+                                <span>
+                                    Apellido
+                                </span>
+
+                                <strong id="dato-apellido">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div class="perfil-dato">
+
+                                <span>
+                                    Correo electrónico
+                                </span>
+
+                                <strong id="dato-email">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div class="perfil-dato">
+
+                                <span>
+                                    Teléfono
+                                </span>
+
+                                <strong id="dato-telefono">
+                                    No registrado
+                                </strong>
+
+                            </div>
+
+                            <div class="perfil-dato">
+
+                                <span>
+                                    Tipo de cuenta
+                                </span>
+
+                                <strong id="dato-rol">
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="perfil-nota">
+
+                            <span>
+                                <i class="fa-solid fa-circle-info"></i>
+                            </span>
+
+                            <p>
+                                La edición de datos personales se
+                                habilitará cuando el backend tenga una
+                                función específica para actualizar la
+                                información del usuario.
+                            </p>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <section
+                    id="perfil-accesos"
+                    class="perfil-accesos"
+                >
+
+                    <div class="perfil-seccion-titulo">
+
+                        <p class="perfil-kicker">
+                            ACCESOS RÁPIDOS
+                        </p>
+
+                        <h2>
+                            Gestiona tu cuenta
+                        </h2>
+
+                    </div>
+
+                    <div class="perfil-accesos-grid">
+
+                        <a
+                            href="/paginas/pedidos/mis-pedidos/"
+                            class="perfil-acceso"
+                            id="perfil-acceso-pedidos"
+                        >
+
+                            <span class="perfil-acceso-icono">
+                                <i class="fa-solid fa-bag-shopping"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Mis pedidos
+                                </strong>
+
+                                <p>
+                                    Consulta tus pedidos,
+                                    estados y totales.
+                                </p>
+
+                            </div>
+
+                            <span class="perfil-acceso-flecha">
+                                →
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="/paginas/reservas/mis-reservas/"
+                            class="perfil-acceso"
+                            id="perfil-acceso-reservas"
+                        >
+
+                            <span class="perfil-acceso-icono">
+                                <i class="fa-regular fa-calendar"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Mis reservas
+                                </strong>
+
+                                <p>
+                                    Revisa tus próximas
+                                    visitas a La Fonda.
+                                </p>
+
+                            </div>
+
+                            <span class="perfil-acceso-flecha">
+                                →
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="/paginas/menu/carta/"
+                            class="perfil-acceso"
+                        >
+
+                            <span class="perfil-acceso-icono">
+                                <i class="fa-solid fa-burger"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Ver carta
+                                </strong>
+
+                                <p>
+                                    Descubre los platos
+                                    disponibles.
+                                </p>
+
+                            </div>
+
+                            <span class="perfil-acceso-flecha">
+                                →
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="/paginas/reservas/nueva-reserva/"
+                            class="perfil-acceso"
+                            id="perfil-acceso-nueva-reserva"
+                        >
+
+                            <span class="perfil-acceso-icono">
+                                <i class="fa-solid fa-utensils"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Reservar mesa
+                                </strong>
+
+                                <p>
+                                    Programa una nueva
+                                    visita al restaurante.
+                                </p>
+
+                            </div>
+
+                            <span class="perfil-acceso-flecha">
+                                →
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="/paginas/administrador/panel/"
+                            class="perfil-acceso perfil-acceso-admin"
+                            id="perfil-acceso-admin"
+                            hidden
+                        >
+
+                            <span class="perfil-acceso-icono">
+                                <i class="fa-solid fa-gear"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Panel administrador
+                                </strong>
+
+                                <p>
+                                    Gestiona las funciones
+                                    internas de La Fonda.
+                                </p>
+
+                            </div>
+
+                            <span class="perfil-acceso-flecha">
+                                →
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="/paginas/acceso/elegir-modo/"
+                            class="perfil-acceso perfil-acceso-admin"
+                            id="perfil-acceso-modo"
+                            hidden
+                        >
+
+                            <span class="perfil-acceso-icono">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Cambiar vista
+                                </strong>
+
+                                <p>
+                                    Alterna entre vista
+                                    administrativa y cliente.
+                                </p>
+
+                            </div>
+
+                            <span class="perfil-acceso-flecha">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+                <section class="perfil-sesion">
+
+                    <div>
+
+                        <p class="perfil-kicker">
+                            SESIÓN
+                        </p>
+
+                        <h2>
+                            ¿Terminaste por ahora?
+                        </h2>
+
+                        <p>
+                            Puedes cerrar tu sesión de forma segura.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="perfil-cerrar-sesion"
+                        class="perfil-cerrar-sesion"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </section>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/perfil/perfil.js"
+    ></script>
+
+</body>
+
+</html>

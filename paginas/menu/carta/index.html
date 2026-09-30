@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuestra Carta | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link rel="stylesheet" href="/paginas/menu/carta/carta.css">
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="carta">
+
+        <section class="carta-hero">
+
+            <div class="container">
+
+                <div class="carta-hero-contenido">
+
+                    <div>
+
+                        <p class="carta-kicker">
+                            LA FONDA
+                        </p>
+
+                        <h1>
+                            Nuestra
+                            <span class="highlight">
+                                Carta
+                            </span>
+                        </h1>
+
+                        <p class="carta-hero-descripcion">
+                            Explora nuestros platos, encuentra
+                            tus favoritos y agrégalos a tu carrito.
+                        </p>
+
+                    </div>
+
+                    <a href="/paginas/pedidos/carrito/" class="carta-carrito-link">
+
+                        <span>
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+
+                        Mi carrito
+
+                        <span id="cart-count" class="carta-carrito-contador">
+                            0
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="carta-catalogo">
+
+            <div class="container">
+
+                <div id="catalog-filters" class="catalog-filters">
+
+                    <div class="filter-search-row">
+
+                        <div class="carta-busqueda">
+
+                            <span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <input id="filter-search" type="search" placeholder="Buscar plato..."
+                                aria-label="Buscar plato" autocomplete="off">
+
+                        </div>
+
+                        <select id="filter-price" aria-label="Filtrar por precio">
+
+                            <option value="all">
+                                Todos los precios
+                            </option>
+
+                            <option value="0-15">
+                                Menos de S/ 15
+                            </option>
+
+                            <option value="15-30">
+                                S/ 15 - S/ 30
+                            </option>
+
+                            <option value="30-50">
+                                S/ 30 - S/ 50
+                            </option>
+
+                            <option value="50+">
+                                Más de S/ 50
+                            </option>
+
+                        </select>
+
+                        <select id="filter-sort" aria-label="Ordenar carta">
+
+                            <option value="default">
+                                Orden recomendado
+                            </option>
+
+                            <option value="price-asc">
+                                Precio menor a mayor
+                            </option>
+
+                            <option value="price-desc">
+                                Precio mayor a menor
+                            </option>
+
+                            <option value="name">
+                                Nombre A - Z
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div id="category-filters" class="category-filters">
+
+                        <button type="button" class="category-chip active" data-category="all">
+                            Todos
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div id="horario-banner" class="horario-banner" hidden></div>
+
+                <div id="catalog-status" class="catalog-status">
+                    Cargando platos...
+                </div>
+
+                <div id="menu-grid" class="menu-grid"></div>
+
+                <section id="combos-section" class="combos-section" hidden>
+
+                    <div class="carta-seccion-heading">
+
+                        <div>
+
+                            <p class="carta-kicker">
+                                PROMOCIONES
+                            </p>
+
+                            <h2>
+                                Combos
+                                <span class="highlight">
+                                    vigentes
+                                </span>
+                            </h2>
+
+                            <p>
+                                Aprovecha nuestras combinaciones
+                                disponibles por tiempo limitado.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div id="combos-grid" class="menu-grid"></div>
+
+                </section>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <button type="button" id="mobile-cart-toggle" class="mobile-cart-btn" aria-label="Ver mi carrito">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span id="mobile-cart-badge">
+            0
+        </span>
+
+    </button>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/stock.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script src="/paginas/menu/carta/carta.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi Carrito | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin=""
+    >
+
+    <link
+        rel="stylesheet"
+        href="/paginas/pedidos/carrito/carrito.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="carrito-pagina">
+
+        <section class="carrito-seccion">
+
+            <div class="container">
+
+                <div class="carrito-encabezado">
+
+                    <div>
+
+                        <p class="carrito-kicker">
+                            TU PEDIDO
+                        </p>
+
+                        <h1>
+                            Mi
+                            <span class="highlight">
+                                Carrito
+                            </span>
+                        </h1>
+
+                        <p>
+                            Revisa tus productos antes de
+                            continuar con el pago.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="/paginas/menu/carta/"
+                        class="carrito-volver"
+                    >
+                        ← Seguir comprando
+                    </a>
+
+                </div>
+
+                <div class="carrito-layout">
+
+                    <section class="carrito-productos-card">
+
+                        <div class="carrito-card-titulo">
+
+                            <div>
+
+                                <p class="carrito-kicker">
+                                    PRODUCTOS
+                                </p>
+
+                                <h2>
+                                    Tu selección
+                                </h2>
+
+                            </div>
+
+                            <span
+                                id="carrito-contador"
+                                class="carrito-contador"
+                            >
+                                0 productos
+                            </span>
+
+                        </div>
+
+                        <div
+                            id="carrito-productos"
+                            class="carrito-productos"
+                        >
+
+                            <div class="carrito-vacio">
+
+                                Cargando carrito...
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="carrito-vaciar"
+                            class="carrito-vaciar"
+                            hidden
+                        >
+                            Vaciar carrito
+                        </button>
+
+                    </section>
+
+                    <aside class="carrito-resumen-card">
+
+                        <p class="carrito-kicker">
+                            RESUMEN
+                        </p>
+
+                        <h2>
+                            Completa tu pedido
+                        </h2>
+
+                        <form id="carrito-form">
+
+                            <div class="carrito-campo">
+
+                                <label for="delivery-type">
+                                    Tipo de entrega
+                                </label>
+
+                                <select id="delivery-type">
+
+                                    <option value="delivery">
+                                        Delivery
+                                    </option>
+
+                                    <option value="recojo">
+                                        Recojo en tienda
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div id="delivery-section">
+
+                                <div class="carrito-campo">
+
+                                    <label for="customer-address">
+                                        Dirección
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="customer-address"
+                                        placeholder="Selecciona tu ubicación"
+                                        required
+                                    >
+
+                                </div>
+
+                                <div
+                                    id="delivery-map"
+                                    class="carrito-mapa"
+                                ></div>
+
+                                <button
+                                    type="button"
+                                    id="btn-my-location"
+                                    class="carrito-ubicacion"
+                                >
+                                    <i class="fa-solid fa-location-dot"></i> Usar mi ubicación
+                                </button>
+
+                                <p
+                                    id="delivery-distance"
+                                    class="carrito-distancia"
+                                ></p>
+
+                            </div>
+
+                            <div class="carrito-cupon">
+
+                                <label for="coupon-input">
+                                    Cupón
+                                </label>
+
+                                <div class="carrito-cupon-fila">
+
+                                    <input
+                                        type="text"
+                                        id="coupon-input"
+                                        placeholder="CÓDIGO"
+                                        maxlength="50"
+                                    >
+
+                                    <button
+                                        type="button"
+                                        id="btn-apply-coupon"
+                                    >
+                                        Aplicar
+                                    </button>
+
+                                </div>
+
+                                <small id="coupon-status"></small>
+
+                            </div>
+
+                            <div class="carrito-campo">
+
+                                <label for="receipt-type">
+                                    Comprobante
+                                </label>
+
+                                <select id="receipt-type">
+
+                                    <option value="boleta">
+                                        Boleta
+                                    </option>
+
+                                    <option value="factura">
+                                        Factura
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div
+                                id="factura-section"
+                                hidden
+                            >
+
+                                <div class="carrito-campo">
+
+                                    <label for="legal-ruc">
+                                        RUC
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="legal-ruc"
+                                        maxlength="11"
+                                        inputmode="numeric"
+                                        placeholder="11 dígitos"
+                                    >
+
+                                </div>
+
+                                <div class="carrito-campo">
+
+                                    <label for="legal-company">
+                                        Razón social
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="legal-company"
+                                        maxlength="150"
+                                        placeholder="Nombre de la empresa"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="carrito-precios">
+
+                                <div>
+
+                                    <span>
+                                        Subtotal
+                                    </span>
+
+                                    <strong id="resumen-subtotal">
+                                        S/ 0.00
+                                    </strong>
+
+                                </div>
+
+                                <div
+                                    id="resumen-descuento-fila"
+                                    hidden
+                                >
+
+                                    <span>
+                                        Descuento
+                                    </span>
+
+                                    <strong
+                                        id="resumen-descuento"
+                                        class="precio-descuento"
+                                    >
+                                        -S/ 0.00
+                                    </strong>
+
+                                </div>
+
+                                <div
+                                    id="resumen-delivery-fila"
+                                    hidden
+                                >
+
+                                    <span>
+                                        Delivery
+                                    </span>
+
+                                    <strong id="resumen-delivery">
+                                        S/ 0.00
+                                    </strong>
+
+                                </div>
+
+                                <div class="carrito-total">
+
+                                    <span>
+                                        Total
+                                    </span>
+
+                                    <strong id="resumen-total">
+                                        S/ 0.00
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <p
+                                id="carrito-estado"
+                                class="carrito-estado"
+                            ></p>
+
+                            <button
+                                type="submit"
+                                id="carrito-continuar"
+                                class="carrito-continuar"
+                            >
+                                Continuar al pago
+                            </button>
+
+                        </form>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin=""
+    ></script>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/stock.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/pedidos/carrito/carrito.js"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reseñas | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/resenas/resenas.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="resenas-page">
+
+        <section class="resenas-hero">
+
+            <div class="container">
+
+                <p class="resenas-kicker">
+                    EXPERIENCIAS
+                </p>
+
+                <h1>
+                    Lo que dicen
+                    <span class="highlight">
+                        nuestros clientes
+                    </span>
+                </h1>
+
+                <p class="resenas-descripcion">
+                    Conoce las opiniones de quienes ya disfrutaron
+                    de La Fonda y comparte tu experiencia después
+                    de realizar un pedido.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="resenas-contenido">
+
+            <div class="container">
+
+                <div class="resenas-layout">
+
+                    <section class="resenas-publicadas">
+
+                        <div class="resenas-heading">
+
+                            <div>
+
+                                <p class="resenas-kicker">
+                                    OPINIONES
+                                </p>
+
+                                <h2>
+                                    Reseñas publicadas
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="reviews-grid"
+                            class="reviews-grid"
+                        >
+
+                            <div class="reviews-empty">
+                                Cargando reseñas...
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <aside class="review-form-container">
+
+                        <div class="review-form-card">
+
+                            <div class="review-form-heading">
+
+                                <span class="review-form-icon">
+                                    <i class="fa-solid fa-star"></i>
+                                </span>
+
+                                <div>
+
+                                    <p class="resenas-kicker">
+                                        TU EXPERIENCIA
+                                    </p>
+
+                                    <h2>
+                                        Escribe una reseña
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                            <p class="review-form-description">
+                                Puedes reseñar uno de tus pedidos
+                                pagados que todavía no tenga una reseña.
+                            </p>
+
+                            <form id="review-form">
+
+                                <label class="review-field">
+
+                                    Pedido
+
+                                    <select
+                                        id="review-order"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Cargando pedidos...
+                                        </option>
+
+                                    </select>
+
+                                </label>
+
+                                <div class="review-field">
+
+                                    <span class="review-field-label">
+                                        Calificación
+                                    </span>
+
+                                    <div
+                                        id="rating-stars"
+                                        class="rating-stars"
+                                        role="radiogroup"
+                                        aria-label="Calificación"
+                                    >
+
+                                        <button
+                                            type="button"
+                                            class="rating-star"
+                                            data-rating="1"
+                                            role="radio"
+                                            aria-checked="false"
+                                            aria-label="1 estrella"
+                                        >
+                                            <i class="fa-solid fa-star"></i>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="rating-star"
+                                            data-rating="2"
+                                            role="radio"
+                                            aria-checked="false"
+                                            aria-label="2 estrellas"
+                                        >
+                                            <i class="fa-solid fa-star"></i>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="rating-star"
+                                            data-rating="3"
+                                            role="radio"
+                                            aria-checked="false"
+                                            aria-label="3 estrellas"
+                                        >
+                                            <i class="fa-solid fa-star"></i>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="rating-star"
+                                            data-rating="4"
+                                            role="radio"
+                                            aria-checked="false"
+                                            aria-label="4 estrellas"
+                                        >
+                                            <i class="fa-solid fa-star"></i>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="rating-star"
+                                            data-rating="5"
+                                            role="radio"
+                                            aria-checked="false"
+                                            aria-label="5 estrellas"
+                                        >
+                                            <i class="fa-solid fa-star"></i>
+                                        </button>
+
+                                    </div>
+
+                                    <input
+                                        type="hidden"
+                                        id="review-rating"
+                                        value="0"
+                                    >
+
+                                    <small
+                                        id="rating-label"
+                                        class="rating-label"
+                                    >
+                                        Selecciona una calificación
+                                    </small>
+
+                                </div>
+
+                                <label class="review-field">
+
+                                    Comentario
+
+                                    <textarea
+                                        id="review-text"
+                                        rows="5"
+                                        maxlength="700"
+                                        placeholder="Cuéntanos cómo fue tu experiencia..."
+                                        required
+                                    ></textarea>
+
+                                    <small class="review-helper">
+                                        Máximo 700 caracteres.
+                                    </small>
+
+                                </label>
+
+                                <p
+                                    id="review-status"
+                                    class="review-status"
+                                ></p>
+
+                                <button
+                                    type="submit"
+                                    id="review-submit"
+                                    class="review-submit"
+                                >
+                                    Enviar reseña
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/resenas/resenas.js"
+    ></script>
+
+</body>
+
+</html>

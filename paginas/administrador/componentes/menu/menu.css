@@ -1,0 +1,279 @@
+
+
+.admin-sidebar {
+    position: sticky;
+
+    top:
+        calc(
+            var(--alto-navbar) +
+            20px
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    min-height: 610px;
+
+    padding:
+        18px;
+
+    background:
+        #0d0d0d;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 13px;
+}
+
+.admin-sidebar-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        5px 5px 20px;
+
+    margin-bottom: 12px;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+}
+
+.admin-sidebar-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        rgba(255, 180, 0, 0.1);
+
+    border:
+        1px solid
+        rgba(255, 180, 0, 0.2);
+
+    border-radius: 9px;
+}
+
+.admin-sidebar-header strong {
+    display: block;
+
+    color:
+        var(--blanco);
+
+    font-size: 0.88rem;
+}
+
+.admin-sidebar-header div span {
+    display: block;
+
+    margin-top: 2px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.7rem;
+}
+
+.admin-navigation {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.admin-navigation > a {
+    display: grid;
+
+    grid-template-columns:
+        32px
+        minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        11px 12px;
+
+    color:
+        var(--blanco);
+
+    text-decoration: none;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius: 8px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-navigation > a:hover {
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    transform:
+        translateX(2px);
+}
+
+.admin-navigation > a.active {
+    background:
+        rgba(255, 180, 0, 0.08);
+
+    border-color:
+        rgba(255, 180, 0, 0.22);
+}
+
+.admin-navigation > a.active > span {
+    color:
+        var(--amarillo);
+}
+
+.admin-navigation > a > span {
+    text-align: center;
+
+    font-size: 1.05rem;
+}
+
+.admin-navigation strong {
+    display: block;
+
+    font-size: 0.78rem;
+}
+
+.admin-navigation small {
+    display: block;
+
+    margin-top: 2px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.63rem;
+}
+
+.admin-sidebar-footer {
+    margin-top: auto;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+}
+
+.admin-cambiar-vista {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    width: 100%;
+
+    padding:
+        10px 12px;
+
+    color:
+        var(--amarillo);
+
+    border:
+        1px solid
+        rgba(255, 180, 0, 0.35);
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.admin-view-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 9px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+}
+
+.admin-view-switch button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 6px;
+    background: transparent;
+    color: var(--gris);
+    border: 0;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.66rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.admin-view-switch button.active {
+    background: var(--amarillo);
+    color: var(--negro);
+}
+
+.admin-view-switch button:not(.active):hover {
+    color: var(--amarillo);
+    background: rgba(255, 180, 0, 0.06);
+}
+
+@media (max-width: 900px) {
+
+    .admin-sidebar {
+        position: static;
+
+        min-height: auto;
+    }
+
+    .admin-navigation {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .admin-sidebar-footer {
+        margin-top: 15px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .admin-navigation {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}

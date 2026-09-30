@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mis Reservas | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/reservas/mis-reservas/mis-reservas.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="mis-reservas">
+
+        <section class="mis-reservas-presentacion">
+
+            <div class="container">
+
+                <div class="mis-reservas-encabezado">
+
+                    <div>
+
+                        <p class="mis-reservas-kicker">
+                            TU HISTORIAL
+                        </p>
+
+                        <h1 class="mis-reservas-titulo">
+                            Mis
+                            <span class="highlight">
+                                Reservas
+                            </span>
+                        </h1>
+
+                        <p class="mis-reservas-descripcion">
+                            Consulta tus próximas visitas
+                            y revisa el historial de reservas
+                            realizadas en La Fonda.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="/paginas/reservas/nueva-reserva/"
+                        class="mis-reservas-nueva"
+                    >
+                        + Nueva reserva
+                    </a>
+
+                </div>
+
+                <div
+                    id="reservas-resumen"
+                    class="reservas-resumen"
+                    hidden
+                >
+
+                    <article class="resumen-card">
+
+                        <span>
+                            Próximas
+                        </span>
+
+                        <strong id="reservas-activas-contador">
+                            0
+                        </strong>
+
+                    </article>
+
+                    <article class="resumen-card">
+
+                        <span>
+                            Historial
+                        </span>
+
+                        <strong id="reservas-historial-contador">
+                            0
+                        </strong>
+
+                    </article>
+
+                    <article class="resumen-card">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong id="reservas-total-contador">
+                            0
+                        </strong>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="mis-reservas-contenido">
+
+            <div class="container">
+
+                <section
+                    id="reservas-proximas-seccion"
+                    class="reservas-bloque"
+                    hidden
+                >
+
+                    <div class="reservas-bloque-encabezado">
+
+                        <div>
+
+                            <p class="mis-reservas-kicker">
+                                PRÓXIMAS VISITAS
+                            </p>
+
+                            <h2>
+                                Reservas activas
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="reservas-proximas"
+                        class="reservas-lista"
+                    ></div>
+
+                </section>
+
+                <section
+                    id="reservas-historial-seccion"
+                    class="reservas-bloque"
+                    hidden
+                >
+
+                    <div class="reservas-bloque-encabezado">
+
+                        <div>
+
+                            <p class="mis-reservas-kicker">
+                                HISTORIAL
+                            </p>
+
+                            <h2>
+                                Visitas anteriores
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="reservas-historial"
+                        class="reservas-lista"
+                    ></div>
+
+                </section>
+
+                <div
+                    id="reservas-estado"
+                    class="reservas-estado"
+                >
+
+                    <div class="reservas-cargando">
+
+                        <span>
+                            <i class="fa-regular fa-calendar"></i>
+                        </span>
+
+                        <p>
+                            Cargando tus reservas...
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div
+        id="modal-cancelar"
+        class="modal-reserva"
+        aria-hidden="true"
+    >
+
+        <div class="modal-reserva-contenido">
+
+            <span class="modal-reserva-icono">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </span>
+
+            <h2>
+                ¿Cancelar reserva?
+            </h2>
+
+            <p>
+                Esta acción eliminará la reserva
+                seleccionada.
+            </p>
+
+            <div
+                id="modal-reserva-detalle"
+                class="modal-reserva-detalle"
+            ></div>
+
+            <div class="modal-reserva-botones">
+
+                <button
+                    type="button"
+                    id="cancelar-no"
+                    class="modal-boton-secundario"
+                >
+                    Volver
+                </button>
+
+                <button
+                    type="button"
+                    id="cancelar-si"
+                    class="modal-boton-peligro"
+                >
+                    Sí, cancelar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/reservas/mis-reservas/mis-reservas.js"
+    ></script>
+
+</body>
+
+</html>

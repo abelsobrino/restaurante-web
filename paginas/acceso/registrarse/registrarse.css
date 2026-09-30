@@ -1,0 +1,290 @@
+
+
+.registro {
+    min-height: 100vh;
+
+    padding-top:
+        var(--alto-navbar);
+}
+
+.registro-seccion {
+    padding:
+        60px 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 180, 0, 0.035),
+            transparent 70%
+        );
+}
+
+.registro-card {
+    width: 100%;
+
+    max-width: 530px;
+
+    margin: auto;
+
+    padding:
+        42px 38px;
+
+    background:
+        #0d0d0d;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 45px
+        rgba(0, 0, 0, 0.65);
+}
+
+.registro-encabezado {
+    margin-bottom: 30px;
+
+    text-align: center;
+}
+
+.registro-kicker {
+    margin-bottom: 9px;
+
+    color:
+        var(--amarillo);
+
+    font-size: 0.73rem;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.registro-encabezado h1 {
+    margin-bottom: 12px;
+
+    color:
+        var(--blanco);
+
+    font-size: 2.4rem;
+    font-weight: 800;
+}
+
+.registro-encabezado p {
+    color:
+        var(--gris);
+
+    font-size: 0.88rem;
+
+    line-height: 1.6;
+}
+
+.registro-formulario {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.registro-doble {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 14px;
+}
+
+.registro-campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--gris);
+
+    font-size: 0.74rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+.registro-campo label span {
+    margin-left: 4px;
+
+    font-size: 0.64rem;
+
+    opacity: 0.65;
+}
+
+.registro-campo input {
+    width: 100%;
+
+    padding:
+        13px 14px;
+
+    background:
+        #191919;
+
+    color:
+        var(--blanco);
+
+    border:
+        1px solid
+        #333;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 0.92rem;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.registro-campo input:focus {
+    background:
+        #202020;
+
+    border-color:
+        var(--amarillo);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 180, 0, 0.08);
+}
+
+.registro-estado {
+    min-height: 20px;
+
+    color:
+        var(--gris);
+
+    text-align: center;
+
+    font-size: 0.82rem;
+}
+
+.registro-estado.error {
+    color:
+        #ff7373;
+}
+
+.registro-estado.exito {
+    color:
+        #72d492;
+}
+
+.registro-boton {
+    width: 100%;
+
+    padding:
+        14px 20px;
+
+    background:
+        var(--amarillo);
+
+    color:
+        var(--negro);
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.registro-boton:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(255, 180, 0, 0.18);
+}
+
+.registro-boton:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.registro-footer {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    text-align: center;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+}
+
+.registro-footer p {
+    color:
+        var(--gris);
+
+    font-size: 0.84rem;
+}
+
+.registro-footer a {
+    color:
+        var(--amarillo);
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+.registro-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+
+    .registro-seccion {
+        padding:
+            45px 0;
+    }
+
+    .registro-card {
+        padding:
+            30px 20px;
+    }
+
+    .registro-doble {
+        grid-template-columns:
+            1fr;
+    }
+
+    .registro-encabezado h1 {
+        font-size: 2rem;
+    }
+
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+    <link rel="stylesheet" href="/paginas/contacto/contacto.css">
+</head>
+
+<body>
+    <div id="global-nav"></div>
+
+    <main class="contacto">
+        <section class="contacto-seccion">
+            <div class="container contacto-grid">
+
+                <div class="contacto-info">
+                    <h1 class="contacto-titulo">Contáctanos</h1>
+
+                    <p class="contacto-descripcion">
+                        ¿Tienes alguna duda, queja o sugerencia? Déjanos tu mensaje y nuestro equipo te responderá lo
+                        antes posible.
+                    </p>
+
+                    <div class="contacto-info-lista">
+                        <p>
+                            <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
+                            LA FONDA, Chaclacayo, Lima 15472, Perú
+                        </p>
+                        <p>
+                            <strong><i class="fa-solid fa-clock"></i> Horario:</strong>
+                            Lun a Dom: 11:00 AM - 10:00 PM
+                        </p>
+                        <p>
+                            <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
+                            +51 987 654 321
+                        </p>
+                        <p>
+                            <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
+                            contacto@lafonda.com
+                        </p>
+                    </div>
+
+                    <div class="contacto-mapa-mini">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249670.92109832214!2d-77.1431136918964!3d-12.104748669150277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105e98091ba3567%3A0xb1b435c863911330!2sLA%20FONDA%20-%20FAST%20FOOD!5e0!3m2!1ses!2spe!4v1790134643217!5m2!1ses!2spe"
+                            title="Ubicación de La Fonda - Fast Food" loading="lazy" allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                </div>
+
+                <div class="contacto-formulario-card">
+                    <div class="contacto-tabs" role="tablist" aria-label="Contacto y reservas">
+                        <button type="button" class="contacto-tab active" id="tab-contacto-btn" data-tab="tab-contacto"
+                            role="tab" aria-selected="true" aria-controls="tab-contacto">
+                            <i class="fa-regular fa-envelope"></i>
+                            <span>Contacto</span>
+                        </button>
+
+                        <button type="button" class="contacto-tab" id="tab-reserva-btn" data-tab="tab-reserva"
+                            role="tab" aria-selected="false" aria-controls="tab-reserva">
+                            <i class="fa-regular fa-calendar"></i>
+                            <span>Reservar mesa</span>
+                        </button>
+                    </div>
+
+                    <section id="tab-contacto" class="contacto-tab-panel active" role="tabpanel"
+                        aria-labelledby="tab-contacto-btn">
+                        <form id="contacto-formulario" class="contacto-formulario">
+                            <div class="contacto-campo">
+                                <label for="contacto-nombre">Nombres completos</label>
+                                <input type="text" id="contacto-nombre" maxlength="100"
+                                    placeholder="Ingresa tus nombres completos" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="contacto-email">Correo electrónico</label>
+                                <input type="email" id="contacto-email" maxlength="150" placeholder="ejemplo@correo.com"
+                                    required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="contacto-tipo">Tipo de mensaje</label>
+                                <select id="contacto-tipo" required>
+                                    <option value="" selected disabled>Selecciona una opción</option>
+                                    <option value="consulta">Consulta</option>
+                                    <option value="sugerencia">Sugerencia</option>
+                                    <option value="queja">Queja / Reclamo</option>
+                                    <option value="felicitacion">Felicitación</option>
+                                </select>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="contacto-mensaje">Tu mensaje</label>
+                                <textarea id="contacto-mensaje" rows="5" maxlength="800" placeholder="Cuéntanos más..."
+                                    required></textarea>
+                                <div class="contacto-contador">
+                                    <span id="contacto-contador">0</span> / 800
+                                </div>
+                            </div>
+
+                            <p id="contacto-estado" class="contacto-estado" aria-live="polite"></p>
+
+                            <button type="submit" id="contacto-enviar" class="contacto-boton">
+                                Enviar comentario
+                            </button>
+                        </form>
+                    </section>
+
+                    <section id="tab-reserva" class="contacto-tab-panel" role="tabpanel"
+                        aria-labelledby="tab-reserva-btn" hidden>
+                        <form id="reserva-form" class="contacto-formulario">
+                            <div class="contacto-campo">
+                                <label for="res-nombre">Nombre completo</label>
+                                <input type="text" id="res-nombre" placeholder="Tu nombre completo" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="res-email">Correo electrónico</label>
+                                <input type="email" id="res-email" placeholder="tu@email.com" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="res-telefono">Teléfono / WhatsApp</label>
+                                <input type="tel" id="res-telefono" placeholder="+51 987 654 321" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="res-fecha">Fecha de reserva</label>
+                                <input type="date" id="res-fecha" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="res-hora">Hora (12:00 PM - 11:00 PM)</label>
+                                <input type="time" id="res-hora" min="12:00" max="23:00" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="res-sillas">Número de sillas</label>
+                                <input type="number" id="res-sillas" min="1" max="20" value="2" required>
+                            </div>
+
+                            <div class="contacto-campo">
+                                <label for="res-descripcion">Descripción / comentarios</label>
+                                <textarea id="res-descripcion" rows="3" maxlength="500"
+                                    placeholder="Ocasión especial, preferencias, etc."></textarea>
+                                <div class="contacto-contador">
+                                    <span id="res-contador">0</span> / 500
+                                </div>
+                            </div>
+
+                            <p id="reserva-estado" class="reserva-estado" aria-live="polite"></p>
+
+                            <button type="submit" class="contacto-boton">
+                                Reservar ahora
+                            </button>
+
+                            <a class="contacto-link-secundario" href="/paginas/reservas/mis-reservas/">
+                                <i class="fa-regular fa-calendar-check"></i>
+                                <span>Ver mis reservas</span>
+                            </a>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+    <script src="/paginas/contacto/contacto.js"></script>
+    <script src="/paginas/reservas/nueva-reserva/nueva-reserva.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+
+
+:root {
+
+    --negro: #000000;
+    --amarillo: #ffb400;
+    --blanco: #ffffff;
+    --gris: #a0a0a0;
+
+    --alto-navbar: 90px;
+
+    --bg-dark: var(--negro);
+    --accent: var(--amarillo);
+    --text-white: var(--blanco);
+    --text-gray: var(--gris);
+    --header-height: var(--alto-navbar);
+}

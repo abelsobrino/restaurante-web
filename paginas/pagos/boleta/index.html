@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Comprobante | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/pagos/boleta/boleta.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="comprobante-pagina">
+
+        <section class="comprobante-seccion">
+
+            <div class="container">
+
+                <div class="comprobante-pagina-encabezado">
+
+                    <div>
+
+                        <p class="comprobante-kicker">
+                            PEDIDO CONFIRMADO
+                        </p>
+
+                        <h1>
+                            Tu
+                            <span class="highlight">
+                                comprobante
+                            </span>
+                        </h1>
+
+                        <p>
+                            Tu pedido fue registrado correctamente.
+                            Puedes imprimir este comprobante o revisar
+                            tus pedidos desde tu cuenta.
+                        </p>
+
+                    </div>
+
+                    <div class="comprobante-check">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                </div>
+
+                <div
+                    id="comprobante-contenedor"
+                    class="comprobante-contenedor"
+                >
+
+                    <div class="comprobante-cargando">
+
+                        <span>
+                            <i class="fa-solid fa-receipt"></i>
+                        </span>
+
+                        <p>
+                            Preparando comprobante...
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="comprobante-acciones"
+                    class="comprobante-acciones"
+                    hidden
+                >
+
+                    <button
+                        type="button"
+                        id="btn-imprimir-comprobante"
+                        class="comprobante-boton principal"
+                    >
+                        <i class="fa-solid fa-print"></i> Imprimir comprobante
+                    </button>
+
+                    <a
+                        href="/paginas/pedidos/mis-pedidos/"
+                        class="comprobante-boton secundario"
+                    >
+                        Ver mis pedidos
+                    </a>
+
+                    <a
+                        href="/paginas/menu/carta/"
+                        class="comprobante-boton texto"
+                    >
+                        Volver a la carta
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/pagos/boleta/boleta.js"
+    ></script>
+
+</body>
+
+</html>

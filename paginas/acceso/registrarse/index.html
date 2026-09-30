@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Crear Cuenta | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/acceso/registrarse/registrarse.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="registro">
+
+        <section class="registro-seccion">
+
+            <div class="container">
+
+                <div class="registro-card">
+
+                    <div class="registro-encabezado">
+
+                        <p class="registro-kicker">
+                            FORMA PARTE DE LA FONDA
+                        </p>
+
+                        <h1>
+                            Crea tu
+                            <span class="highlight">
+                                cuenta
+                            </span>
+                        </h1>
+
+                        <p>
+                            Regístrate para realizar pedidos,
+                            reservar mesas, publicar reseñas y
+                            disfrutar todas las funciones disponibles.
+                        </p>
+
+                    </div>
+
+                    <form
+                        id="register-form"
+                        class="registro-formulario"
+                    >
+
+                        <div class="registro-doble">
+
+                            <div class="registro-campo">
+
+                                <label for="reg-nombre">
+                                    Nombre
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="reg-nombre"
+                                    placeholder="Juan"
+                                    maxlength="100"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="registro-campo">
+
+                                <label for="reg-apellido">
+                                    Apellido
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="reg-apellido"
+                                    placeholder="Pérez"
+                                    maxlength="100"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <div class="registro-campo">
+
+                            <label for="reg-email">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                id="reg-email"
+                                placeholder="correo@ejemplo.com"
+                                autocomplete="email"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="registro-campo">
+
+                            <label for="reg-telefono">
+                                Teléfono / WhatsApp
+                                <span>
+                                    Opcional
+                                </span>
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="reg-telefono"
+                                placeholder="987654321"
+                                inputmode="numeric"
+                                maxlength="15"
+                            >
+
+                        </div>
+
+                        <div class="registro-campo">
+
+                            <label for="reg-password">
+                                Contraseña
+                            </label>
+
+                            <input
+                                type="password"
+                                id="reg-password"
+                                placeholder="Mínimo 6 caracteres"
+                                minlength="6"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="registro-campo">
+
+                            <label for="reg-password2">
+                                Confirmar contraseña
+                            </label>
+
+                            <input
+                                type="password"
+                                id="reg-password2"
+                                placeholder="Repite tu contraseña"
+                                minlength="6"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                        </div>
+
+                        <p
+                            id="register-status"
+                            class="registro-estado"
+                        ></p>
+
+                        <button
+                            type="submit"
+                            id="register-boton"
+                            class="registro-boton"
+                        >
+                            Crear cuenta
+                        </button>
+
+                    </form>
+
+                    <div class="registro-footer">
+
+                        <p>
+                            ¿Ya tienes una cuenta?
+
+                            <a
+                                href="/paginas/acceso/iniciar-sesion/"
+                            >
+                                Inicia sesión
+                            </a>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/acceso/registrarse/registrarse.js"
+    ></script>
+
+</body>
+
+</html>

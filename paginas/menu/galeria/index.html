@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Galería | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/menu/galeria/galeria.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="galeria">
+
+        <div class="container">
+
+            <header class="galeria-encabezado">
+
+                <p class="galeria-kicker">
+                    MOMENTOS LA FONDA
+                </p>
+
+                <h1 class="galeria-titulo">
+                    Nuestra
+                    <span class="highlight">
+                        Galería
+                    </span>
+                </h1>
+
+                <p class="galeria-descripcion">
+                    Descubre algunos de los mejores momentos
+                    compartidos en La Fonda por nuestros clientes
+                    y nuestro equipo.
+                </p>
+
+            </header>
+
+            <section
+                class="galeria-grid"
+                id="galeria-grid"
+            >
+
+                <div class="galeria-vacia">
+                    Cargando fotografías...
+                </div>
+
+            </section>
+
+            <section class="galeria-envio">
+
+                <div class="galeria-envio-card">
+
+                    <div class="galeria-envio-encabezado">
+
+                        <p class="galeria-kicker">
+                            COMPARTE TU EXPERIENCIA
+                        </p>
+
+                        <h2>
+                            ¿Tienes una
+                            <span class="highlight">
+                                foto
+                            </span>
+                            con nosotros?
+                        </h2>
+
+                        <p>
+                            Envíala para revisión. La fotografía
+                            aparecerá en nuestra galería cuando
+                            sea aprobada por el administrador.
+                        </p>
+
+                    </div>
+
+                    <form
+                        id="galeria-formulario"
+                        class="galeria-formulario"
+                    >
+
+                        <div class="campo">
+
+                            <label for="galeria-nombre">
+                                Nombre
+                            </label>
+
+                            <input
+                                type="text"
+                                id="galeria-nombre"
+                                placeholder="Tu nombre"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="campo">
+
+                            <label for="galeria-instagram">
+                                Instagram
+                                <span class="campo-opcional">
+                                    Opcional
+                                </span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="galeria-instagram"
+                                placeholder="@usuario"
+                                maxlength="100"
+                            >
+
+                        </div>
+
+                        <div class="campo campo-imagen">
+
+                            <label for="galeria-archivo">
+                                Fotografía
+                            </label>
+
+                            <label
+                                for="galeria-archivo"
+                                class="selector-imagen"
+                            >
+
+                                <span class="selector-imagen-icono">
+                                    <i class="fa-solid fa-camera"></i>
+                                </span>
+
+                                <span class="selector-imagen-texto">
+
+                                    <strong>
+                                        Selecciona una fotografía
+                                    </strong>
+
+                                    <small>
+                                        JPG, PNG o WEBP
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                            <input
+                                type="file"
+                                id="galeria-archivo"
+                                accept="image/*"
+                                required
+                                hidden
+                            >
+
+                        </div>
+
+                        <div
+                            id="galeria-preview-contenedor"
+                            class="galeria-preview-contenedor"
+                            hidden
+                        >
+
+                            <img
+                                id="galeria-preview"
+                                class="galeria-preview"
+                                alt="Vista previa de la fotografía"
+                            >
+
+                            <button
+                                type="button"
+                                id="galeria-quitar-imagen"
+                                class="galeria-quitar-imagen"
+                            >
+                                Quitar imagen
+                            </button>
+
+                        </div>
+
+                        <p
+                            id="galeria-estado"
+                            class="galeria-estado"
+                        ></p>
+
+                        <button
+                            type="submit"
+                            id="galeria-enviar"
+                            class="galeria-boton"
+                        >
+                            Enviar fotografía
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <div
+        id="galeria-lightbox"
+        class="galeria-lightbox"
+        aria-hidden="true"
+    >
+
+        <button
+            type="button"
+            id="galeria-lightbox-cerrar"
+            class="galeria-lightbox-cerrar"
+            aria-label="Cerrar fotografía"
+        >
+            ×
+        </button>
+
+        <div class="galeria-lightbox-contenido">
+
+            <img
+                id="galeria-lightbox-imagen"
+                alt=""
+            >
+
+            <div class="galeria-lightbox-info">
+
+                <strong
+                    id="galeria-lightbox-titulo"
+                ></strong>
+
+                <span
+                    id="galeria-lightbox-autor"
+                ></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/image-utils.js"></script>
+
+    <script src="/js/sesion.js"></script>
+
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/menu/galeria/galeria.js"
+    ></script>
+
+</body>
+
+</html>

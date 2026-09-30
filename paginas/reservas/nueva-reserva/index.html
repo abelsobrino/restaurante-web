@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reservar Mesa | La Fonda</title>
+
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+
+    <link
+        rel="stylesheet"
+        href="/paginas/reservas/nueva-reserva/nueva-reserva.css"
+    >
+</head>
+
+<body>
+
+    <div id="global-nav"></div>
+
+    <main class="reserva">
+
+        <section class="reserva-seccion">
+
+            <div class="container reserva-grid">
+
+                <div class="reserva-info">
+
+                    <p class="reserva-kicker">
+                        TU MESA TE ESPERA
+                    </p>
+
+                    <h1 class="reserva-titulo">
+                        Reserva una
+                        <span class="highlight">
+                            mesa
+                        </span>
+                    </h1>
+
+                    <p class="reserva-descripcion">
+                        Elige la fecha, hora y cantidad de personas.
+                        Nosotros nos encargamos del resto.
+                    </p>
+
+                    <div class="reserva-detalles">
+
+                        <article class="reserva-detalle">
+
+                            <span class="reserva-detalle-icono">
+                                <i class="fa-regular fa-clock"></i>
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Horario
+                                </small>
+
+                                <strong>
+                                    12:00 PM - 11:00 PM
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+                        <article class="reserva-detalle">
+
+                            <span class="reserva-detalle-icono">
+                                <i class="fa-solid fa-user-group"></i>
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Personas
+                                </small>
+
+                                <strong>
+                                    De 1 a 20 personas
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+                        <article class="reserva-detalle">
+
+                            <span class="reserva-detalle-icono">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Lugar
+                                </small>
+
+                                <strong>
+                                    La Fonda
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                    <a
+                        href="/paginas/reservas/mis-reservas/"
+                        class="reserva-enlace"
+                    >
+                        Ver mis reservas →
+                    </a>
+
+                </div>
+
+                <div class="reserva-formulario-card">
+
+                    <div class="reserva-formulario-encabezado">
+
+                        <p class="reserva-kicker">
+                            NUEVA RESERVA
+                        </p>
+
+                        <h2>
+                            Completa tus datos
+                        </h2>
+
+                    </div>
+
+                    <form id="reserva-form">
+
+                        <div class="reserva-campo">
+
+                            <label for="res-nombre">
+                                Nombre completo
+                            </label>
+
+                            <input
+                                type="text"
+                                id="res-nombre"
+                                maxlength="100"
+                                placeholder="Tu nombre"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="reserva-campo">
+
+                            <label for="res-email">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                id="res-email"
+                                maxlength="150"
+                                placeholder="correo@ejemplo.com"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="reserva-campo">
+
+                            <label for="res-telefono">
+                                Teléfono
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="res-telefono"
+                                maxlength="15"
+                                inputmode="numeric"
+                                placeholder="987654321"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="reserva-doble">
+
+                            <div class="reserva-campo">
+
+                                <label for="res-fecha">
+                                    Fecha
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="res-fecha"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="reserva-campo">
+
+                                <label for="res-hora">
+                                    Hora
+                                </label>
+
+                                <input
+                                    type="time"
+                                    id="res-hora"
+                                    min="12:00"
+                                    max="23:00"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <div class="reserva-campo">
+
+                            <label for="res-sillas">
+                                Cantidad de personas
+                            </label>
+
+                            <input
+                                type="number"
+                                id="res-sillas"
+                                min="1"
+                                max="20"
+                                value="2"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="reserva-campo">
+
+                            <label for="res-descripcion">
+                                Comentario
+                                <span>
+                                    Opcional
+                                </span>
+                            </label>
+
+                            <textarea
+                                id="res-descripcion"
+                                rows="4"
+                                maxlength="300"
+                                placeholder="Cumpleaños, ubicación preferida, alguna indicación..."
+                            ></textarea>
+
+                            <div class="reserva-contador">
+
+                                <span id="res-contador">
+                                    0
+                                </span>
+
+                                / 300
+
+                            </div>
+
+                        </div>
+
+                        <p
+                            id="reserva-estado"
+                            class="reserva-estado"
+                        ></p>
+
+                        <button
+                            type="submit"
+                            id="reserva-boton"
+                            class="reserva-boton"
+                        >
+                            Confirmar reserva
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="global-footer"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+
+    <script
+        src="/paginas/reservas/nueva-reserva/nueva-reserva.js"
+    ></script>
+
+</body>
+
+</html>
