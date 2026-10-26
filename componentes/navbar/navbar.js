@@ -126,3 +126,4 @@ function inicializarMenuUsuario() {
     });
 
 }
+window.marcarPaginaActiva = marcarPaginaActiva;

@@ -1,3 +1,4 @@
+(function () {
 const RESERVAS_KEY =
     "la_fonda_reservas";
 
@@ -646,15 +647,16 @@ function configurarEventosReserva() {
 
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+function iniciarPaginaReserva() {
+    if (!document.getElementById("reserva-form")) return;
+    configurarFechaReserva();
+    completarDatosReserva();
+    configurarEventosReserva();
+}
 
-        configurarFechaReserva();
+window.LaFondaPublicPages = window.LaFondaPublicPages || {};
+window.LaFondaPublicPages["reservaContacto"] = iniciarPaginaReserva;
 
-        completarDatosReserva();
+document.addEventListener("DOMContentLoaded", iniciarPaginaReserva);
 
-        configurarEventosReserva();
-
-    }
-);
+})();

@@ -1,3 +1,4 @@
+(function () {
 const resenasState = {
 
     rating:
@@ -766,28 +767,17 @@ async function enviarResena(
 
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+async function iniciarPaginaResenas() {
+    resenasState.rating = 0;
+    resenasState.hoverRating = 0;
+    configurarEstrellas();
+    document.getElementById("review-form").addEventListener("submit", enviarResena);
+    await Promise.all([cargarResenasPublicas(), cargarPedidosResenables()]);
+}
 
-        configurarEstrellas();
+window.LaFondaPublicPages = window.LaFondaPublicPages || {};
+window.LaFondaPublicPages["resenas"] = iniciarPaginaResenas;
 
-        document
-            .getElementById(
-                "review-form"
-            )
-            .addEventListener(
-                "submit",
-                enviarResena
-            );
+document.addEventListener("DOMContentLoaded", iniciarPaginaResenas);
 
-        await Promise.all([
-
-            cargarResenasPublicas(),
-
-            cargarPedidosResenables()
-
-        ]);
-
-    }
-);
+})();

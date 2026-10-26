@@ -314,3 +314,6 @@
     }
 
 }
+.recuperar-enlace { text-align: right; margin: 2px 0 8px; }
+.recuperar-enlace a { color: var(--amarillo); font-size: .82rem; text-decoration: none; }
+.recuperar-enlace a:hover { text-decoration: underline; }

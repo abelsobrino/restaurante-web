@@ -288,3 +288,138 @@
     }
 
 }
+.registro-campo input.campo-invalido,
+.registro-campo input.campo-invalido:focus {
+    border-color: #f08080;
+    box-shadow: 0 0 0 2px rgba(240, 128, 128, 0.1);
+}
+
+.registro-ayuda {
+    margin-top: 6px;
+    color: #a9a9a9;
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+.registro-error {
+    margin-top: 5px;
+    color: #ff8989;
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+.registro-error:empty {
+    display: none;
+}
+
+.registro-password-campo {
+    position: relative;
+}
+
+.registro-password-campo input {
+    padding-right: 86px;
+}
+
+.registro-ver-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 6px;
+    border: 0;
+    background: transparent;
+    color: var(--amarillo);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.registro-ver-password:focus-visible {
+    outline: 2px solid var(--amarillo);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+.registro-password-seguridad {
+    margin-top: 12px;
+    padding: 13px;
+    border: 1px solid #303030;
+    background: #151515;
+    border-radius: 8px;
+}
+
+.registro-password-barra {
+    height: 5px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #303030;
+}
+
+.registro-password-barra span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: #e16d68;
+    border-radius: inherit;
+    transition: width 0.2s ease, background 0.2s ease;
+}
+
+.registro-password-barra span[data-nivel="medio"] {
+    background: var(--amarillo);
+}
+
+.registro-password-barra span[data-nivel="alto"] {
+    background: #76c794;
+}
+
+.registro-password-seguridad > p {
+    margin-top: 9px;
+    color: #e1e1e1;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.registro-reglas {
+    display: grid;
+    gap: 6px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.registro-reglas li {
+    color: #a7a7a7;
+    font-size: 0.75rem;
+}
+
+.registro-reglas li::before {
+    content: "○";
+    display: inline-block;
+    margin-right: 8px;
+    color: #999;
+}
+
+.registro-reglas li.cumple {
+    color: #a9e4bc;
+}
+
+.registro-reglas li.cumple::before {
+    content: "✓";
+    color: #76c794;
+}
+
+.codigo-seccion[hidden] { display: none; }
+.codigo-seccion { text-align: center; }
+.codigo-emblema { display: inline-grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; margin-bottom: 15px; background: rgba(255, 180, 0, .12); color: var(--amarillo); font-size: 1.35rem; }
+.codigo-seccion h2 { color: var(--blanco); font-size: 1.5rem; margin-bottom: 12px; }
+.codigo-seccion > p { color: var(--gris); line-height: 1.65; font-size: .86rem; overflow-wrap: anywhere; margin-bottom: 20px; }
+.codigo-seccion > p strong { color: var(--amarillo); }
+.codigo-seccion .registro-campo { text-align: left; }
+.codigo-seccion .registro-campo input { text-align: center; font-size: 1.45rem; letter-spacing: .4em; font-weight: 700; }
+.codigo-acciones { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.codigo-acciones button { background: none; color: var(--amarillo); border: 0; padding: 6px 8px; font: inherit; font-size: .82rem; cursor: pointer; }
+.codigo-acciones button:disabled { color: var(--gris); cursor: default; }
+.codigo-acciones button:focus-visible { outline: 2px solid var(--amarillo); outline-offset: 3px; }
+
+.registro-formulario[hidden] { display: none; }

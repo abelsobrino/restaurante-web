@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar cuenta | La Fonda</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/utilidades.css">
+    <link rel="stylesheet" href="/componentes/navbar/navbar.css">
+    <link rel="stylesheet" href="/componentes/footer/footer.css">
+    <link rel="stylesheet" href="/paginas/acceso/registrarse/registrarse.css">
+    <link rel="stylesheet" href="/paginas/acceso/recuperar-cuenta/recuperar-cuenta.css">
+</head>
+<body>
+    <div id="global-nav"></div>
+    <main class="registro">
+        <section class="registro-seccion">
+            <div class="container">
+                <div class="registro-card">
+                    <div class="registro-encabezado">
+                        <p class="registro-kicker">SEGURIDAD DE TU CUENTA</p>
+                        <h1>Recupera tu <span class="highlight">cuenta</span></h1>
+                        <p>Te enviaremos un código a tu correo para que puedas elegir una nueva contraseña.</p>
+                    </div>
+                    <form id="recuperar-correo-form" class="registro-formulario">
+                        <div class="registro-campo">
+                            <label for="recuperar-email">Correo electrónico</label>
+                            <input id="recuperar-email" type="email" autocomplete="email" maxlength="150" placeholder="correo@ejemplo.com" required>
+                        </div>
+                        <p id="recuperar-correo-estado" class="registro-estado" role="status" aria-live="polite"></p>
+                        <button id="recuperar-enviar" type="submit" class="registro-boton">Enviar código</button>
+                    </form>
+                    <section id="recuperar-paso-codigo" class="codigo-seccion" hidden>
+                        <div class="codigo-emblema"><i class="fa-regular fa-envelope"></i></div>
+                        <h2>Comprueba tu correo</h2>
+                        <p>Escribe el código de seis dígitos enviado a <strong id="recuperar-destino"></strong>.</p>
+                        <form id="recuperar-codigo-form" class="registro-formulario">
+                            <div class="registro-campo">
+                                <label for="recuperar-codigo">Código de verificación</label>
+                                <input id="recuperar-codigo" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="000000" pattern="[0-9]{6}" maxlength="6" required>
+                            </div>
+                            <p id="recuperar-codigo-estado" class="registro-estado" role="status" aria-live="polite"></p>
+                            <button id="recuperar-verificar" type="submit" class="registro-boton">Verificar código</button>
+                        </form>
+                        <div class="codigo-acciones">
+                            <button id="recuperar-reenviar" type="button">Reenviar código</button>
+                            <button id="recuperar-cambiar" type="button">Cambiar correo</button>
+                        </div>
+                    </section>
+                    <form id="recuperar-password-form" class="registro-formulario" hidden>
+                        <div class="recuperar-check"><i class="fa-solid fa-circle-check"></i> Correo verificado correctamente</div>
+                        <div class="registro-campo">
+                            <label for="recuperar-password">Nueva contraseña</label>
+                            <div class="registro-password-campo">
+                                <input id="recuperar-password" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="Nueva contraseña segura" required>
+                                <button type="button" id="recuperar-ver-password" class="registro-ver-password">Mostrar</button>
+                            </div>
+                            <p class="registro-ayuda">Entre 8 y 72 caracteres, con mayúscula, minúscula, número y símbolo.</p>
+                        </div>
+                        <div class="registro-campo">
+                            <label for="recuperar-password2">Confirmar nueva contraseña</label>
+                            <div class="registro-password-campo">
+                                <input id="recuperar-password2" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="Confirma tu contraseña" required>
+                                <button type="button" id="recuperar-ver-password2" class="registro-ver-password">Mostrar</button>
+                            </div>
+                        </div>
+                        <p id="recuperar-password-estado" class="registro-estado" role="status" aria-live="polite"></p>
+                        <button id="recuperar-guardar" type="submit" class="registro-boton">Guardar nueva contraseña</button>
+                    </form>
+                    <div id="recuperar-finalizado" class="codigo-seccion" hidden>
+                        <div class="codigo-emblema"><i class="fa-solid fa-check"></i></div>
+                        <h2>¡Contraseña actualizada!</h2>
+                        <p>Ya puedes entrar con tu correo y tu nueva contraseña.</p>
+                        <a class="registro-boton recuperar-volver" href="/paginas/acceso/iniciar-sesion/">Ir a iniciar sesión</a>
+                    </div>
+                    <div class="registro-footer">
+                        <p><a href="/paginas/acceso/iniciar-sesion/">Volver al inicio de sesión</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="global-footer"></div>
+    <script src="/js/config.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/auth-email.js"></script>
+    <script src="/js/sesion.js"></script>
+    <script src="/componentes/navbar/navbar.js"></script>
+    <script src="/js/transiciones.js"></script>
+    <script src="/js/cargar-componentes.js"></script>
+    <script src="/paginas/acceso/recuperar-cuenta/recuperar-cuenta.js"></script>
+</body>
+</html>

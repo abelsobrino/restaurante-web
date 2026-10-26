@@ -82,15 +82,3 @@ main {
 
 }
 
-body {
-    transition:
-        opacity 0.14s ease,
-        transform 0.14s ease;
-}
-
-body.page-leaving {
-    opacity: 0;
-
-    transform:
-        translateY(-3px);
-}

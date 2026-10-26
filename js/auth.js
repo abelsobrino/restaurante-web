@@ -172,7 +172,7 @@
 
         const resultado =
             await window.LaFondaDB.rpc(
-                "web_registrar_cliente",
+                "web_registrar_cliente_validado",
                 {
                     p_nombre:
                         nombre,
@@ -205,6 +205,50 @@
             password
         );
 
+    }
+
+    async function registerVerified(datos, accessToken) {
+
+        if (!accessToken || !window.LaFondaDB) {
+            throw new Error("Debes verificar tu correo antes de crear la cuenta.");
+        }
+
+        const resultado = await window.LaFondaDB.rpc(
+            "web_confirmar_registro_cliente",
+            {
+                p_nombre: datos.nombre,
+                p_apellido: datos.apellido,
+                p_email: datos.email,
+                p_telefono: datos.telefono,
+                p_password: datos.password
+            },
+            { accessToken }
+        );
+
+        if (!resultado?.ok) {
+            throw new Error(resultado?.mensaje || "No se pudo crear la cuenta.");
+        }
+
+        return login(datos.email, datos.password);
+    }
+
+    async function resetPasswordVerified(email, password, accessToken) {
+
+        if (!accessToken || !window.LaFondaDB) {
+            throw new Error("Verifica tu correo para cambiar la contraseña.");
+        }
+
+        const resultado = await window.LaFondaDB.rpc(
+            "web_restablecer_contrasena_cliente",
+            { p_email: email, p_password: password },
+            { accessToken }
+        );
+
+        if (!resultado?.ok) {
+            throw new Error(resultado?.mensaje || "No se pudo actualizar la contraseña.");
+        }
+
+        return resultado;
     }
 
     function setMode(modo) {
@@ -328,6 +372,10 @@
         login,
 
         register,
+
+        registerVerified,
+
+        resetPasswordVerified,
 
         setMode,
 

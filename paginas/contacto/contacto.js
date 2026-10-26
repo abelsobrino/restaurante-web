@@ -1,3 +1,4 @@
+(function () {
 function contactoEmailValido(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -103,8 +104,15 @@ function configurarEventosContacto() {
     mensaje?.addEventListener("input", actualizarContadorContacto);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function iniciarPaginaContacto() {
     completarDatosContacto();
     configurarTabsContacto();
     configurarEventosContacto();
-});
+}
+
+window.LaFondaPublicPages = window.LaFondaPublicPages || {};
+window.LaFondaPublicPages["contacto"] = iniciarPaginaContacto;
+
+document.addEventListener("DOMContentLoaded", iniciarPaginaContacto);
+
+})();

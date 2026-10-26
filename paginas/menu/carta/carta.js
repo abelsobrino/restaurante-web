@@ -1,3 +1,4 @@
+(function () {
 const CARRITO_KEY =
     "lafonda_carrito";
 
@@ -2181,17 +2182,18 @@ window.addEventListener(
     refrescarCarritoCarta
 );
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+async function iniciarPaginaCarta() {
+    cartaState.categoria = "all";
+    cartaState.seleccionPorGrupo = {};
+    cargarCarritoGuardado();
+    actualizarCarritoCarta();
+    configurarEventosCarta();
+    await cargarCatalogo();
+}
 
-        cargarCarritoGuardado();
+window.LaFondaPublicPages = window.LaFondaPublicPages || {};
+window.LaFondaPublicPages["carta"] = iniciarPaginaCarta;
 
-        actualizarCarritoCarta();
+document.addEventListener("DOMContentLoaded", iniciarPaginaCarta);
 
-        configurarEventosCarta();
-
-        await cargarCatalogo();
-
-    }
-);
+})();

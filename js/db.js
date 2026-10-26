@@ -15,7 +15,7 @@
 
     }
 
-    async function rpc(nombre, parametros = {}) {
+    async function rpc(nombre, parametros = {}, opciones = {}) {
 
         if (!isConfigured()) {
 
@@ -37,7 +37,7 @@
                         config.supabaseAnonKey,
 
                     Authorization:
-                        `Bearer ${config.supabaseAnonKey}`,
+                        `Bearer ${opciones.accessToken || config.supabaseAnonKey}`,
 
                     "Content-Type":
                         "application/json"

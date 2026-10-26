@@ -1,3 +1,4 @@
+(function () {
 
 
 const galeriaState = {
@@ -320,6 +321,8 @@ function cerrarGaleriaLightbox() {
         document.getElementById(
             "galeria-lightbox"
         );
+
+    if (!lightbox) return;
 
     lightbox.classList.remove(
         "abierto"
@@ -703,32 +706,25 @@ function configurarEventosGaleria() {
             }
         );
 
-    document.addEventListener(
-        "keydown",
-        evento => {
-
-            if (
-                evento.key === "Escape"
-            ) {
-
-                cerrarGaleriaLightbox();
-
-            }
-
-        }
-    );
+    if (!window.LaFondaGaleriaEscapeConfigurado) {
+        window.LaFondaGaleriaEscapeConfigurado = true;
+        document.addEventListener("keydown", evento => {
+            if (evento.key === "Escape") cerrarGaleriaLightbox();
+        });
+    }
 
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+async function iniciarPaginaGaleria() {
+    galeriaState.imagenProcesada = null;
+    prepararFormularioGaleria();
+    configurarEventosGaleria();
+    await cargarGaleria();
+}
 
-        prepararFormularioGaleria();
+window.LaFondaPublicPages = window.LaFondaPublicPages || {};
+window.LaFondaPublicPages["galeria"] = iniciarPaginaGaleria;
 
-        configurarEventosGaleria();
+document.addEventListener("DOMContentLoaded", iniciarPaginaGaleria);
 
-        await cargarGaleria();
-
-    }
-);
+})();
