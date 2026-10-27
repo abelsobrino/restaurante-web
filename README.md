@@ -41,3 +41,18 @@ La aplicación utiliza un frontend modular organizado por páginas y componentes
 
 Estado
 Proyecto académico en desarrollo. Antes de su uso en producción deben completarse las pruebas integrales del registro, la recuperación de cuentas, los permisos y el flujo de pedidos.
+
+
+## Documentación técnica
+
+El proyecto cuenta con documentación complementaria organizada por áreas técnicas para facilitar su comprensión y mantenimiento.
+
+| Documento | Contenido |
+|---|---|
+| [Arquitectura técnica](docs/ARQUITECTURA.md) | Tecnologías, componentes y diagramas |
+| [Implementación de interfaces](docs/INTERFACES.md) | UI/UX y componentes reutilizables |
+| [Flujo de pedidos](docs/FLUJO_PEDIDOS.md) | Recorrido del cliente y operaciones |
+| [Autenticación](docs/AUTENTICACION.md) | Registro, OTP y gestión de sesiones |
+| [Integración de sistemas](docs/INTEGRACION.md) | Comunicación entre web, escritorio y PostgreSQL |
+
+Esta documentación complementa el código fuente y puede actualizarse conforme evoluciona el proyecto.
