@@ -1,0 +1,814 @@
+[
+  {
+    "path": "/",
+    "name": "Inicio",
+    "title": "La Fonda",
+    "styles": [
+      "/inicio.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [],
+    "source": "index.html",
+    "mainIds": []
+  },
+  {
+    "path": "/paginas/acceso/elegir-modo/",
+    "name": "AccesoElegirModo",
+    "title": "Elegir Vista | La Fonda",
+    "styles": [
+      "/paginas/acceso/elegir-modo/elegir-modo.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__acceso__elegir-modo__elegir-modo.js"
+    ],
+    "source": "paginas/acceso/elegir-modo/index.html",
+    "mainIds": [
+      "mode-admin",
+      "mode-client",
+      "modo-estado"
+    ]
+  },
+  {
+    "path": "/paginas/acceso/iniciar-sesion/",
+    "name": "AccesoIniciarSesion",
+    "title": "Iniciar Sesión | La Fonda",
+    "styles": [
+      "/paginas/acceso/iniciar-sesion/iniciar-sesion.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__acceso__iniciar-sesion__iniciar-sesion.js"
+    ],
+    "source": "paginas/acceso/iniciar-sesion/index.html",
+    "mainIds": [
+      "login-form",
+      "login-email",
+      "login-password",
+      "mostrar-password",
+      "login-status",
+      "login-boton"
+    ]
+  },
+  {
+    "path": "/paginas/acceso/recuperar-cuenta/",
+    "name": "AccesoRecuperarCuenta",
+    "title": "Recuperar cuenta | La Fonda",
+    "styles": [
+      "/paginas/acceso/registrarse/registrarse.css",
+      "/paginas/acceso/recuperar-cuenta/recuperar-cuenta.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__acceso__recuperar-cuenta__recuperar-cuenta.js"
+    ],
+    "source": "paginas/acceso/recuperar-cuenta/index.html",
+    "mainIds": [
+      "recuperar-correo-form",
+      "recuperar-email",
+      "recuperar-correo-estado",
+      "recuperar-enviar",
+      "recuperar-paso-codigo",
+      "recuperar-destino",
+      "recuperar-codigo-form",
+      "recuperar-codigo",
+      "recuperar-codigo-estado",
+      "recuperar-verificar",
+      "recuperar-reenviar",
+      "recuperar-cambiar",
+      "recuperar-password-form",
+      "recuperar-password",
+      "recuperar-ver-password",
+      "recuperar-password2",
+      "recuperar-ver-password2",
+      "recuperar-password-estado",
+      "recuperar-guardar",
+      "recuperar-finalizado"
+    ]
+  },
+  {
+    "path": "/paginas/acceso/registrarse/",
+    "name": "AccesoRegistrarse",
+    "title": "Crear Cuenta | La Fonda",
+    "styles": [
+      "/paginas/acceso/registrarse/registrarse.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__acceso__registrarse__registrarse.js"
+    ],
+    "source": "paginas/acceso/registrarse/index.html",
+    "mainIds": [
+      "register-form",
+      "reg-nombre",
+      "reg-nombre-error",
+      "reg-apellido",
+      "reg-apellido-error",
+      "reg-email",
+      "reg-email-ayuda",
+      "reg-email-error",
+      "reg-telefono",
+      "reg-telefono-ayuda",
+      "reg-telefono-error",
+      "reg-password",
+      "ver-reg-password",
+      "reg-password-error",
+      "registro-password-progreso",
+      "registro-password-indicador",
+      "regla-longitud",
+      "regla-mayuscula",
+      "regla-minuscula",
+      "regla-numero",
+      "regla-simbolo",
+      "reg-password2",
+      "ver-reg-password2",
+      "reg-password2-error",
+      "register-status",
+      "register-boton",
+      "registro-verificacion",
+      "codigo-titulo",
+      "registro-correo-destino",
+      "registro-codigo-form",
+      "registro-codigo",
+      "registro-codigo-estado",
+      "registro-confirmar",
+      "registro-reenviar",
+      "registro-cambiar"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/configuracion/",
+    "name": "AdministradorConfiguracion",
+    "title": "Configuración | Administración La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css",
+      "/paginas/administrador/configuracion/configuracion.css"
+    ],
+    "leaflet": true,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__configuracion__configuracion.js"
+    ],
+    "source": "paginas/administrador/configuracion/index.html",
+    "mainIds": [
+      "admin-menu",
+      "admin-status",
+      "delivery-summary",
+      "summary-status",
+      "summary-price",
+      "summary-min",
+      "summary-radius",
+      "delivery-form",
+      "delivery-active",
+      "delivery-lat",
+      "delivery-lng",
+      "delivery-center-map",
+      "delivery-price",
+      "delivery-min",
+      "delivery-radius",
+      "delivery-example-distance",
+      "delivery-example-price",
+      "delivery-save",
+      "admin-delivery-map",
+      "map-lat",
+      "map-lng",
+      "horario-form",
+      "horario-activo",
+      "horario-dias-body",
+      "horario-save"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/contenido/",
+    "name": "AdministradorContenido",
+    "title": "Contenido | Administración La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css",
+      "/paginas/administrador/contenido/contenido.css"
+    ],
+    "leaflet": false,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__contenido__contenido.js"
+    ],
+    "source": "paginas/administrador/contenido/index.html",
+    "mainIds": [
+      "admin-menu",
+      "admin-status",
+      "contenido-resumen",
+      "contenido-fotos-total",
+      "contenido-fotos-publicadas",
+      "contenido-resenas-total",
+      "contenido-resenas-publicadas",
+      "badge-galeria",
+      "badge-resenas",
+      "contenido-section-galeria",
+      "gallery-search",
+      "gallery-filter",
+      "gallery-admin",
+      "contenido-section-resenas",
+      "review-search",
+      "review-filter",
+      "reviews-admin",
+      "photo-modal",
+      "photo-modal-close",
+      "photo-modal-image",
+      "photo-modal-author",
+      "photo-modal-instagram"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/gestion/",
+    "name": "AdministradorGestion",
+    "title": "Gestión | Administración La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css",
+      "/paginas/administrador/gestion/gestion.css"
+    ],
+    "leaflet": false,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__gestion__gestion.js"
+    ],
+    "source": "paginas/administrador/gestion/index.html",
+    "mainIds": [
+      "admin-menu",
+      "gestion-recargar",
+      "admin-status",
+      "gestion-total",
+      "gestion-publicados",
+      "gestion-ocultos",
+      "gestion-stock-confirmado",
+      "gestion-busqueda",
+      "gestion-filtro",
+      "gestion-stock-body"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/menu/",
+    "name": "AdministradorMenu",
+    "title": "Menú | Administración La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css",
+      "/paginas/administrador/menu/menu.css"
+    ],
+    "leaflet": false,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__menu__menu.js"
+    ],
+    "source": "paginas/administrador/menu/index.html",
+    "mainIds": [
+      "admin-menu",
+      "admin-status",
+      "menu-section-platos",
+      "admin-dishes",
+      "dish-form",
+      "dish-id",
+      "dish-form-title",
+      "dish-new",
+      "dish-name",
+      "dish-description",
+      "dish-price",
+      "dish-time",
+      "dish-category",
+      "dish-available",
+      "dish-image",
+      "dish-preview",
+      "dish-clear",
+      "menu-section-combos",
+      "combo-search",
+      "combo-source",
+      "combo-form",
+      "combo-id",
+      "combo-new",
+      "combo-dropzone",
+      "combo-selected",
+      "combo-name",
+      "combo-description",
+      "combo-price",
+      "combo-regular",
+      "combo-image",
+      "combo-active",
+      "combo-date-start",
+      "combo-date-end",
+      "combo-time-start",
+      "combo-time-end",
+      "combo-days",
+      "combo-clear",
+      "combo-existing"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/panel/",
+    "name": "AdministradorPanel",
+    "title": "Administración | La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css"
+    ],
+    "leaflet": false,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__panel__panel.js"
+    ],
+    "source": "paginas/administrador/panel/index.html",
+    "mainIds": [
+      "admin-menu",
+      "admin-status",
+      "stat-ventas",
+      "stat-total",
+      "stat-ticket",
+      "stat-origen",
+      "top-platos",
+      "latest-sales"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/promociones/",
+    "name": "AdministradorPromociones",
+    "title": "Promociones | Administración La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css",
+      "/paginas/administrador/promociones/promociones.css"
+    ],
+    "leaflet": false,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__promociones__promociones.js"
+    ],
+    "source": "paginas/administrador/promociones/index.html",
+    "mainIds": [
+      "admin-menu",
+      "coupon-new-top",
+      "admin-status",
+      "coupon-summary",
+      "coupon-total",
+      "coupon-active-count",
+      "coupon-public-count",
+      "coupon-uses-count",
+      "coupon-search",
+      "coupon-filter",
+      "coupon-list",
+      "coupon-form",
+      "coupon-id",
+      "coupon-form-title",
+      "coupon-new",
+      "coupon-code",
+      "coupon-description",
+      "coupon-type",
+      "coupon-value-prefix",
+      "coupon-value",
+      "coupon-min",
+      "coupon-limit",
+      "coupon-start",
+      "coupon-end",
+      "coupon-visible",
+      "coupon-active",
+      "coupon-preview-code",
+      "coupon-preview-description",
+      "coupon-preview-value",
+      "coupon-cancel",
+      "coupon-save"
+    ]
+  },
+  {
+    "path": "/paginas/administrador/reportes/",
+    "name": "AdministradorReportes",
+    "title": "Reportes | Administración La Fonda",
+    "styles": [
+      "/paginas/administrador/admin.css",
+      "/paginas/administrador/componentes/menu/menu.css",
+      "/paginas/administrador/reportes/reportes.css"
+    ],
+    "leaflet": false,
+    "admin": true,
+    "navClass": "",
+    "footerClass": "no-print",
+    "controllers": [
+      "paginas__administrador__admin.js",
+      "paginas__administrador__reportes__reportes.js"
+    ],
+    "source": "paginas/administrador/reportes/index.html",
+    "mainIds": [
+      "admin-menu",
+      "reporte-csv",
+      "reporte-imprimir",
+      "admin-status",
+      "reporte-periodos",
+      "reporte-ventas",
+      "reporte-total",
+      "reporte-ticket",
+      "reporte-origen",
+      "reporte-top",
+      "reporte-ventas-tabla"
+    ]
+  },
+  {
+    "path": "/paginas/contacto/",
+    "name": "Contacto",
+    "title": "Contáctanos | La Fonda",
+    "styles": [
+      "/paginas/contacto/contacto.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__contacto__contacto.js",
+      "paginas__reservas__nueva-reserva__nueva-reserva.js"
+    ],
+    "source": "paginas/contacto/index.html",
+    "mainIds": [
+      "tab-contacto-btn",
+      "tab-reserva-btn",
+      "tab-contacto",
+      "contacto-formulario",
+      "contacto-nombre",
+      "contacto-email",
+      "contacto-tipo",
+      "contacto-mensaje",
+      "contacto-contador",
+      "contacto-estado",
+      "contacto-enviar",
+      "tab-reserva",
+      "reserva-form",
+      "res-nombre",
+      "res-email",
+      "res-telefono",
+      "res-fecha",
+      "res-hora",
+      "res-sillas",
+      "res-descripcion",
+      "res-contador",
+      "reserva-estado"
+    ]
+  },
+  {
+    "path": "/paginas/menu/carta/",
+    "name": "MenuCarta",
+    "title": "Nuestra Carta | La Fonda",
+    "styles": [
+      "/paginas/menu/carta/carta.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__menu__carta__carta.js"
+    ],
+    "source": "paginas/menu/carta/index.html",
+    "mainIds": [
+      "cart-count",
+      "catalog-filters",
+      "filter-search",
+      "filter-price",
+      "filter-sort",
+      "category-filters",
+      "horario-banner",
+      "catalog-status",
+      "menu-grid",
+      "combos-section",
+      "combos-grid",
+      "mobile-cart-toggle",
+      "mobile-cart-badge"
+    ]
+  },
+  {
+    "path": "/paginas/menu/galeria/",
+    "name": "MenuGaleria",
+    "title": "Galería | La Fonda",
+    "styles": [
+      "/paginas/menu/galeria/galeria.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__menu__galeria__galeria.js"
+    ],
+    "source": "paginas/menu/galeria/index.html",
+    "mainIds": [
+      "galeria-grid",
+      "galeria-formulario",
+      "galeria-nombre",
+      "galeria-instagram",
+      "galeria-archivo",
+      "galeria-preview-contenedor",
+      "galeria-preview",
+      "galeria-quitar-imagen",
+      "galeria-estado",
+      "galeria-enviar",
+      "galeria-lightbox",
+      "galeria-lightbox-cerrar",
+      "galeria-lightbox-imagen",
+      "galeria-lightbox-titulo",
+      "galeria-lightbox-autor"
+    ]
+  },
+  {
+    "path": "/paginas/nosotros/",
+    "name": "Nosotros",
+    "title": "Sobre Nosotros | La Fonda",
+    "styles": [
+      "/paginas/nosotros/nosotros.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [],
+    "source": "paginas/nosotros/index.html",
+    "mainIds": []
+  },
+  {
+    "path": "/paginas/pagos/boleta/",
+    "name": "PagosBoleta",
+    "title": "Comprobante | La Fonda",
+    "styles": [
+      "/paginas/pagos/boleta/boleta.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__pagos__boleta__boleta.js"
+    ],
+    "source": "paginas/pagos/boleta/index.html",
+    "mainIds": [
+      "comprobante-contenedor",
+      "comprobante-acciones",
+      "btn-imprimir-comprobante"
+    ]
+  },
+  {
+    "path": "/paginas/pagos/pasarela/",
+    "name": "PagosPasarela",
+    "title": "Pago | La Fonda",
+    "styles": [
+      "/paginas/pagos/pasarela/pasarela.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__pagos__pasarela__pasarela.js"
+    ],
+    "source": "paginas/pagos/pasarela/index.html",
+    "mainIds": [
+      "pago-cliente",
+      "pago-form",
+      "pago-tarjeta",
+      "pago-vencimiento",
+      "pago-cvv",
+      "pago-titular",
+      "pago-estado",
+      "pago-boton",
+      "pago-productos",
+      "pago-entrega",
+      "pago-direccion-fila",
+      "pago-direccion",
+      "pago-comprobante",
+      "pago-subtotal",
+      "pago-descuento-fila",
+      "pago-descuento",
+      "pago-delivery-fila",
+      "pago-delivery",
+      "pago-total"
+    ]
+  },
+  {
+    "path": "/paginas/pedidos/carrito/",
+    "name": "PedidosCarrito",
+    "title": "Mi Carrito | La Fonda",
+    "styles": [
+      "/paginas/pedidos/carrito/carrito.css"
+    ],
+    "leaflet": true,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__pedidos__carrito__carrito.js"
+    ],
+    "source": "paginas/pedidos/carrito/index.html",
+    "mainIds": [
+      "carrito-contador",
+      "carrito-productos",
+      "carrito-vaciar",
+      "carrito-form",
+      "delivery-type",
+      "delivery-section",
+      "customer-address",
+      "delivery-map",
+      "btn-my-location",
+      "delivery-distance",
+      "coupon-input",
+      "btn-apply-coupon",
+      "coupon-status",
+      "receipt-type",
+      "factura-section",
+      "legal-ruc",
+      "legal-company",
+      "resumen-subtotal",
+      "resumen-descuento-fila",
+      "resumen-descuento",
+      "resumen-delivery-fila",
+      "resumen-delivery",
+      "resumen-total",
+      "carrito-estado",
+      "carrito-continuar"
+    ]
+  },
+  {
+    "path": "/paginas/pedidos/mis-pedidos/",
+    "name": "PedidosMisPedidos",
+    "title": "Mis Pedidos | La Fonda",
+    "styles": [
+      "/paginas/pedidos/mis-pedidos/mis-pedidos.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__pedidos__mis-pedidos__mis-pedidos.js"
+    ],
+    "source": "paginas/pedidos/mis-pedidos/index.html",
+    "mainIds": [
+      "pedidos-resumen",
+      "pedidos-total",
+      "pedidos-completados",
+      "pedidos-gastado",
+      "pedidos-filtros",
+      "pedidos-filtro-estado",
+      "pedidos-list"
+    ]
+  },
+  {
+    "path": "/paginas/perfil/",
+    "name": "Perfil",
+    "title": "Mi Perfil | La Fonda",
+    "styles": [
+      "/paginas/perfil/perfil.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__perfil__perfil.js"
+    ],
+    "source": "paginas/perfil/index.html",
+    "mainIds": [
+      "perfil-avatar",
+      "perfil-nombre",
+      "perfil-email",
+      "perfil-rol",
+      "perfil-modo-contenedor",
+      "perfil-modo",
+      "dato-nombre",
+      "dato-apellido",
+      "dato-email",
+      "dato-telefono",
+      "dato-rol",
+      "perfil-accesos",
+      "perfil-acceso-pedidos",
+      "perfil-acceso-reservas",
+      "perfil-acceso-nueva-reserva",
+      "perfil-acceso-admin",
+      "perfil-acceso-modo",
+      "perfil-cerrar-sesion"
+    ]
+  },
+  {
+    "path": "/paginas/resenas/",
+    "name": "Resenas",
+    "title": "Reseñas | La Fonda",
+    "styles": [
+      "/paginas/resenas/resenas.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__resenas__resenas.js"
+    ],
+    "source": "paginas/resenas/index.html",
+    "mainIds": [
+      "reviews-grid",
+      "review-form",
+      "review-order",
+      "rating-stars",
+      "review-rating",
+      "rating-label",
+      "review-text",
+      "review-status",
+      "review-submit"
+    ]
+  },
+  {
+    "path": "/paginas/reservas/mis-reservas/",
+    "name": "ReservasMisReservas",
+    "title": "Mis Reservas | La Fonda",
+    "styles": [
+      "/paginas/reservas/mis-reservas/mis-reservas.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__reservas__mis-reservas__mis-reservas.js"
+    ],
+    "source": "paginas/reservas/mis-reservas/index.html",
+    "mainIds": [
+      "reservas-resumen",
+      "reservas-activas-contador",
+      "reservas-historial-contador",
+      "reservas-total-contador",
+      "reservas-proximas-seccion",
+      "reservas-proximas",
+      "reservas-historial-seccion",
+      "reservas-historial",
+      "reservas-estado",
+      "modal-cancelar",
+      "modal-reserva-detalle",
+      "cancelar-no",
+      "cancelar-si"
+    ]
+  },
+  {
+    "path": "/paginas/reservas/nueva-reserva/",
+    "name": "ReservasNuevaReserva",
+    "title": "Reservar Mesa | La Fonda",
+    "styles": [
+      "/paginas/reservas/nueva-reserva/nueva-reserva.css"
+    ],
+    "leaflet": false,
+    "admin": false,
+    "navClass": "",
+    "footerClass": "",
+    "controllers": [
+      "paginas__reservas__nueva-reserva__nueva-reserva.js"
+    ],
+    "source": "paginas/reservas/nueva-reserva/index.html",
+    "mainIds": [
+      "reserva-form",
+      "res-nombre",
+      "res-email",
+      "res-telefono",
+      "res-fecha",
+      "res-hora",
+      "res-sillas",
+      "res-descripcion",
+      "res-contador",
+      "reserva-estado",
+      "reserva-boton"
+    ]
+  }
+]

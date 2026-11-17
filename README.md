@@ -1,58 +1,81 @@
-LA FONDA - WEB
+# La Fonda — migración a React
 
-La Fonda (web) es la plataforma web de un restaurante que permite a los clientes consultar la carta, gestionar pedidos y realizar reservas. También incluye un panel de administración para gestionar información y operaciones de la web.
+Proyecto web migrado a una aplicación de página única (SPA) con React, Vite y React Router. Mantiene las rutas del sitio original, los recursos gráficos, las hojas de estilo y el contrato con Supabase. El frontend se ejecuta independiente de la aplicación de escritorio.
 
-Funcionalidades
+## Ejecutar en Visual Studio Code (Windows)
 
-- Sitio público: inicio, nosotros, carta, galería, reseñas y contacto, con navegación fluida entre secciones.
-- Cuentas de clientes: registro, inicio de sesión, verificación del correo mediante código OTP y recuperación de contraseña.
-- Pedidos: carrito de compras, proceso de pedido, pantalla de pago, comprobante e historial de pedidos.
-- Reservas: formulario de reserva y consulta de reservas del usuario.
-- Administración: gestión de platos y combos, promociones, contenido, reportes y configuración.
+1. Descomprime `LaFonda-React.zip` y abre la carpeta `LaFonda-React` (donde está `package.json`). Conserva el proyecto anterior como respaldo.
+2. Abre **Terminal > Nueva terminal**. Se recomienda Node.js 22 LTS. Comprueba `node -v` y `npm -v`.
+3. Ejecuta:
 
-Tecnologías
+```powershell
+npm install
+npm run dev
+```
 
-- HTML5 y CSS3: estructura, diseño adaptable y estilos.
-- JavaScript: interactividad, validaciones, componentes y navegación dinámica.
-- Supabase y PostgreSQL: persistencia de información y operaciones mediante funciones RPC.
-- Supabase Auth y SMTP: envío y verificación de códigos por correo electrónico.
-  El frontend está desarrollado con tecnologías web nativas, sin frameworks de JavaScript.
+4. Abre la dirección que indique Vite, normalmente `http://localhost:5173/`.
+5. Para comprobar las pruebas locales, sin realizar llamadas a Supabase:
 
-Estructura del proyecto
+```powershell
+npm test
+```
 
-- index.html: página de inicio.
-- componentes/: barra de navegación y pie de página reutilizables.
-- css/: estilos generales y variables visuales.
-- js/: configuración, conexión con Supabase, autenticación, sesión y navegación.
-- paginas/: módulos de acceso, carta, pedidos, pagos, reservas, perfil y administración.
-- imagenes/: recursos gráficos del restaurante.
-- supabase/: scripts SQL de instalación, validación y reversión.
+6. Para generar la versión de publicación y probarla localmente:
 
-Instalación y ejecución
+```powershell
+npm run build
+npm run preview
+```
 
-1. Clona o descarga el repositorio y abre la carpeta del proyecto en Visual Studio Code. https://github.com/abelsobrino/restaurante-web.git
-2. Configura la URL del proyecto Supabase y su clave pública en js/config.js.
-3. Prepara las funciones SQL necesarias de Supabase siguiendo los archivos de instalación incluidos. Para los correos OTP, configura Supabase Auth y el servicio SMTP.
-4. Ejecuta el proyecto desde su carpeta raíz usando Live Server o un servidor HTTP local. Por ejemplo, con Python: python -m http.server 5500.
-5. Abre http://localhost:5500 en el navegador.
+El resultado compilado estará en `dist/`. En Netlify ya se incluye `netlify.toml` (`npm run build`, directorio `dist`) y `public/_redirects` para mantener las rutas al actualizar el navegador. No uses Live Server directamente con el código fuente JSX. Si Supabase Auth restringe los orígenes o redirecciones de desarrollo, revisa la configuración con el responsable de la base; no cambies permisos o políticas de la aplicación de escritorio.
 
-Arquitectura
-La aplicación utiliza un frontend modular organizado por páginas y componentes. JavaScript conecta la interfaz con Supabase mediante solicitudes HTTP y funciones RPC; PostgreSQL gestiona los datos y Supabase Auth interviene en la verificación por correo.
+## Conexión a Supabase
 
-Estado
-Proyecto académico en desarrollo. Antes de su uso en producción deben completarse las pruebas integrales del registro, la recuperación de cuentas, los permisos y el flujo de pedidos.
+El proyecto conserva la URL y la clave pública publishable original en `src/services/config.js`, de modo que no necesitas cambiar el esquema de base de datos. Si necesitas probar con otro proyecto de Supabase, copia `.env.example` a `.env` y configura `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. Son valores públicos del navegador: **nunca uses una clave service_role, una clave secreta ni contraseñas en variables VITE_**.
 
+No se ejecutó SQL, no se alteraron tablas, no se cambiaron políticas RLS y no se registraron pedidos reales durante esta entrega. Las operaciones web mantienen los 28 nombres RPC existentes y sus parámetros originales. El servicio de stock mantiene sus dos lecturas directas: `plato_stock_diario` y `plato_ingredientes`. Las funciones SQL existentes pueden efectuar escrituras internas propias de su operación; deben verificarse sus definiciones, permisos y comportamiento en el entorno real antes de publicar.
 
-## Documentación técnica
+**No ejecutes los archivos de `referencia-sql/` para iniciar la web.** Son copias de los scripts de instalación/reversión aportados con el sistema antiguo, conservadas exclusivamente como referencia. No son migraciones nuevas ni se cargan desde Vite. Modificar o revertir esas funciones en la base compartida podría afectar a la aplicación de escritorio.
 
-El proyecto cuenta con documentación complementaria organizada por áreas técnicas para facilitar su comprensión y mantenimiento.
+## Organización
 
-| Documento | Contenido |
-|---|---|
-| [Arquitectura técnica](docs/ARQUITECTURA.md) | Tecnologías, componentes y diagramas |
-| [Implementación de interfaces](docs/INTERFACES.md) | UI/UX y componentes reutilizables |
-| [Flujo de pedidos](docs/FLUJO_PEDIDOS.md) | Recorrido del cliente y operaciones |
-| [Autenticación](docs/AUTENTICACION.md) | Registro, OTP y gestión de sesiones |
-| [Integración de sistemas](docs/INTEGRACION.md) | Comunicación entre web, escritorio y PostgreSQL |
+```text
+LaFonda-React/
+├── index.html                  # Único documento de entrada
+├── package.json
+├── vite.config.js
+├── netlify.toml
+├── public/                     # CSS originales y las 17 imágenes WebP
+│   ├── css/
+│   ├── componentes/
+│   ├── imagenes/
+│   └── paginas/                # Hojas CSS (sin documentos HTML separados)
+├── src/
+│   ├── main.jsx                 # Inicio de React + BrowserRouter
+│   ├── App.jsx                  # Navegación, carga, protección de admin
+│   ├── routes.js                # Las 24 rutas originales y sus recursos
+│   ├── components/              # Navbar.jsx y Footer.jsx
+│   ├── pages/                   # Un componente de React por pantalla
+│   ├── controllers/             # Controladores de dominio adaptados al ciclo de vida
+│   ├── services/                # Supabase, autenticación, correo, stock e imágenes
+│   └── runtime/                 # Montaje, limpieza y caché de recursos de ruta
+├── tests/                       # Pruebas locales sin acceso a la base
+├── docs/                        # Inventario, auditoría y resultados de pruebas
+└── referencia-sql/              # SQL original, NO ejecutar automáticamente
+```
 
-Esta documentación complementa el código fuente y puede actualizarse conforme evoluciona el proyecto.
+## Qué cambió
+
+- La navegación se gestiona con React Router y el historial del navegador. Se reconocen las rutas antiguas, incluidas las terminadas en `index.html`.
+- La promoción, el catálogo, el carrito, los formularios, mapas y operaciones administrativas conservan sus controladores originales dentro de componentes React por ruta. No se sustituyeron por datos de ejemplo en la aplicación entregada. La estrategia es una migración de compatibilidad: los controladores complejos aún manipulan su DOM aislado, en vez de reescribir simultáneamente unas 20 000 líneas como hooks. El encabezado, pie e inicio/nosotros son JSX declarativo. Las demás pantallas están montadas en React, con plantillas y controladores encapsulados; es la base para refactorizar gradualmente a componentes declarativos sin modificar el contrato con Supabase.
+- El encabezado React permanece montado: cambia enlace activo, menú móvil, desplegable y datos del usuario con el cambio de sesión o modo. El pie también permanece montado. Se han conservado clases, iconos y estructura visual.
+- Se cargan los módulos de cada ruta bajo demanda, se precargan módulos/estilos al pasar el puntero o enfocar un enlace y se mantienen recursos en caché. No se reutilizan datos de stock obsoletos de forma deliberada. Leaflet se carga solo para las páginas con mapa, desde el paquete local de npm.
+- Se eliminó la navegación HTML por `fetch`/reemplazo de documentos y los antiguos inicializadores globales. Al abandonar una ruta se eliminan eventos globales y temporizadores; los mapas se liberan. No se inicia una nueva RPC desde un controlador que ya se desmontó. Una operación ya enviada al servidor no se cancela retroactivamente ni se reintenta automáticamente.
+- Se conservaron las 30 hojas CSS y las 17 imágenes WebP sin cambios de contenido (47 recursos comprobados byte a byte).
+- Se endureció la validación de reservas locales (sesión de la pestaña, correo de la cuenta, cantidad entera de personas, fecha válida y longitud de comentario). Se mantuvieron las reglas de formularios, OTP, stock y pago originales. Se desactivó el autocompletado de tarjeta en el pago simulado.
+
+## Estado y límites de esta entrega
+
+Consulta `docs/AUDITORIA.md` para detalles de funcionalidades, seguridad y pruebas pendientes. El archivo CSV de base de datos recibido enumera columnas y tipos, no contiene cuerpos de funciones RPC, restricciones completas, políticas RLS ni datos. No permite certificar que una operación sea segura para la aplicación de escritorio.
+
+Las 24 pantallas fueron inicializadas en Chromium atravesando los controladores adaptados, con respuestas vacías/simuladas, identidad de prueba y una interfaz de mapa simulada. Se comprobaron también cambio de pestaña de contacto, limpieza de eventos/temporizadores y rechazo de RPC iniciada después de desmontar. Las pruebas Node pasaron 4/4; se verificó sintaxis de JavaScript y de 29 archivos JSX. **No se pudo instalar npm ni compilar la aplicación real en el entorno de entrega porque el registro de npm no resolvía DNS.** No existe todavía una validación integral de React Router, Vite, Leaflet real, responsive visual ni acceso en vivo a Supabase. La primera ejecución de `npm install` en tu equipo generará el archivo de bloqueo de dependencias; consérvalo para futuras instalaciones. No publiques sobre el sistema anterior hasta completar las comprobaciones con datos controlados.

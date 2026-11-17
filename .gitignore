@@ -1,12 +1,7 @@
-﻿VALIDACION.md
+node_modules/
+dist/
 .env
 .env.*
 !.env.example
-node_modules/
-.vscode/
 *.log
-*.zip
-*.pem
-*.key
-
-supabase/
+.vscode/

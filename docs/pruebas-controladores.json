@@ -1,0 +1,225 @@
+[
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 0,
+    "name": "Inicio",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 3,
+    "name": "AccesoElegirModo",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 6,
+    "name": "AccesoIniciarSesion",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 20,
+    "name": "AccesoRecuperarCuenta",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 35,
+    "name": "AccesoRegistrarse",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_delivery",
+      "web_admin_horario"
+    ],
+    "ids": 25,
+    "name": "AdministradorConfiguracion",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_galeria",
+      "web_admin_resenas"
+    ],
+    "ids": 22,
+    "name": "AdministradorContenido",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_platos",
+      "web_catalogo"
+    ],
+    "ids": 10,
+    "name": "AdministradorGestion",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_platos",
+      "web_admin_combos"
+    ],
+    "ids": 38,
+    "name": "AdministradorMenu",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_estadisticas"
+    ],
+    "ids": 8,
+    "name": "AdministradorPanel",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_cupones"
+    ],
+    "ids": 31,
+    "name": "AdministradorPromociones",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_admin_estadisticas"
+    ],
+    "ids": 11,
+    "name": "AdministradorReportes",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 22,
+    "name": "Contacto",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_catalogo"
+    ],
+    "ids": 13,
+    "name": "MenuCarta",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_galeria_publica"
+    ],
+    "ids": 15,
+    "name": "MenuGaleria",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 0,
+    "name": "Nosotros",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 3,
+    "name": "PagosBoleta",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [
+      "/paginas/pedidos/carrito/"
+    ],
+    "calls": [],
+    "ids": 19,
+    "name": "PagosPasarela",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_catalogo"
+    ],
+    "ids": 25,
+    "name": "PedidosCarrito",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_mis_pedidos"
+    ],
+    "ids": 7,
+    "name": "PedidosMisPedidos",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 18,
+    "name": "Perfil",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [
+      "web_resenas_publicas",
+      "web_pedidos_resenables"
+    ],
+    "ids": 9,
+    "name": "Resenas",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 13,
+    "name": "ReservasMisReservas",
+    "console": []
+  },
+  {
+    "errors": [],
+    "nav": [],
+    "calls": [],
+    "ids": 11,
+    "name": "ReservasNuevaReserva",
+    "console": []
+  }
+]
