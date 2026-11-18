@@ -4,52 +4,16 @@ export function setup(scope) {
     const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
     const LaFondaAdmin = window.LaFondaAdmin;
 (function () {
-const RESERVAS_KEY =
-    "la_fonda_reservas";
-
-function cargarReservasGuardadas() {
-
-    try {
-
-        const datos =
-            localStorage.getItem(
-                RESERVAS_KEY
-            );
-
-        const reservas =
-            JSON.parse(
-                datos || "[]"
-            );
-
-        return Array.isArray(reservas)
-            ? reservas
-            : [];
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Error cargando reservas:",
-            error
-        );
-
-        return [];
-
-    }
-
+let enviandoReserva = false;
+function mensajeErrorReserva(error) {
+    const mensaje = String(error?.message || "");
+    if (/lf_crear_reserva|schema cache|PGRST202/i.test(mensaje)) return "El módulo de reservas no está habilitado en Supabase. Contacta al restaurante.";
+    if (/sesión|inicia sesión|cuenta de cliente/i.test(mensaje)) return "Inicia sesión nuevamente con tu cuenta de cliente.";
+    if (/ya tienes una reserva/i.test(mensaje)) return "Ya tienes una reserva activa para esa fecha y hora. Consulta Mis reservas.";
+    if (/fecha y hora futuras|horario de reservas|datos obligatorios/i.test(mensaje)) return "Revisa los datos y el horario de la reserva (12:00 a 23:00, hora de Lima).";
+    return "No se pudo confirmar el registro en Supabase. Consulta Mis reservas antes de volver a enviar.";
 }
 
-function guardarReservas(
-    reservas
-) {
-
-    localStorage.setItem(
-        RESERVAS_KEY,
-        JSON.stringify(reservas)
-    );
-
-}
 
 function obtenerUsuarioReserva() {
     return window.LaFondaAuth?.getSession?.() || null;
@@ -82,31 +46,8 @@ function mostrarEstadoReserva(
 }
 
 function obtenerFechaLocal() {
-
-    const hoy =
-        new Date();
-
-    const anio =
-        hoy.getFullYear();
-
-    const mes =
-        String(
-            hoy.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-    const dia =
-        String(
-            hoy.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-    return `${anio}-${mes}-${dia}`;
-
+    const partes = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {timeZone:"America/Lima",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+    return `${partes.year}-${partes.month}-${partes.day}`;
 }
 
 function configurarFechaReserva() {
@@ -235,7 +176,7 @@ function reservaEsPasada(
 
     const reserva =
         new Date(
-            `${fecha}T${hora}:00`
+            `${fecha}T${hora}:00-05:00`
         );
 
     const ahora =
@@ -245,48 +186,12 @@ function reservaEsPasada(
 
 }
 
-function existeReservaDuplicada(
-    reservas,
-    fecha,
-    hora
-) {
-
-    return reservas.some(
-        reserva =>
-            reserva.fecha === fecha &&
-            reserva.hora === hora &&
-            String(reserva.estado || "ACTIVA").toUpperCase() !== "CANCELADA"
-    );
-
-}
-
-function crearIdReserva() {
-
-    if (
-        window.crypto &&
-        typeof crypto.randomUUID ===
-            "function"
-    ) {
-
-        return crypto.randomUUID();
-
-    }
-
-    return (
-        Date.now().toString() +
-        "-" +
-        Math.random()
-            .toString(16)
-            .slice(2)
-    );
-
-}
-
-function crearNuevaReserva(
+async function crearNuevaReserva(
     evento
 ) {
 
     evento.preventDefault();
+    if (enviandoReserva) return;
 
     const usuario =
         obtenerUsuarioReserva();
@@ -386,7 +291,7 @@ function crearNuevaReserva(
     }
 
     if (
-        nombre.length < 3
+        nombre.length < 3 || nombre.length > 100
     ) {
 
         mostrarEstadoReserva(
@@ -483,69 +388,26 @@ function crearNuevaReserva(
         return;
     }
 
-    const reservas =
-        cargarReservasGuardadas();
-
-    if (
-        existeReservaDuplicada(
-            reservas,
-            fecha,
-            hora
-        )
-    ) {
-
-        mostrarEstadoReserva(
-            "Ya existe una reserva para esa fecha y hora. Elige otro horario.",
-            "error"
-        );
-
+    enviandoReserva = true;
+    const boton = document.querySelector('#reserva-form button[type="submit"]');
+    if (boton) boton.disabled = true;
+    try {
+        const cred = LaFondaAuth.credentials("CLIENTE");
+        const idReserva = await LaFondaDB.rpc("lf_crear_reserva", {
+            p_email: cred.email, p_password: cred.password, p_nombre: nombre,
+            p_telefono: telefono, p_fecha: fecha, p_hora: hora,
+            p_personas: personas, p_descripcion: descripcion
+        });
+        if (!/^[1-9]\d*$/.test(String(idReserva))) throw new Error("El servidor no devolvió una confirmación válida. Consulta Mis reservas antes de reenviar.");
+    } catch (error) {
+        if (scope.active === false) return;
+        mostrarEstadoReserva(mensajeErrorReserva(error), "error");
+        enviandoReserva = false;
+        if (boton) boton.disabled = false;
         return;
-
     }
-
-    const nuevaReserva = {
-
-        id:
-            crearIdReserva(),
-
-        nombre,
-
-        email,
-
-        telefono,
-
-        fecha,
-
-        hora,
-
-        sillas:
-            personas,
-
-        descripcion:
-            descripcion ||
-            "Sin comentarios",
-
-        estado:
-            "ACTIVA",
-
-        fechaCreacion:
-            new Date()
-                .toISOString()
-
-    };
-
-    reservas.push(
-        nuevaReserva
-    );
-
-    guardarReservas(
-        reservas
-    );
-
-    mostrarEstadoReserva(
-        "Reserva guardada en este navegador. Aún no se ha confirmado con el restaurante.",
-        "exito"
-    );
+    if (scope.active === false) return;
+    mostrarEstadoReserva("Solicitud enviada al restaurante. Pendiente de asignación de mesa.", "exito");
 
     document
         .getElementById(

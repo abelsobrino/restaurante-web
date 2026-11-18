@@ -3,8 +3,7 @@ export function setup(scope) {
     const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
     const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
     const LaFondaAdmin = window.LaFondaAdmin;
-const MIS_RESERVAS_KEY =
-    "la_fonda_reservas";
+
 
 let reservaPendienteCancelar =
     null;
@@ -31,78 +30,11 @@ function obtenerUsuarioMisReservas() {
     return window.LaFondaAuth?.getSession?.() || null;
 }
 
-function cargarTodasLasReservas() {
-
-    try {
-
-        const datos =
-            localStorage.getItem(
-                MIS_RESERVAS_KEY
-            );
-
-        const reservas =
-            JSON.parse(
-                datos || "[]"
-            );
-
-        return Array.isArray(reservas)
-            ? reservas
-            : [];
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Error leyendo reservas:",
-            error
-        );
-
-        return [];
-
-    }
-
-}
-
-function guardarTodasLasReservas(
-    reservas
-) {
-
-    localStorage.setItem(
-        MIS_RESERVAS_KEY,
-        JSON.stringify(reservas)
-    );
-
-}
-
-function obtenerReservasUsuario() {
-
-    const usuario =
-        obtenerUsuarioMisReservas();
-
-    if (!usuario?.email) {
-
-        return [];
-
-    }
-
-    const email =
-        String(usuario.email)
-            .trim()
-            .toLowerCase();
-
-    return cargarTodasLasReservas()
-        .filter(
-            reserva =>
-
-                String(
-                    reserva.email || ""
-                )
-                    .trim()
-                    .toLowerCase() ===
-                email
-        );
-
+async function obtenerReservasUsuario() {
+    const cred = LaFondaAuth.credentials("CLIENTE");
+    const datos = await LaFondaDB.rpc("lf_mis_reservas", {p_email:cred.email,p_password:cred.password});
+    if (!Array.isArray(datos)) throw new Error("Respuesta de reservas inválida");
+    return datos;
 }
 
 function obtenerFechaReserva(
@@ -120,7 +52,7 @@ function obtenerFechaReserva(
 
     const fecha =
         new Date(
-            `${reserva.fecha}T${reserva.hora}:00`
+            `${reserva.fecha}T${reserva.hora}:00-05:00`
         );
 
     return Number.isNaN(
@@ -131,26 +63,14 @@ function obtenerFechaReserva(
 
 }
 
-function reservaEsPasada(
-    reserva
-) {
-
-    const fecha =
-        obtenerFechaReserva(
-            reserva
-        );
-
-    if (!fecha) {
-
-        return true;
-
-    }
-
-    return (
-        fecha.getTime() <
-        Date.now()
-    );
-
+function reservaEsPasada(reserva) {
+    return ["FINALIZADA", "CANCELADA", "NO_ASISTIO"].includes(reserva.estado);
+}
+function estadoVisible(reserva) {
+    return ({PENDIENTE:"Pendiente de mesa", ASIGNADA:"Confirmada", EN_ATENCION:"En atención", FINALIZADA:"Finalizada", CANCELADA:"Cancelada", NO_ASISTIO:"No asistió"})[reserva.estado] || "Pendiente";
+}
+function puedeCancelar(reserva) {
+    return ["PENDIENTE","ASIGNADA"].includes(reserva.estado) && obtenerFechaReserva(reserva)?.getTime() > Date.now();
 }
 
 function formatearFechaReserva(
@@ -284,9 +204,7 @@ function crearTarjetaReserva(
                     }"
                 >
                     ${
-                        pasada
-                            ? "Completada"
-                            : "Activa"
+                        escaparReserva(estadoVisible(reserva))
                     }
                 </span>
 
@@ -337,12 +255,13 @@ function crearTarjetaReserva(
 
                 </div>
 
+                ${reserva.mesa_numero != null ? `<div class="reserva-dato"><span>Mesa asignada</span><strong>${escaparReserva(reserva.mesa_numero)}</strong></div>` : ""}
                 ${comentario}
 
             </div>
 
             ${
-                !pasada
+                puedeCancelar(reserva)
 
                     ? `
 
@@ -383,7 +302,9 @@ function crearTarjetaReserva(
 
 }
 
-function renderizarMisReservas() {
+let consultaActual = 0;
+async function renderizarMisReservas() {
+    const consulta = ++consultaActual;
 
     const estado =
         document.getElementById(
@@ -459,8 +380,17 @@ function renderizarMisReservas() {
 
     }
 
-    const reservas =
-        obtenerReservasUsuario();
+    if (!proximasContenedor.innerHTML && !historialContenedor.innerHTML) estado.textContent = "Consultando reservas en Supabase…";
+    let reservas;
+    try { reservas = await obtenerReservasUsuario(); }
+    catch (error) {
+        if (consulta !== consultaActual || scope.active === false) return;
+        proximasSeccion.hidden = historialSeccion.hidden = true;
+        document.getElementById("reservas-resumen").hidden = true;
+        estado.textContent = /lf_mis_reservas|schema cache/i.test(String(error?.message)) ? "El módulo de reservas no está habilitado en Supabase." : "No se pudieron consultar las reservas en Supabase. Verifica tu sesión y conexión.";
+        return;
+    }
+    if (consulta !== consultaActual || scope.active === false) return;
 
     if (!reservas.length) {
 
@@ -717,100 +647,21 @@ function cerrarModalCancelar() {
 
 }
 
-function confirmarCancelacionReserva() {
-
-    if (
-        !reservaPendienteCancelar
-    ) {
-
-        return;
-
-    }
-
-    const reservas =
-        cargarTodasLasReservas();
-
-    let indice = -1;
-
-    if (
-        reservaPendienteCancelar.id
-    ) {
-
-        indice =
-            reservas.findIndex(
-                reserva =>
-
-                    String(
-                        reserva.id || ""
-                    ) ===
-                    String(
-                        reservaPendienteCancelar
-                            .id
-                    )
-            );
-
-    }
-
-    if (indice === -1) {
-
-        indice =
-            reservas.findIndex(
-                reserva =>
-
-                    String(
-                        reserva.email || ""
-                    ).toLowerCase() ===
-                    String(
-                        reservaPendienteCancelar
-                            .email || ""
-                    ).toLowerCase()
-
-                    &&
-
-                    reserva.fecha ===
-                    reservaPendienteCancelar
-                        .fecha
-
-                    &&
-
-                    reserva.hora ===
-                    reservaPendienteCancelar
-                        .hora
-
-                    &&
-
-                    reserva.nombre ===
-                    reservaPendienteCancelar
-                        .nombre
-            );
-
-    }
-
-    if (indice === -1) {
-
+let cancelando = false;
+async function confirmarCancelacionReserva() {
+    if (!reservaPendienteCancelar || cancelando) return;
+    cancelando = true;
+    const boton = document.getElementById("cancelar-si");
+    boton.disabled = true;
+    try {
+        const cred = LaFondaAuth.credentials("CLIENTE");
+        const ok = await LaFondaDB.rpc("lf_cancelar_reserva", {p_email:cred.email,p_password:cred.password,p_id:reservaPendienteCancelar.id});
+        if (ok !== true) throw new Error("No se pudo cancelar la reserva");
+        if (scope.active === false) return;
         cerrarModalCancelar();
-
-        alert(
-            "No se pudo encontrar la reserva."
-        );
-
-        return;
-
-    }
-
-    reservas.splice(
-        indice,
-        1
-    );
-
-    guardarTodasLasReservas(
-        reservas
-    );
-
-    cerrarModalCancelar();
-
-    renderizarMisReservas();
-
+        await renderizarMisReservas();
+    } catch (error) { if (scope.active !== false) alert("No se pudo confirmar la cancelación. Actualiza Mis reservas y verifica el estado."); }
+    finally { cancelando = false; boton.disabled = false; }
 }
 
 function configurarModalReserva() {
@@ -867,14 +718,12 @@ function configurarModalReserva() {
 
 function escucharCambiosReservas() {
 
+    window.addEventListener("lafonda-session-change", renderizarMisReservas);
     window.addEventListener(
         "storage",
         evento => {
 
             if (
-                evento.key ===
-                    MIS_RESERVAS_KEY ||
-
                 evento.key ===
                     "la_fonda_user"
             ) {
@@ -897,6 +746,7 @@ document.addEventListener(
         escucharCambiosReservas();
 
         renderizarMisReservas();
+        setInterval(renderizarMisReservas, 30000);
 
     }
 );

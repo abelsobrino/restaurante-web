@@ -4,7 +4,7 @@ Proyecto web migrado a una aplicación de página única (SPA) con React, Vite y
 
 ## Ejecutar en Visual Studio Code (Windows)
 
-1. Descomprime `LaFonda-React.zip` y abre la carpeta `LaFonda-React` (donde está `package.json`). Conserva el proyecto anterior como respaldo.
+1. Descomprime y abre la carpeta. Conserva el proyecto anterior como respaldo.
 2. Abre **Terminal > Nueva terminal**. Se recomienda Node.js 22 LTS. Comprueba `node -v` y `npm -v`.
 3. Ejecuta:
 
@@ -31,7 +31,7 @@ El resultado compilado estará en `dist/`. En Netlify ya se incluye `netlify.tom
 
 ## Conexión a Supabase
 
-El proyecto conserva la URL y la clave pública publishable original en `src/services/config.js`, de modo que no necesitas cambiar el esquema de base de datos. Si necesitas probar con otro proyecto de Supabase, copia `.env.example` a `.env` y configura `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. Son valores públicos del navegador: **nunca uses una clave service_role, una clave secreta ni contraseñas en variables VITE_**.
+El proyecto conserva la URL y la clave pública publishable original en `src/services/config.js`, de modo que no necesitas cambiar el esquema de base de datos. Si necesitas probar con otro proyecto de Supabase, copia `.env.example` a `.env` y configura `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. Son valores públicos del navegador: **nunca uses una clave service*role, una clave secreta ni contraseñas en variables VITE***.
 
 No se ejecutó SQL, no se alteraron tablas, no se cambiaron políticas RLS y no se registraron pedidos reales durante esta entrega. Las operaciones web mantienen los 28 nombres RPC existentes y sus parámetros originales. El servicio de stock mantiene sus dos lecturas directas: `plato_stock_diario` y `plato_ingredientes`. Las funciones SQL existentes pueden efectuar escrituras internas propias de su operación; deben verificarse sus definiciones, permisos y comportamiento en el entorno real antes de publicar.
 

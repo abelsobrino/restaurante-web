@@ -1,5 +1,8 @@
 {
   "rpc": [
+    "lf_cancelar_reserva",
+    "lf_crear_reserva",
+    "lf_mis_reservas",
     "web_admin_combos",
     "web_admin_cupones",
     "web_admin_delivery",
@@ -29,7 +32,7 @@
     "web_restablecer_contrasena_cliente",
     "web_validar_cupon"
   ],
-  "rpc_count": 28,
+  "rpc_count": 31,
   "public_relations": [
     "caja_cierres",
     "categorias",
@@ -64,6 +67,7 @@
     "proveedores",
     "resenas",
     "resenas_imagenes",
+    "reservas_web",
     "usuarios",
     "vw_carta_stock_publico",
     "vw_platos_opciones",
