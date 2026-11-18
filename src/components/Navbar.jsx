@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { mensajeRPC } from '../services/mensajes.js';
 import { normalizePath } from '../routes.js';
 const links = [
     ['/paginas/nosotros/', 'SOBRE NOSOTROS', 'nav-nosotros'],
@@ -14,6 +15,7 @@ export default function Navbar({ navigate, className = '' }) {
     const [mobile, setMobile] = useState(false);
     const [dropdown, setDropdown] = useState(false);
     const account = useRef(null);
+    const [unread,setUnread]=useState(null);
     useEffect(() => {
         const refresh = () => setSession(window.LaFondaAuth?.getSession());
         const outside = event => { if (!account.current?.contains(event.target)) setDropdown(false); };
@@ -24,6 +26,15 @@ export default function Navbar({ navigate, className = '' }) {
     }, []);
     useEffect(() => { setMobile(false); setDropdown(false); }, [pathname]);
     const role = String(session?.rol || '').toUpperCase();
+    useEffect(() => {
+        let alive=true, running=false;
+        setUnread(null);
+        if(role!=='CLIENTE') return;
+        const refresh=async()=>{if(!alive||running||document.hidden)return;running=true;try{const n=await mensajeRPC('CLIENTE','lf_notificaciones_contar');if(alive)setUnread(Number.isSafeInteger(n)&&n>=0?n:null);}catch{if(alive)setUnread(null);}finally{running=false;}};
+        refresh();const timer=window.setInterval(refresh,60000);
+        window.addEventListener('lafonda-notificaciones-change',refresh);document.addEventListener('visibilitychange',refresh);
+        return()=>{alive=false;window.clearInterval(timer);window.removeEventListener('lafonda-notificaciones-change',refresh);document.removeEventListener('visibilitychange',refresh);};
+    },[role,session?.id,session?.email,session?.password]);
     const admin = role === 'ADMIN';
     const adminMode = admin && String(session?.modo || '').toUpperCase() === 'ADMIN';
     const name = String(session?.nombre || '').trim().split(/\s+/)[0] || String(session?.email || '').split('@')[0] || 'Cuenta';
@@ -43,6 +54,7 @@ export default function Navbar({ navigate, className = '' }) {
                 <ul className={`nav-list${mobile ? ' open' : ''}`} id="nav-menu-list">
                     {links.map(([to,label,id]) => <li key={id}><Link to={to} id={id} className={active(to)} aria-current={active(to).includes('active') ? 'page' : undefined} onClick={close}>{label}</Link></li>)}
                     <li id="nav-admin-item" hidden={!adminMode}><Link to="/paginas/administrador/panel/" className={active('/paginas/administrador/panel/')} onClick={close}>ADMIN</Link></li>
+                    {role==='CLIENTE'&&<li className="lf-nav-notifications"><Link to="/paginas/notificaciones/" className={active('/paginas/notificaciones/')+' lf-nav-bell'} aria-label={unread===null?'Notificaciones':`Notificaciones: ${unread} sin leer`} title="Notificaciones" onClick={close}><i className="fa-regular fa-bell" aria-hidden="true"/>{unread>0&&<span className="lf-nav-count">{unread>99?'99+':unread}</span>}</Link></li>}
                     <li className="nav-user-item" ref={account}>
                         <button type="button" className={`nav-user-btn${session ? ' logged-in' : ''}`} id="nav-user-btn" aria-label="Mi cuenta" aria-expanded={dropdown} aria-controls="user-dropdown" onClick={() => setDropdown(v => !v)}><span className="user-icon"><i className="fa-regular fa-user"/></span><span className="user-label" id="user-display-name">{name}</span><span className="user-arrow"><i className="fa-solid fa-caret-down"/></span></button>
                         <ul id="user-dropdown" className={`user-dropdown${dropdown ? ' open' : ''}`}>

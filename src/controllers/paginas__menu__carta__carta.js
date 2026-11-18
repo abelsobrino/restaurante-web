@@ -814,14 +814,12 @@ async function cargarCatalogo() {
         estado.hidden =
             false;
 
-        estado.textContent =
-            "Cargando platos...";
+        estado.setAttribute('aria-busy','true');
+        estado.innerHTML = '<div class="lf-brand-loader" role="status"><img src="/imagenes/logo/logo.webp" alt=""/><span>Cargando nuestra carta...</span></div>';
 
-        const resultado =
-            await LaFondaDB.rpc(
-                "web_catalogo",
-                {}
-            );
+        // La lectura del inventario no depende de la respuesta del catálogo.
+        const lectura = window.LaFondaStock?.prepararLecturaCatalogo?.();
+        const resultado = await LaFondaDB.rpc("web_catalogo", {});
 
         if (
             window.LaFondaStock?.enriquecerCatalogo
@@ -829,11 +827,12 @@ async function cargarCatalogo() {
 
             await window.LaFondaStock
                 .enriquecerCatalogo(
-                    resultado
+                    resultado, lectura
                 );
 
         }
 
+        if (!scope.active) return;
         cartaState.catalogo = {
 
             categorias:
@@ -872,11 +871,14 @@ async function cargarCatalogo() {
 
         estado.hidden =
             true;
+        estado.removeAttribute("aria-busy");
 
     }
 
     catch (error) {
 
+        if (!scope.active) return;
+        estado.removeAttribute("aria-busy");
         console.error(
             "Error cargando carta:",
             error
@@ -1201,7 +1203,7 @@ function aplicarFiltros() {
 }
 
 function crearImagenCarta(
-    item
+    item, prioritaria = false
 ) {
 
     const imagen =
@@ -1232,7 +1234,7 @@ function crearImagenCarta(
             alt="${escaparCarta(
                 item.nombre
             )}"
-            loading="lazy"
+            loading="${prioritaria ? 'eager' : 'lazy'}" decoding="async" ${prioritaria ? 'fetchpriority="high"' : ''}
         >
 
     `;
@@ -1410,7 +1412,7 @@ function renderizarCatalogo() {
                             >
 
                                 ${crearImagenCarta(
-                                    variante
+                                    variante, indice < 3
                                 )}
 
                             </div>

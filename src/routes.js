@@ -23,6 +23,8 @@ export const routes = [
     { ...{"path": "/paginas/resenas/", "name": "Resenas", "title": "Reseñas | La Fonda", "styles": ["/paginas/resenas/resenas.css"], "leaflet": false, "admin": false, "navClass": "", "footerClass": ""}, load: () => import("./pages/Resenas.jsx") },
     { ...{"path": "/paginas/reservas/mis-reservas/", "name": "ReservasMisReservas", "title": "Mis Reservas | La Fonda", "styles": ["/paginas/reservas/mis-reservas/mis-reservas.css"], "leaflet": false, "admin": false, "navClass": "", "footerClass": ""}, load: () => import("./pages/ReservasMisReservas.jsx") },
     { ...{"path": "/paginas/reservas/nueva-reserva/", "name": "ReservasNuevaReserva", "title": "Reservar Mesa | La Fonda", "styles": ["/paginas/reservas/nueva-reserva/nueva-reserva.css"], "leaflet": false, "admin": false, "navClass": "", "footerClass": ""}, load: () => import("./pages/ReservasNuevaReserva.jsx") },
+    { path: "/paginas/administrador/contacto/", name: "AdministradorContacto", title: "Mensajes | Administración La Fonda", styles: ["/paginas/administrador/admin.css", "/paginas/administrador/componentes/menu/menu.css"], leaflet: false, admin: true, navClass: "", footerClass: "", load: () => import("./pages/AdministradorContacto.jsx") },
+    { path: "/paginas/notificaciones/", name: "Notificaciones", title: "Notificaciones | La Fonda", styles: [], leaflet: false, admin: false, cliente: true, navClass: "", footerClass: "", load: () => import("./pages/Notificaciones.jsx") },
 ];
 
 export function normalizePath(path) {

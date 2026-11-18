@@ -34,6 +34,11 @@ export default function App() {
         setFailure(null);
         const route = findRoute(loc.pathname);
         if (!route) { setDisplay(null); setPending(false); setFailure({message: 'La página solicitada no existe.'}); return; }
+        if (route.cliente && window.LaFondaAuth?.getSession()?.rol !== "CLIENTE") {
+            if (!window.LaFondaAuth?.getSession()) { sessionStorage.setItem("lafonda_return_to", loc.pathname); navigate("/paginas/acceso/iniciar-sesion/", {replace:true}); }
+            else navigate("/", {replace:true});
+            return;
+        }
         if (route.admin) {
             const session = window.LaFondaAuth.getSession();
             if (!session || session.rol !== 'ADMIN') {
@@ -83,12 +88,13 @@ export default function App() {
         return () => { document.removeEventListener('click', click); document.removeEventListener('pointerover', prefetch); document.removeEventListener('focusin', prefetch); };
     }, [navigate]);
     const Page = display?.Component;
+    const menuLoading = pending && findRoute(loc.pathname)?.name === "MenuCarta" && display?.target !== target;
     const retryRoute = () => { setFailure(null); setRetry(n => n + 1); };
     return <>
         <Navbar navigate={navigate} className={display?.navClass}/>
         {pending && <div role="status" aria-label="Cargando sección" style={{position:'fixed',top:0,left:0,right:0,height:3,background:'var(--dorado, #e8b34e)',zIndex:9999,pointerEvents:'none'}}/>}
         {failure && <section role="alert" className="container" style={{paddingBlock:24}}><p>{failure.message}</p><button type="button" onClick={retryRoute}>Reintentar</button>{' '}<button type="button" onClick={() => navigate('/')}>Volver al inicio</button></section>}
-        {Page ? <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/> : !failure && <main aria-busy="true" className="container" style={{minHeight:'45vh',paddingBlock:32}}>Cargando...</main>}
+        {Page && !menuLoading ? <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/> : !failure && <main aria-busy="true" className="container lf-route-loader lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span role="status">Cargando La Fonda...</span></main>}
         <Footer className={display?.footerClass}/>
     </>;
 }

@@ -177,7 +177,8 @@ export function setup(scope) {
             "promociones",
             "contenido",
             "reportes",
-            "configuracion"
+            "configuracion",
+            "contacto"
 
         ];
 

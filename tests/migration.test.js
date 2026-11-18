@@ -6,9 +6,9 @@ import { createPageScope } from '../src/runtime/scope.js';
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
 const inventory = JSON.parse(read('docs/inventario-rutas.json'));
 
-test('24 rutas y alias históricos index.html conservados', () => {
-    assert.equal(routes.length, 24);
-    assert.equal(new Set(routes.map(r => r.path)).size, 24);
+test('24 rutas históricas conservadas y dos rutas nuevas', () => {
+    assert.equal(routes.length, 26);
+    assert.equal(new Set(routes.map(r => r.path)).size, 26);
     assert.equal(normalizePath('/index.html'), '/');
     for (const r of inventory) {
         assert.equal(findRoute(r.path).name, r.name);
@@ -19,8 +19,8 @@ test('24 rutas y alias históricos index.html conservados', () => {
     }
     assert.equal(findRoute('/no-existe'), undefined);
 });
-test('siete módulos admin protegidos y llamadas RPC conservadas', () => {
-    assert.equal(routes.filter(r => r.admin).length, 7);
+test('ocho módulos admin protegidos y llamadas RPC históricas conservadas', () => {
+    assert.equal(routes.filter(r => r.admin).length, 8);
     const fileList = [...new Set(inventory.flatMap(r => r.controllers))].map(s => 'src/controllers/' + s);
     const files = [...fileList, 'src/services/auth.js', 'src/services/db.js'];
     const found = new Set(files.flatMap(f => [...read(f).matchAll(/(?:\.rpc|\brpc)\s*\(\s*["']([^"']+)/g)].map(m => m[1])));

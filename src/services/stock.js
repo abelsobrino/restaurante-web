@@ -213,13 +213,18 @@
         };
     }
 
-    async function enriquecerCatalogo(catalogo) {
+    async function prepararLecturaCatalogo() {
+        try { return { lectura: await cargarLecturaDiaria() }; } catch (error) { return { error }; }
+    }
+
+    async function enriquecerCatalogo(catalogo, preparacion) {
         if (!catalogo || !Array.isArray(catalogo.platos)) return catalogo;
 
         let lectura;
 
         try {
-            lectura = await cargarLecturaDiaria();
+            if (preparacion) { const resultado = await preparacion; if (resultado.error) throw resultado.error; lectura = resultado.lectura; }
+            else lectura = await cargarLecturaDiaria();
         } catch (error) {
             lecturaState.intentada = true;
             lecturaState.ultimoErrorStock = String(error?.message || error || "");
@@ -543,6 +548,7 @@
         validarProducto,
         validarProductos,
         enriquecerCatalogo,
+        prepararLecturaCatalogo,
         registrarErrorServidor,
         esErrorStockServidor,
         estaRechazado,

@@ -1,3 +1,4 @@
+import { mensajeRPC, confirmarID, errorMensajes } from "../services/mensajes.js";
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
     const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
@@ -36,6 +37,8 @@ function completarDatosContacto() {
     }
 
     if (email) email.value = sesion.email || "";
+    if (nombre && sesion.rol === "CLIENTE") nombre.readOnly = true;
+    if (email && sesion.rol === "CLIENTE") email.readOnly = true;
 }
 
 function cambiarTabContacto(id) {
@@ -58,8 +61,15 @@ function configurarTabsContacto() {
     });
 }
 
-function enviarContacto(evento) {
+let enviando = false;
+let solicitud = null;
+let contenido = null;
+async function enviarContacto(evento) {
     evento.preventDefault();
+    if (enviando) return;
+    const sesion = LaFondaAuth?.getSession();
+    if (!sesion) { LaFondaAuth?.requireLogin("/paginas/contacto/"); return; }
+    if (sesion.rol !== "CLIENTE") { mostrarEstadoContacto("Inicia sesión con una cuenta de cliente para enviar un mensaje.", "error"); return; }
 
     const nombre = document.getElementById("contacto-nombre").value.trim();
     const email = document.getElementById("contacto-email").value.trim();
@@ -87,18 +97,24 @@ function enviarContacto(evento) {
     }
 
     const boton = document.getElementById("contacto-enviar");
-    boton.disabled = true;
+    const form = document.getElementById("contacto-formulario");
+    if (!['consulta','sugerencia','queja','felicitacion'].includes(tipo)) { mostrarEstadoContacto('Selecciona un tipo válido.', 'error'); return; }
+    const clave = JSON.stringify([tipo,mensaje]);
+    if (!solicitud || contenido !== clave) { solicitud = crypto.randomUUID(); contenido = clave; }
+    enviando = true;
+    const controles = [...form.querySelectorAll('input,select,textarea,button')];
+    controles.forEach(c => c.disabled = true);
     boton.textContent = "Enviando...";
     mostrarEstadoContacto("Enviando mensaje...");
+    try {
+        confirmarID(await mensajeRPC('CLIENTE','lf_contacto_enviar',{p_solicitud:solicitud,p_tipo:tipo,p_mensaje:mensaje}));
+        if (!scope.active) return;
+        form.reset(); completarDatosContacto(); actualizarContadorContacto();
+        solicitud = null; contenido = null;
+        mostrarEstadoContacto("Mensaje enviado. Recibirás la respuesta en Notificaciones.", "exito");
+    } catch (error) { if (scope.active) mostrarEstadoContacto(errorMensajes(error), "error"); }
+    finally { enviando = false; if (scope.active) { controles.forEach(c => c.disabled = false); boton.textContent = "Enviar comentario"; } }
 
-    setTimeout(() => {
-        document.getElementById("contacto-formulario").reset();
-        document.getElementById("contacto-contador").textContent = "0";
-        completarDatosContacto();
-        mostrarEstadoContacto("Formulario validado. El envío al restaurante aún no está conectado.", "exito");
-        boton.disabled = false;
-        boton.textContent = "Enviar comentario";
-    }, 500);
 }
 
 function configurarEventosContacto() {
@@ -111,6 +127,7 @@ function configurarEventosContacto() {
 
 function iniciarPaginaContacto() {
     completarDatosContacto();
+    if (!LaFondaAuth?.getSession()) mostrarEstadoContacto("Inicia sesión para enviar un mensaje y recibir la respuesta en Notificaciones.");
     configurarTabsContacto();
     configurarEventosContacto();
 }
