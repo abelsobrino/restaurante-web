@@ -15,25 +15,3 @@
 @media(max-width:600px){.lf-msg-card{padding:15px}.lf-msg-top{gap:7px}.lf-msg-state{font-size:.67rem}.lf-msg-actions .lf-msg-button,.lf-msg-actions .lf-msg-secondary{flex:1 1 auto}.lf-msg-summary{max-width:none}.lf-inbox-heading{align-items:flex-start}.lf-nav-count{right:-6px;top:-5px}}
 
 .menu-img-container:has(> img){background:#171717 url("/imagenes/logo/logo.webp") center/76px auto no-repeat}
-
-/* Transición SPA: mantiene tapado el contenido mientras se aplican los CSS
-   específicos de la nueva ruta, evitando controles sin estilo (FOUC). */
-.lf-route-transition {
-    position: fixed;
-    inset: var(--alto-navbar, 90px) 0 0;
-    z-index: 970;
-    display: grid;
-    place-items: center;
-    background: #000;
-    pointer-events: auto;
-}
-.lf-route-transition .lf-brand-loader { min-height: 0; padding: 18px; }
-@media (max-width: 768px) {
-    .lf-route-transition { bottom: calc(82px + env(safe-area-inset-bottom, 0px)); }
-    body.lf-has-mobile-switch .lf-route-transition { top: calc(var(--alto-navbar, 68px) + 59px); }
-}
-
-/* Resguardo visual definitivo: aunque Safari pinte un frame intermedio,
-   el contenido de ruta nunca puede mostrarse sin sus estilos. */
-.lf-route-scene { display: contents; }
-.lf-route-scene[aria-hidden="true"] { visibility: hidden !important; }

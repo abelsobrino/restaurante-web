@@ -36,9 +36,9 @@ const sectionGroups = [
     ]}
 ];
 
-export default function Navbar({ navigate, className = '' }) {
+export default function Navbar({ navigate, className = '', visiblePath }) {
     const { pathname } = useLocation();
-    const current = normalizePath(pathname);
+    const current = normalizePath(visiblePath || pathname);
     const [session, setSession] = useState(() => window.LaFondaAuth?.getSession());
     const [dropdown, setDropdown] = useState(false);
     const [unread, setUnread] = useState(null);

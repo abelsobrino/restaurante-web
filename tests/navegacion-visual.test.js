@@ -5,29 +5,23 @@ import { calcularLimitesCarrito } from '../src/services/floating-cart.js';
 
 const leer = ruta => readFileSync(new URL(`../${ruta}`, import.meta.url), 'utf8');
 
-test('las hojas se activan durante el montaje, no antes de reemplazar la pantalla anterior', () => {
+test('la pantalla anterior continúa visible hasta que el componente entrante esté preparado', () => {
     const app = leer('src/App.jsx');
-    const preparar = app.indexOf('prepareRoute(route).then(prepared =>');
-    const mostrar = app.indexOf('setDisplay({ ...prepared', preparar);
-    const activar = app.indexOf('useInsertionEffect(() => {');
-    assert.ok(preparar >= 0 && mostrar > preparar && activar > mostrar);
-    assert.doesNotMatch(app.slice(preparar, mostrar), /activateStyles\(/);
-    assert.match(app.slice(activar), /activateStyles\(display\.styles\)/);
-    assert.match(app, /stylesReady\(display\.styles\)/);
-    assert.match(app, /requestAnimationFrame\(\(\) => \{[\s\S]*?requestAnimationFrame\(\(\) => \{/);
+    const start = app.indexOf('prepareRoute(route).then(prepared =>');
+    const setDisplay = app.indexOf('setDisplay({ ...prepared', start);
+    assert.ok(start >= 0 && setDisplay > start);
+    assert.doesNotMatch(app, /setPending|transitioning|visibility:.*hidden/);
+    assert.match(app, /Page \? <Page key=\{display\.key\}/);
+    assert.match(app, /visiblePath=\{display\?\.path\}/);
+    assert.doesNotMatch(app, /useInsertionEffect|activateStyles|stylesReady/);
 });
 
-test('la pantalla nunca muestra contenido sin CSS mientras carga una ruta', () => {
+test('no existen overlays de transición que introduzcan otro flash negro', () => {
     const app = leer('src/App.jsx');
     const styles = leer('public/css/mensajes.css');
-    assert.match(app, /display\.target !== target/);
-    assert.match(app, /visibility: transitioning \? 'hidden' : 'visible'/);
-    assert.match(app, /transitioning && Page && <div className="lf-route-transition"/);
-    assert.match(app, /aria-label="Preparando sección"/);
-    assert.match(styles, /\.lf-route-transition\s*\{[\s\S]*?position:\s*fixed/);
-    assert.match(styles, /z-index:\s*970/);
-    assert.match(styles, /body\.lf-has-mobile-switch \.lf-route-transition/);
-    assert.match(styles, /\.lf-route-scene\[aria-hidden="true"\]\s*\{\s*visibility:\s*hidden\s*!important/);
+    assert.doesNotMatch(app, /lf-route-transition|lf-route-scene/);
+    assert.doesNotMatch(styles, /\.lf-route-transition|\.lf-route-scene/);
+    assert.match(app, /prepareRoute\(route\)/);
     assert.doesNotMatch(leer('public/css/general.css'), /@view-transition/);
 });
 

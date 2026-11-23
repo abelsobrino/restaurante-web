@@ -530,7 +530,7 @@
 
 @media print {
 
-    body {
+    body:has(.comprobante-pagina) {
         margin: 0 !important;
 
         padding: 0 !important;
@@ -560,7 +560,7 @@
         padding: 0;
     }
 
-    .container {
+    body:has(.comprobante-pagina) .container {
         width: 100%;
 
         max-width: none;
