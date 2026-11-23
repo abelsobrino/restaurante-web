@@ -743,12 +743,12 @@
     position:
         fixed;
 
-    /* Por defecto sobre los accesos móviles. JS limita cualquier arrastre. */
+    /* Ubicación provisional amplia y segura; JS la afina tras medir. */
     right:
-        calc(14px + env(safe-area-inset-right, 0px));
+        calc(36px + env(safe-area-inset-right, 0px));
 
     bottom:
-        calc(92px + env(safe-area-inset-bottom, 0px));
+        calc(112px + env(safe-area-inset-bottom, 0px));
 
     z-index:
         960;
@@ -795,6 +795,9 @@
         0 8px 24px
         rgba(255, 180, 0, 0.3);
 }
+
+/* Se revela solo cuando su posición se calculó con el CSS ya cargado. */
+.mobile-cart-btn:not([data-cart-ready="true"]) { visibility: hidden; }
 
 .mobile-cart-btn > span {
     position:

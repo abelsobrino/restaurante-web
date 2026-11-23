@@ -10,11 +10,11 @@ test('el carrito flotante queda entre el selector superior y la barra inferior',
         anchoPantalla: 375, altoPantalla: 800, anchoBoton: 58, altoBoton: 58,
         limiteSuperior: 132, inicioBarraInferior: 720
     });
-    assert.deepEqual(limites, { minX: 12, maxX: 305, minY: 144, maxY: 650 });
+    assert.deepEqual(limites, { minX: 24, maxX: 293, minY: 152, maxY: 640 });
     const css = leer('public/paginas/menu/carta/carta.css');
     assert.match(css, /touch-action:\s*none/);
-    assert.match(css, /92px \+ env\(safe-area-inset-bottom/);
-    assert.match(css, /\.mobile-cart-btn\s*\{[\s\S]*?bottom:\s*calc\(92px/);
+    assert.match(css, /112px \+ env\(safe-area-inset-bottom/);
+    assert.match(css, /\.mobile-cart-btn\s*\{[\s\S]*?bottom:\s*calc\(112px/);
 });
 
 test('el botón se mueve y se limita al área segura sin navegar al arrastrarlo', () => {
@@ -22,7 +22,8 @@ test('el botón se mueve y se limita al área segura sin navegar al arrastrarlo'
     const controles = {};
     const almacen = new Map();
     const boton = {
-        style: {}, offsetWidth: 58, offsetHeight: 58,
+        style: {}, attributes: {}, offsetWidth: 58, offsetHeight: 58,
+        setAttribute(nombre, valor) { this.attributes[nombre] = valor; },
         addEventListener(tipo, fn) { eventos.set(tipo, fn); },
         removeEventListener(tipo) { eventos.delete(tipo); },
         setPointerCapture(id) { this.captura = id; },
@@ -51,12 +52,13 @@ test('el botón se mueve y se limita al área segura sin navegar al arrastrarlo'
     };
     try {
         configurarCarritoFlotante(boton, scope);
-        assert.equal(boton.style.left, '305px');
-        assert.equal(boton.style.top, '650px');
+        assert.equal(boton.style.left, '281px');
+        assert.equal(boton.style.top, '624px');
+        assert.equal(boton.attributes['data-cart-ready'], 'true');
         enviar('pointerdown', { clientX: 340, clientY: 680 });
         enviar('pointermove', { clientX: -400, clientY: -500 });
-        assert.equal(boton.style.left, '12px');
-        assert.equal(boton.style.top, '144px');
+        assert.equal(boton.style.left, '24px');
+        assert.equal(boton.style.top, '152px');
         enviar('pointerup');
         const trasArrastre = enviar('click');
         assert.ok(trasArrastre.prevented);
@@ -64,7 +66,7 @@ test('el botón se mueve y se limita al área segura sin navegar al arrastrarlo'
         enviar('click');
         assert.equal(win.location.href, '/paginas/pedidos/carrito/');
         enviar('keydown', { key: 'ArrowDown' });
-        assert.equal(boton.style.top, '156px');
+        assert.equal(boton.style.top, '164px');
         assert.ok(almacen.size > 0);
         scope.cleanup();
         assert.equal(eventos.size, 0);

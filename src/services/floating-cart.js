@@ -1,16 +1,19 @@
 // La posición del carrito flotante respeta los límites del encabezado y
 // la navegación inferior. Funciona sin modificar el flujo de pedidos.
 export function calcularLimitesCarrito({ anchoPantalla, altoPantalla, anchoBoton, altoBoton, limiteSuperior, inicioBarraInferior }) {
-    const margen = 12;
-    const minX = margen;
-    const maxX = Math.max(minX, anchoPantalla - anchoBoton - margen);
-    const minY = Math.max(margen, limiteSuperior + margen);
-    const maxY = Math.max(minY, Math.min(altoPantalla, inicioBarraInferior) - altoBoton - margen);
+    // Margen amplio para que ni el contador ni la sombra se recorten en iOS.
+    const margenLateral = 24;
+    const minX = margenLateral;
+    const maxX = Math.max(minX, anchoPantalla - anchoBoton - margenLateral);
+    const minY = Math.max(24, limiteSuperior + 20);
+    const maxY = Math.max(minY, Math.min(altoPantalla, inicioBarraInferior) - altoBoton - 22);
     return { minX, maxX, minY, maxY };
 }
 
 const ajustar = (valor, menor, mayor) => Math.max(menor, Math.min(mayor, valor));
-const CLAVE = 'lafonda-carrito-flotante-pos-v1';
+// Se renueva la clave para no reutilizar posiciones pegadas al borde
+// de versiones anteriores. Desde esta versión sí se conserva el arrastre.
+const CLAVE = 'lafonda-carrito-flotante-pos-v2';
 
 export function configurarCarritoFlotante(boton, scope) {
     if (!boton) return;
@@ -22,8 +25,10 @@ export function configurarCarritoFlotante(boton, scope) {
     let ignorarClick = false;
 
     function limites() {
-        const alto = Number(win.innerHeight) || doc.documentElement?.clientHeight || 700;
-        const ancho = Number(win.innerWidth) || doc.documentElement?.clientWidth || 375;
+        // innerWidth / innerHeight son más estables en posición fixed;
+        // el visualViewport facilita ajustar cuando cambia la barra de Safari.
+        const alto = Number(win.visualViewport?.height) || Number(win.innerHeight) || doc.documentElement?.clientHeight || 700;
+        const ancho = Number(win.visualViewport?.width) || Number(win.innerWidth) || doc.documentElement?.clientWidth || 375;
         const cabecera = doc.querySelector?.('.main-header');
         const selector = doc.querySelector?.('.lf-mobile-group-switch');
         const barra = doc.querySelector?.('.lf-mobile-tabs');
@@ -47,6 +52,8 @@ export function configurarCarritoFlotante(boton, scope) {
             left: `${posicion.x}px`, top: `${posicion.y}px`,
             right: 'auto', bottom: 'auto'
         });
+        // No mostrar un botón en su posición CSS provisional antes de medirlo.
+        boton.setAttribute?.('data-cart-ready', 'true');
     }
 
     function guardar() {
@@ -68,7 +75,8 @@ export function configurarCarritoFlotante(boton, scope) {
                 return;
             }
         } catch { /* Se usa la ubicación por defecto. */ }
-        dibujar(maxX, maxY);
+        // Ubicación inicial cómoda, no pegada al borde ni encima de la barra.
+        dibujar(Math.max(minX, maxX - 12), Math.max(minY, maxY - 16));
     }
 
     function alPresionar(e) {
@@ -131,6 +139,7 @@ export function configurarCarritoFlotante(boton, scope) {
     boton.addEventListener('keydown', alTeclado);
     win.addEventListener('resize', alCambiarPantalla);
     win.addEventListener('orientationchange', alCambiarPantalla);
+    win.visualViewport?.addEventListener?.('resize', alCambiarPantalla);
     restaurar();
 
     scope.onDispose?.(() => {
@@ -140,5 +149,6 @@ export function configurarCarritoFlotante(boton, scope) {
         boton.removeEventListener('pointercancel', alSoltar);
         boton.removeEventListener('click', alClick);
         boton.removeEventListener('keydown', alTeclado);
+        win.visualViewport?.removeEventListener?.('resize', alCambiarPantalla);
     });
 }

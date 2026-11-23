@@ -50,21 +50,36 @@ export default function App() {
         setPending(true);
         prepareRoute(route).then(prepared => {
             if (cancelled) return;
+            // Activar el CSS ANTES de montar los controladores de la siguiente
+            // página. Su medición del DOM (p. ej. el carrito flotante) requiere
+            // tamaños y posiciones calculados con los estilos definitivos.
+            activateStyles(prepared.styles);
+            // Forzar un recálculo de estilos antes del montaje evita el FOUC.
+            void document.documentElement.offsetHeight;
             setDisplay({ ...prepared, target, key: loc.key + ':' + retry });
-            setPending(false);
+            // pending se retira tras dos frames en el efecto de layout.
         }).catch(error => { if (!cancelled) { setPending(false); onError(error); } });
         return () => { cancelled = true; };
     }, [loc.pathname, loc.search, loc.hash, loc.key, target, retry, navigate, onError]);
-    // El encabezado no se desmonta. Se activa el CSS de la nueva pantalla en el
-    // mismo commit en que cambia el contenido, sin ocultar toda la página.
+    // La página entrante queda cubierta durante la activación del CSS. Esto
+    // también evita mostrar controles sin formato en Safari/iOS entre rutas.
     useLayoutEffect(() => {
         if (!display) { activateStyles([]); return; }
+        if (display.target !== target) return;
         activateStyles(display.styles);
         document.title = display.title;
         const hash = new URL(display.target, window.location.origin).hash;
         if (hash) { try { document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView(); } catch {} }
         else window.scrollTo({ top: 0, behavior: 'instant' });
-    }, [display]);
+        // No descubrir la nueva sección hasta que el navegador haya tenido
+        // oportunidad de calcular y pintar los estilos de la ruta.
+        let frame1 = 0;
+        let frame2 = 0;
+        frame1 = window.requestAnimationFrame(() => {
+            frame2 = window.requestAnimationFrame(() => setPending(false));
+        });
+        return () => { window.cancelAnimationFrame(frame1); window.cancelAnimationFrame(frame2); };
+    }, [display, target]);
     useEffect(() => {
         const link = event => event.target instanceof Element ? event.target.closest('a[href]') : null;
         const routeLink = anchor => {
@@ -88,13 +103,16 @@ export default function App() {
         return () => { document.removeEventListener('click', click); document.removeEventListener('pointerover', prefetch); document.removeEventListener('focusin', prefetch); };
     }, [navigate]);
     const Page = display?.Component;
-    const menuLoading = pending && findRoute(loc.pathname)?.name === "MenuCarta" && display?.target !== target;
+    const transitioning = !failure && (pending || (display && display.target !== target));
     const retryRoute = () => { setFailure(null); setRetry(n => n + 1); };
     return <>
         <Navbar navigate={navigate} className={display?.navClass}/>
-        {pending && <div role="status" aria-label="Cargando sección" style={{position:'fixed',top:0,left:0,right:0,height:3,background:'var(--dorado, #e8b34e)',zIndex:9999,pointerEvents:'none'}}/>}
+
         {failure && <section role="alert" className="container" style={{paddingBlock:24}}><p>{failure.message}</p><button type="button" onClick={retryRoute}>Reintentar</button>{' '}<button type="button" onClick={() => navigate('/')}>Volver al inicio</button></section>}
-        {Page && !menuLoading ? <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/> : !failure && <main aria-busy="true" className="container lf-route-loader lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span role="status">Cargando La Fonda...</span></main>}
+        {Page ? <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/> : !failure && <main aria-busy="true" className="container lf-route-loader lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span role="status">Cargando La Fonda...</span></main>}
+        {transitioning && Page && <div className="lf-route-transition" role="status" aria-live="polite" aria-label="Preparando sección">
+            <div className="lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span>Preparando La Fonda...</span></div>
+        </div>}
         <Footer className={display?.footerClass}/>
     </>;
 }
