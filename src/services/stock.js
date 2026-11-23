@@ -111,150 +111,25 @@
         sessionStorage.removeItem(RECHAZOS_KEY);
     }
 
-    async function leerTabla(ruta) {
-        const config = window.LAFONDA_CONFIG || {};
-
-        if (!config.supabaseUrl || !config.supabaseAnonKey) {
-            throw new Error("Supabase no está configurado");
-        }
-
-        const respuesta = await fetch(
-            `${config.supabaseUrl}/rest/v1/${ruta}`,
-            {
-                method: "GET",
-                cache: "no-store",
-                headers: {
-                    apikey: config.supabaseAnonKey,
-                    Authorization: `Bearer ${config.supabaseAnonKey}`,
-                    Accept: "application/json"
-                }
-            }
-        );
-
-        const texto = await respuesta.text();
-        let datos = null;
-
-        if (texto) {
-            try {
-                datos = JSON.parse(texto);
-            } catch {
-                datos = texto;
-            }
-        }
-
-        if (!respuesta.ok) {
-            const mensaje = datos?.message || datos?.details || datos?.hint || `HTTP ${respuesta.status}`;
-            throw new Error(String(mensaje));
-        }
-
-        return Array.isArray(datos) ? datos : [];
-    }
-
-    function filaMasReciente(actual, candidata) {
-        if (!actual) return candidata;
-
-        const fechaActual = Date.parse(actual.updated_at || actual.created_at || 0) || 0;
-        const fechaCandidata = Date.parse(candidata.updated_at || candidata.created_at || 0) || 0;
-
-        return fechaCandidata >= fechaActual ? candidata : actual;
-    }
-
-    async function cargarLecturaDiaria() {
-        const hoy = fechaLima();
+    // El frontend NO debe leer directamente las tablas internas de inventario.
+    // Supabase deniega esas lecturas a anon (42501) por seguridad.
+    // La RPC publica web_catalogo es la unica fuente de datos mostrables;
+    // info() interpreta sus campos de stock cuando estan disponibles.
+    // La verificacion definitiva de existencias corresponde a las RPC de pedido.
+    async function prepararLecturaCatalogo() {
         lecturaState.intentada = true;
-        lecturaState.fecha = hoy;
+        lecturaState.fecha = fechaLima();
         lecturaState.stockDiarioLegible = false;
         lecturaState.recetasLegibles = false;
         lecturaState.ultimoErrorStock = "";
         lecturaState.ultimoErrorRecetas = "";
-
-        const rutaStock =
-            `plato_stock_diario?select=plato_id,fecha,stock_actual,activo,updated_at&fecha=eq.${encodeURIComponent(hoy)}`;
-        const rutaRecetas =
-            "plato_ingredientes?select=plato_id";
-
-        const [stockResultado, recetasResultado] = await Promise.allSettled([
-            leerTabla(rutaStock),
-            leerTabla(rutaRecetas)
-        ]);
-
-        const stockPorPlato = new Map();
-        const platosConReceta = new Set();
-
-        if (stockResultado.status === "fulfilled") {
-            lecturaState.stockDiarioLegible = true;
-
-            for (const fila of stockResultado.value) {
-                const id = Number(fila.plato_id);
-                if (!Number.isFinite(id) || id <= 0) continue;
-                stockPorPlato.set(id, filaMasReciente(stockPorPlato.get(id), fila));
-            }
-        } else {
-            lecturaState.ultimoErrorStock = String(stockResultado.reason?.message || stockResultado.reason || "");
-        }
-
-        if (recetasResultado.status === "fulfilled") {
-            lecturaState.recetasLegibles = true;
-
-            for (const fila of recetasResultado.value) {
-                const id = Number(fila.plato_id);
-                if (Number.isFinite(id) && id > 0) platosConReceta.add(id);
-            }
-        } else {
-            lecturaState.ultimoErrorRecetas = String(recetasResultado.reason?.message || recetasResultado.reason || "");
-        }
-
-        return {
-            fecha: hoy,
-            stockPorPlato,
-            platosConReceta,
-            stockDiarioLegible: lecturaState.stockDiarioLegible,
-            recetasLegibles: lecturaState.recetasLegibles
-        };
-    }
-
-    async function prepararLecturaCatalogo() {
-        try { return { lectura: await cargarLecturaDiaria() }; } catch (error) { return { error }; }
+        return { lectura: null };
     }
 
     async function enriquecerCatalogo(catalogo, preparacion) {
-        if (!catalogo || !Array.isArray(catalogo.platos)) return catalogo;
-
-        let lectura;
-
-        try {
-            if (preparacion) { const resultado = await preparacion; if (resultado.error) throw resultado.error; lectura = resultado.lectura; }
-            else lectura = await cargarLecturaDiaria();
-        } catch (error) {
-            lecturaState.intentada = true;
-            lecturaState.ultimoErrorStock = String(error?.message || error || "");
-            return catalogo;
-        }
-
-        for (const plato of catalogo.platos) {
-            const id = Number(plato.id);
-            const fila = lectura.stockPorPlato.get(id);
-
-            if (fila) {
-                plato.stock_hoy = Math.max(0, Number(fila.stock_actual || 0));
-                plato.stock_habilitado_hoy = fila.activo !== false;
-                plato.stock_fecha = lectura.fecha;
-                plato.stock_origen = "plato_stock_diario";
-                continue;
-            }
-
-            if (
-                lectura.stockDiarioLegible &&
-                lectura.recetasLegibles &&
-                lectura.platosConReceta.has(id)
-            ) {
-                plato.stock_hoy = 0;
-                plato.stock_habilitado_hoy = false;
-                plato.stock_fecha = lectura.fecha;
-                plato.stock_origen = "plato_stock_diario_sin_fila_hoy";
-            }
-        }
-
+        // Mantiene la interfaz usada por Carta, Carrito y Pagos.
+        // No inventa stock ni consulta tablas privadas con la clave anon.
+        if (preparacion) await preparacion;
         return catalogo;
     }
 
