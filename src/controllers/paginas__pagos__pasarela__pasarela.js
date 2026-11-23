@@ -862,7 +862,7 @@ async function registrarPedido() {
                 sesion.email,
 
             p_password:
-                sesion.password,
+                LaFondaAuth.credentials().password,
 
             p_items:
                 crearItemsPedido(),

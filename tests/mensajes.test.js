@@ -7,10 +7,10 @@ import {findRoute} from '../src/routes.js';
 import {adminMenu} from '../src/runtime/adminMenu.js';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 function entorno(rpc,rol='CLIENTE'){
- const fields=new Map();const ready=[];const session=rol?{id:123,nombre:'Cliente',apellido:'Prueba',email:'cliente@example.invalid',password:'solo-prueba',rol,modo:rol}:null;
+ const fields=new Map();const ready=[];const session=rol?{id:123,nombre:'Cliente',apellido:'Prueba',email:'cliente@example.invalid',rol,modo:rol}:null;
  const element=id=>{if(!fields.has(id))fields.set(id,{value:'',textContent:'',className:'',classList:{add(){}},listeners:{},addEventListener(k,f){this.listeners[k]=f;}});return fields.get(id);};
  const form=element('contacto-formulario');form.querySelectorAll=()=>['contacto-nombre','contacto-email','contacto-tipo','contacto-mensaje','contacto-enviar'].map(element);form.reset=()=>{element('contacto-mensaje').value='';element('contacto-tipo').value='';};
- let redirected=false;const win={LaFondaAuth:{getSession:()=>session,requireLogin:()=>{redirected=true;}},LaFondaDB:{rpc}};
+ let redirected=false;const win={LaFondaAuth:{getSession:()=>session,credentials:()=>({email:session?.email,password:'solo-prueba'}),requireLogin:()=>{redirected=true;}},LaFondaDB:{rpc}};
  globalThis.window=win;
  const scope={active:true,window:win,document:{getElementById:element,querySelectorAll:()=>[],addEventListener:(e,f)=>ready.push(f)},setTimeout,clearTimeout,setInterval,clearInterval};
  setup(scope);ready.forEach(f=>f());element('contacto-tipo').value='consulta';element('contacto-mensaje').value='Una consulta de prueba.';return {element,scope,send:()=>form.listeners.submit({preventDefault(){}}),redirected:()=>redirected};
@@ -26,7 +26,7 @@ test('doble envío y falta de sesión o rol no generan RPC adicionales',async()=
  const guest=entorno(()=>{calls++;},null);await guest.send();assert.equal(guest.redirected(),true);const admin=entorno(()=>{calls++;},'ADMIN');await admin.send();assert.equal(calls,1);delete globalThis.window;
 });
 test('cliente no invoca función de admin mediante servicio y no suplanta credenciales',async()=>{
- globalThis.window={LaFondaAuth:{getSession:()=>({rol:'CLIENTE',modo:'CLIENTE',email:'real@example.invalid',password:'demo'})},LaFondaDB:{rpc:async(fn,p)=>p}};
+ globalThis.window={LaFondaAuth:{getSession:()=>({rol:'CLIENTE',modo:'CLIENTE',email:'real@example.invalid'}),credentials:()=>({email:'real@example.invalid',password:'demo'})},LaFondaDB:{rpc:async(fn,p)=>p}};
  await assert.rejects(mensajeRPC('ADMIN','lf_contacto_admin_lista'));
  const p=await mensajeRPC('CLIENTE','lf_notificaciones_contar',{p_email:'otro@example.invalid',p_password:'otra'});assert.equal(p.p_email,'real@example.invalid');assert.equal(p.p_password,'demo');assert.throws(()=>confirmarID(null));assert.throws(()=>confirmarAccion(false));delete globalThis.window;
 });

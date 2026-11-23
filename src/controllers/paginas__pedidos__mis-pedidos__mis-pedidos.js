@@ -506,7 +506,7 @@ async function cargarMisPedidos() {
                         sesion.email,
 
                     p_password:
-                        sesion.password
+                        LaFondaAuth.credentials().password
 
                 }
             );

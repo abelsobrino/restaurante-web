@@ -6,92 +6,53 @@
     const LEGACY_KEY =
         "la_fonda_user";
 
+    // El contrato SQL actual requiere la contraseña en varias RPC. Mientras se
+    // migra a tokens de servidor, nunca persistirla en localStorage/sessionStorage.
+    // Al recargar por completo el navegador se solicita un nuevo inicio de sesión.
+    let activeSession = null;
+    let passwordInMemory = null;
+
+    try {
+        sessionStorage.removeItem(SESSION_KEY); // Limpia datos de versiones antiguas.
+        localStorage.removeItem(LEGACY_KEY);
+    } catch { /* El almacenamiento puede estar bloqueado (modo privado). */ }
+
     function getSession() {
-
-        try {
-
-            const datos =
-                sessionStorage.getItem(
-                    SESSION_KEY
-                );
-
-            return JSON.parse(
-                datos || "null"
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "No se pudo leer la sesión:",
-                error
-            );
-
-            return null;
-
-        }
-
+        return activeSession ? { ...activeSession } : null;
     }
 
-    function writeSession(session) {
+    function writeSession(session, password) {
+        const { password: ignored, ...publicSession } = session;
+        if (typeof password !== "string" || !password) {
+            throw new Error("Se requiere iniciar sesión nuevamente.");
+        }
+        activeSession = { ...publicSession };
+        passwordInMemory = password;
 
-        sessionStorage.setItem(
-            SESSION_KEY,
-            JSON.stringify(session)
-        );
+        // Dato de compatibilidad para la actualización visual entre pestañas:
+        // solo perfil público, nunca el secreto de autenticación.
+        try {
+            localStorage.setItem(LEGACY_KEY, JSON.stringify({
+                nombre: activeSession.nombre || activeSession.email?.split("@")[0] || "Usuario",
+                email: activeSession.email,
+                rol: activeSession.rol,
+                loginTime: new Date().toISOString()
+            }));
+        } catch { /* Continúa sin almacenamiento persistente. */ }
 
-        localStorage.setItem(
-            LEGACY_KEY,
-            JSON.stringify({
-                nombre:
-                    session.nombre ||
-                    session.email?.split("@")[0] ||
-                    "Usuario",
-
-                email:
-                    session.email,
-
-                rol:
-                    session.rol,
-
-                loginTime:
-                    new Date().toISOString()
-            })
-        );
-
-        window.dispatchEvent(
-            new CustomEvent(
-                "lafonda-session-change",
-                {
-                    detail: session
-                }
-            )
-        );
-
-        return session;
-
+        const visible = getSession();
+        window.dispatchEvent(new CustomEvent("lafonda-session-change", { detail: visible }));
+        return visible;
     }
 
     function clearSession() {
-
-        sessionStorage.removeItem(
-            SESSION_KEY
-        );
-
-        localStorage.removeItem(
-            LEGACY_KEY
-        );
-
-        window.dispatchEvent(
-            new CustomEvent(
-                "lafonda-session-change",
-                {
-                    detail: null
-                }
-            )
-        );
-
+        activeSession = null;
+        passwordInMemory = null;
+        try {
+            sessionStorage.removeItem(SESSION_KEY);
+            localStorage.removeItem(LEGACY_KEY);
+        } catch { /* Continúa incluso sin acceso a storage. */ }
+        window.dispatchEvent(new CustomEvent("lafonda-session-change", { detail: null }));
     }
 
     async function login(email, password) {
@@ -145,12 +106,9 @@
             modo:
                 resultado.rol === "ADMIN"
                     ? null
-                    : "CLIENTE",
+                    : "CLIENTE"
 
-            password:
-                password
-
-        });
+        }, password);
 
     }
 
@@ -271,7 +229,8 @@
                 : "CLIENTE";
 
         return writeSession(
-            sesion
+            sesion,
+            passwordInMemory
         );
 
     }
@@ -294,15 +253,10 @@
 
     function credentials(rol = null) {
 
-        const sesion =
-            getSession();
+        const sesion = getSession();
 
-        if (!sesion) {
-
-            throw new Error(
-                "Inicia sesión para continuar"
-            );
-
+        if (!sesion || !passwordInMemory) {
+            throw new Error("Inicia sesión para continuar");
         }
 
         if (
@@ -328,7 +282,7 @@
                 sesion.email,
 
             password:
-                sesion.password
+                passwordInMemory
 
         };
 

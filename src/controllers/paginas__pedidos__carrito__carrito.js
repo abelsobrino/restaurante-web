@@ -1230,7 +1230,7 @@ async function aplicarCuponCarrito() {
                         sesion.email,
 
                     p_password:
-                        sesion.password,
+                        LaFondaAuth.credentials().password,
 
                     p_codigo:
                         codigo,

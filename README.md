@@ -79,3 +79,13 @@ LaFonda-React/
 Consulta `docs/AUDITORIA.md` para detalles de funcionalidades, seguridad y pruebas pendientes. El archivo CSV de base de datos recibido enumera columnas y tipos, no contiene cuerpos de funciones RPC, restricciones completas, políticas RLS ni datos. No permite certificar que una operación sea segura para la aplicación de escritorio.
 
 Las 24 pantallas fueron inicializadas en Chromium atravesando los controladores adaptados, con respuestas vacías/simuladas, identidad de prueba y una interfaz de mapa simulada. Se comprobaron también cambio de pestaña de contacto, limpieza de eventos/temporizadores y rechazo de RPC iniciada después de desmontar. Las pruebas Node pasaron 4/4; se verificó sintaxis de JavaScript y de 29 archivos JSX. **No se pudo instalar npm ni compilar la aplicación real en el entorno de entrega porque el registro de npm no resolvía DNS.** No existe todavía una validación integral de React Router, Vite, Leaflet real, responsive visual ni acceso en vivo a Supabase. La primera ejecución de `npm install` en tu equipo generará el archivo de bloqueo de dependencias; consérvalo para futuras instalaciones. No publiques sobre el sistema anterior hasta completar las comprobaciones con datos controlados.
+
+
+## Actualización de seguridad v2.0.10 (noviembre de 2026)
+
+- Las contraseñas **no se guardan** en `sessionStorage` ni `localStorage`, ni se exponen en el perfil público de sesión. Las versiones antiguas del almacenamiento se limpian al abrir la web.
+- Las RPC existentes todavía requieren correo y contraseña. Para no modificar sin pruebas la base de datos compartida, se conservan las credenciales **solo en memoria** mientras la pestaña está activa; al **recargar completamente la página se debe iniciar sesión de nuevo**. Es una mitigación temporal, no autenticación basada en tokens.
+- Se restringen las URLs de imágenes de galería, se protege la precedencia de credenciales en llamadas administrativas y se agregan cabeceras de seguridad en Netlify.
+- La política CSP se configura inicialmente en **Report-Only** para observar posibles bloqueos antes de imponerla. Requiere verificación en producción.
+- `npm test` ejecuta pruebas funcionales y de seguridad; `npm run build` valida la compilación, y `npm audit` **con conexión a Internet** es necesario para consultar alertas de dependencias actualizadas.
+- **Pendiente para una solución de autenticación definitiva:** diseñar sesiones/tokens validados por el servidor y actualizar las RPC de Supabase, tras revisar sus definiciones y el impacto en el sistema de escritorio. Las pruebas locales no sustituyen una auditoría de permisos/RLS ni un pentest de producción.

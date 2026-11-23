@@ -89,7 +89,7 @@ export default function Navbar({ navigate, className = '', visiblePath }) {
             window.removeEventListener('lafonda-notificaciones-change', refresh);
             document.removeEventListener('visibilitychange', refresh);
         };
-    }, [role, session?.id, session?.email, session?.password]);
+    }, [role, session?.id, session?.email]);
 
     const name = String(session?.nombre || '').trim().split(/\s+/)[0] || String(session?.email || '').split('@')[0] || 'Cuenta';
     const active = to => current === normalizePath(to) ? 'nav-link active' : 'nav-link';

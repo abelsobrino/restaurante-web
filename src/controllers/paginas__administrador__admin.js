@@ -74,7 +74,7 @@ export function setup(scope) {
                 sesion.email,
 
             p_password:
-                sesion.password
+                LaFondaAuth.credentials().password
 
         };
 
@@ -97,9 +97,9 @@ export function setup(scope) {
             nombre,
             {
 
-                ...credenciales(),
+                ...parametros,
 
-                ...parametros
+                ...credenciales()
 
             }
         );

@@ -1,3 +1,4 @@
+import { safeGalleryImageURL } from '../services/safe-image-url.js';
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
     const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
@@ -169,7 +170,7 @@ function renderizarGaleria() {
                         >
 
                             <img
-                                src="${publicacion.imagen}"
+                                src="${galeriaEscapar(safeGalleryImageURL(publicacion.imagen))}"
                                 alt="${galeriaEscapar(
                                     titulo
                                 )}"
@@ -293,7 +294,7 @@ function abrirGaleriaLightbox(
         );
 
     imagen.src =
-        publicacion.imagen;
+        safeGalleryImageURL(publicacion.imagen);
 
     imagen.alt =
         publicacion.titulo ||
@@ -579,7 +580,7 @@ async function enviarFotoGaleria(
                     sesion.email,
 
                 p_password:
-                    sesion.password,
+                    LaFondaAuth.credentials().password,
 
                 p_nombre:
                     nombre,

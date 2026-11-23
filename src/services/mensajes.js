@@ -1,7 +1,12 @@
 export function credencialesMensajes(rol) {
-    const s = window.LaFondaAuth?.getSession();
-    if (!s || s.rol !== rol || !s.email || !s.password || (rol === 'ADMIN' && s.modo !== 'ADMIN')) throw new Error('Inicia sesión con la cuenta correspondiente.');
-    return {p_email:s.email,p_password:s.password};
+    const auth = window.LaFondaAuth;
+    const session = auth?.getSession();
+    if (!session || session.rol !== rol || (rol === 'ADMIN' && session.modo !== 'ADMIN')) {
+        throw new Error('Inicia sesión con la cuenta correspondiente.');
+    }
+    const { email, password } = auth.credentials(rol);
+    if (!email || !password) throw new Error('Inicia sesión con la cuenta correspondiente.');
+    return { p_email: email, p_password: password };
 }
 export async function mensajeRPC(rol, nombre, datos = {}) {
     const cred = credencialesMensajes(rol);

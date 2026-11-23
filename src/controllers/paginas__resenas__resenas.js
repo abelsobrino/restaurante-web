@@ -241,7 +241,7 @@ async function cargarPedidosResenables() {
                         sesion.email,
 
                     p_password:
-                        sesion.password
+                        LaFondaAuth.credentials().password
 
                 }
             );
@@ -719,7 +719,7 @@ async function enviarResena(
                     sesion.email,
 
                 p_password:
-                    sesion.password,
+                    LaFondaAuth.credentials().password,
 
                 p_pedido_id:
                     pedidoId,
