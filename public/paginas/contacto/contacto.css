@@ -153,6 +153,24 @@
     }
 }
 
+
+.contacto-bloque-etiqueta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    background: var(--amarillo);
+    color: var(--negro);
+    border-radius: 9px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.45px;
+    text-transform: uppercase;
+}
+
 .contacto-formulario {
     display: flex;
     flex-direction: column;

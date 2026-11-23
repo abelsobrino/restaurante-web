@@ -175,7 +175,7 @@ function renderizarPerfil() {
         rol;
 
     if (
-        sesion.rol === "ADMIN"
+        String(sesion.rol || "").trim().toUpperCase() === "ADMIN"
     ) {
 
         configurarPerfilAdministrador(
@@ -256,7 +256,7 @@ function configurarPerfilAdministrador(
         false;
 
     const modoAdmin =
-        sesion.modo === "ADMIN";
+        String(sesion.modo || "").trim().toUpperCase() === "ADMIN";
 
     document.getElementById(
         "perfil-acceso-pedidos"
@@ -318,6 +318,8 @@ document.addEventListener(
         configurarEventosPerfil();
 
         renderizarPerfil();
+        // Si se cambia/cierra sesión con el perfil abierto, actualizar los accesos.
+        window.addEventListener("lafonda-session-change", renderizarPerfil);
 
     }
 );

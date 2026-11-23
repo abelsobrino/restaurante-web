@@ -536,3 +536,12 @@
     }
 
 }
+/* Seguridad visual: solo se muestran cuando el controlador reconoce un ADMIN. */
+.perfil-acceso-admin[hidden],
+#perfil-modo-contenedor[hidden] { display: none !important; }
+
+@media (max-width: 600px) {
+    .perfil-seccion { padding-top: 24px; }
+    .perfil-accesos { margin-top: 32px; }
+    .perfil-sesion { margin-top: 32px; }
+}

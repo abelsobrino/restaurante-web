@@ -491,3 +491,27 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Composición fotográfica editorial usando las fotos originales del proyecto. */
+.nosotros-visual { position: relative; min-width: 0; padding: 0 36px 46px 0; }
+.nosotros-visual-principal, .nosotros-visual-detalle { position: relative; overflow: hidden; margin: 0; border-radius: 18px; border: 1px solid rgba(255,180,0,.19); background: #101010; }
+.nosotros-visual-principal { height: clamp(310px, 36vw, 465px); }
+.nosotros-visual-principal img, .nosotros-visual-detalle img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.nosotros-visual-principal::after, .nosotros-visual-detalle::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent,rgba(0,0,0,.72)); pointer-events: none; }
+.nosotros-visual-principal figcaption, .nosotros-visual-detalle figcaption { position: absolute; z-index: 1; color: white; font-size: .73rem; font-weight: 700; letter-spacing: .06em; bottom: 16px; left: 18px; }
+.nosotros-visual-detalle { position: absolute; width: 48%; height: 174px; right: 0; bottom: 0; border: 5px solid #050505; box-shadow: 0 12px 35px rgba(0,0,0,.65); }
+.nosotros-visual-detalle figcaption { font-size: .55rem; bottom: 9px; left: 10px; }
+.nosotros-presentacion-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: center; gap: clamp(28px, 5vw, 70px); }
+.nosotros-presentacion { padding-top: 48px; padding-bottom: 68px; align-items: center; }
+@media (max-width: 950px) {
+    .nosotros-presentacion-grid { grid-template-columns: 1fr; align-items: start; }
+    .nosotros-visual { width: min(100%,600px); margin-inline: auto; }
+}
+@media (max-width: 600px) {
+    .nosotros-presentacion { padding-top: 24px; padding-bottom: 45px; }
+    .nosotros-visual { padding: 0 23px 28px 0; }
+    .nosotros-visual-principal { height: 255px; border-radius: 13px; }
+    .nosotros-visual-detalle { width: 46%; height: 112px; border-width: 3px; border-radius: 10px; }
+    .nosotros-visual-principal figcaption { font-size: .62rem; }
+    .nosotros-visual-detalle figcaption { font-size: .48rem; }
+}

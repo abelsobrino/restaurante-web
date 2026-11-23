@@ -10,6 +10,12 @@ const CARRITO_KEY =
 const MAX_PER_ITEM =
     10;
 
+const CATALOGO_CACHE_KEY =
+    "lafonda_catalogo_cache_v1";
+
+const CATALOGO_CACHE_TTL_MS =
+    5 * 60 * 1000;
+
 const cartaState = {
 
     catalogo: {
@@ -39,6 +45,135 @@ const cartaState = {
         {}
 
 };
+
+function leerCatalogoCache() {
+
+    try {
+
+        const storage =
+            window.localStorage;
+
+        if (!storage) {
+
+            return null;
+
+        }
+
+        const bruto =
+            storage.getItem(
+                CATALOGO_CACHE_KEY
+            );
+
+        if (!bruto) {
+
+            return null;
+
+        }
+
+        const registro =
+            JSON.parse(bruto);
+
+        const actualizado =
+            Number(registro?.updatedAt || 0);
+
+        if (
+            !actualizado ||
+            Date.now() - actualizado > CATALOGO_CACHE_TTL_MS ||
+            !registro?.data
+        ) {
+
+            return null;
+
+        }
+
+        return registro.data;
+
+    }
+
+    catch {
+
+        return null;
+
+    }
+
+}
+
+function guardarCatalogoCache(resultado) {
+
+    try {
+
+        const storage =
+            window.localStorage;
+
+        if (!storage) {
+
+            return;
+
+        }
+
+        storage.setItem(
+            CATALOGO_CACHE_KEY,
+            JSON.stringify({
+
+                updatedAt:
+                    Date.now(),
+
+                data:
+                    resultado
+
+            })
+        );
+
+    }
+
+    catch {
+
+        // Si el almacenamiento local no está disponible,
+        // la carta seguirá funcionando con la respuesta remota.
+
+    }
+
+}
+
+function aplicarResultadoCatalogo(resultado) {
+
+    cartaState.catalogo = {
+
+        categorias:
+            resultado?.categorias ||
+            [],
+
+        platos:
+            resultado?.platos ||
+            [],
+
+        combos:
+            resultado?.combos ||
+            [],
+
+        cupones:
+            resultado?.cupones ||
+            [],
+
+        horario:
+            resultado?.horario ||
+            null
+
+    };
+
+    agruparPlatos();
+
+    renderizarCategorias();
+
+    aplicarFiltros();
+
+    renderizarCombos();
+
+    renderHorarioBanner();
+
+    mostrarPromocionDisponible();
+
+}
 
 function cartaDinero(valor) {
 
@@ -809,6 +944,11 @@ async function cargarCatalogo() {
             "catalog-status"
         );
 
+    const cache =
+        leerCatalogoCache();
+
+    let usandoCache = false;
+
     try {
 
         estado.hidden =
@@ -816,6 +956,21 @@ async function cargarCatalogo() {
 
         estado.setAttribute('aria-busy','true');
         estado.innerHTML = '<div class="lf-brand-loader" role="status"><img src="/imagenes/logo/logo.webp" alt=""/><span>Cargando nuestra carta...</span></div>';
+
+        if (cache) {
+
+            aplicarResultadoCatalogo(
+                cache
+            );
+
+            usandoCache =
+                true;
+
+            estado.hidden =
+                true;
+            estado.removeAttribute("aria-busy");
+
+        }
 
         // La lectura del inventario no depende de la respuesta del catálogo.
         const lectura = window.LaFondaStock?.prepararLecturaCatalogo?.();
@@ -833,41 +988,14 @@ async function cargarCatalogo() {
         }
 
         if (!scope.active) return;
-        cartaState.catalogo = {
 
-            categorias:
-                resultado?.categorias ||
-                [],
+        guardarCatalogoCache(
+            resultado
+        );
 
-            platos:
-                resultado?.platos ||
-                [],
-
-            combos:
-                resultado?.combos ||
-                [],
-
-            cupones:
-                resultado?.cupones ||
-                [],
-
-            horario:
-                resultado?.horario ||
-                null
-
-        };
-
-        agruparPlatos();
-
-        renderizarCategorias();
-
-        aplicarFiltros();
-
-        renderizarCombos();
-
-        renderHorarioBanner();
-
-        mostrarPromocionDisponible();
+        aplicarResultadoCatalogo(
+            resultado
+        );
 
         estado.hidden =
             true;
@@ -883,6 +1011,12 @@ async function cargarCatalogo() {
             "Error cargando carta:",
             error
         );
+
+        if (usandoCache) {
+
+            return;
+
+        }
 
         estado.hidden =
             false;
@@ -2070,7 +2204,16 @@ function mostrarPromocionDisponible() {
 
     }
 
-    localStorage.setItem(
+    const storage =
+            window.localStorage;
+
+        if (!storage) {
+
+            return;
+
+        }
+
+        storage.setItem(
         clave,
         "1"
     );

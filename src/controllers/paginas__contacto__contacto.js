@@ -113,7 +113,7 @@ async function enviarContacto(evento) {
         solicitud = null; contenido = null;
         mostrarEstadoContacto("Mensaje enviado. Recibirás la respuesta en Notificaciones.", "exito");
     } catch (error) { if (scope.active) mostrarEstadoContacto(errorMensajes(error), "error"); }
-    finally { enviando = false; if (scope.active) { controles.forEach(c => c.disabled = false); boton.textContent = "Enviar comentario"; } }
+    finally { enviando = false; if (scope.active) { controles.forEach(c => c.disabled = false); boton.textContent = "Enviar mensaje"; } }
 
 }
 
@@ -128,7 +128,7 @@ function configurarEventosContacto() {
 function iniciarPaginaContacto() {
     completarDatosContacto();
     if (!LaFondaAuth?.getSession()) mostrarEstadoContacto("Inicia sesión para enviar un mensaje y recibir la respuesta en Notificaciones.");
-    configurarTabsContacto();
+    actualizarContadorContacto();
     configurarEventosContacto();
 }
 

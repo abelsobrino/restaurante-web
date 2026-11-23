@@ -9,6 +9,11 @@
     font-family: "Poppins", sans-serif;
 }
 
+/* Los elementos ocultos por sesión/rol no deben recuperar display:grid/flex. */
+[hidden] {
+    display: none !important;
+}
+
 html {
     width: 100%;
 }

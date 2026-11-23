@@ -12,9 +12,15 @@ export default function Nosotros() { return <>
 <p className={"nosotros-descripcion"}>{"\n                        Buscamos que cada visita sea una experiencia\n                        agradable, desde el momento en que eliges tu\n                        plato hasta que llega a tu mesa o a la puerta\n                        de tu casa.\n                    "}</p>
 <a className={"nosotros-boton"} href={"/paginas/menu/carta/"}>{"\n                        Ver nuestra carta\n                    "}</a>
 </div>
-<div className={"nosotros-presentacion-imagen"}>
-<div className={"nosotros-imagen-fondo"}></div>
-<img alt={"Pizza de La Fonda"} className={"nosotros-imagen"} src={"/imagenes/platos/pizza.webp"} />
+<div className={"nosotros-visual"}>
+<figure className={"nosotros-visual-principal"}>
+<img alt={"Equipo de La Fonda compartiendo un momento en un ambiente cálido"} src={"/imagenes/la_fonda_real/equipo-brindis.jpg"} loading={"eager"} decoding={"async"}/>
+<figcaption>NUESTRO EQUIPO Y AMBIENTE</figcaption>
+</figure>
+<figure className={"nosotros-visual-detalle"}>
+<img alt={"Preparación dedicada detrás de cada detalle"} src={"/imagenes/la_fonda_real/equipo-preparacion.jpg"} loading={"lazy"} decoding={"async"}/>
+<figcaption>DEDICACIÓN EN CADA PREPARACIÓN</figcaption>
+</figure>
 </div>
 </div>
 </section>

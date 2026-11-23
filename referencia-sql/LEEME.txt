@@ -1,3 +1,0 @@
-REFERENCIA ÚNICAMENTE. No ejecutar para iniciar la web.
-Estos cuatro archivos pertenecían al ZIP original. No fueron modificados ni ejecutados.
-Antes de cambiar funciones, permisos o tablas en Supabase, coordinar con la aplicación de escritorio.

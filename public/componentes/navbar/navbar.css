@@ -322,7 +322,16 @@
 
 }
 
+/* Accesos táctiles disponibles en móvil; escritorio conserva su navegación actual. */
+.lf-mobile-tabs { display: none; }
+
 @media (max-width: 768px) {
+
+    :root { --alto-navbar: 68px; }
+
+    /* Cada página ya añade su propio espacio para el encabezado fijo.
+       La regla anterior de body sumaba 90px extra en TODAS las páginas. */
+    body { padding-top: 0 !important; padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
 
     .main-header {
         height: var(--alto-navbar);
@@ -513,11 +522,62 @@
         font-size: 0.9rem;
     }
 
-    body {
-        padding-top:
-            var(--alto-navbar);
+    .lf-mobile-tabs {
+        position: fixed;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        align-items: stretch;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 990;
+        min-height: 64px;
+        padding: 6px max(8px, env(safe-area-inset-left, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-right, 0px));
+        border-top: 1px solid rgba(255,180,0,.22);
+        background: rgba(10, 10, 10, .97);
+        box-shadow: 0 -8px 28px rgba(0,0,0,.55);
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
     }
 
+    .lf-mobile-tabs.is-hidden { visibility: hidden; pointer-events: none; }
+
+    .lf-mobile-tab {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: 0;
+        min-height: 54px;
+        gap: 5px;
+        color: #b5b5b5;
+        text-align: center;
+        font-size: .63rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 10px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .lf-mobile-tab i { font-size: 1.17rem; }
+    .lf-mobile-tab span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .lf-mobile-tab.active, .lf-mobile-tab[aria-current="page"] { color: var(--amarillo); background: rgba(255,180,0,.09); }
+    .lf-mobile-tab:focus-visible { outline: 2px solid var(--amarillo); outline-offset: -3px; }
+
+    /* El panel lateral no queda oculto detrás de los accesos inferiores. */
+    .nav-list {
+        height: calc(100dvh - var(--alto-navbar) - 64px);
+        padding: 24px 28px;
+        overflow-y: auto;
+        max-width: min(88vw, 340px);
+    }
+}
+
+@media (min-width: 769px) {
+    .lf-mobile-tabs { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lf-mobile-tabs *, .lf-mobile-tabs *::before { transition: none !important; }
 }
 
 .user-icon,
@@ -544,4 +604,64 @@
     width: 18px;
     text-align: center;
     flex-shrink: 0;
+}
+
+/* Navegación inferior de cinco grupos: el menú hamburguesa no se usa en móvil. */
+.lf-header-mobile-bell,
+.lf-mobile-group-switch { display: none; }
+@media (max-width: 768px) {
+    .header-container { min-height: var(--alto-navbar); }
+    .main-nav, .nav-toggle, .nav-list { display: none !important; }
+    .logo-img { height: 48px; width: auto; max-width: 130px; object-fit: contain; }
+    .lf-header-mobile-bell {
+        display: inline-flex; align-items: center; justify-content: center;
+        position: relative; width: 46px; height: 46px;
+        color: var(--amarillo); font-size: 1.35rem; text-decoration: none;
+        border: 1px solid rgba(255, 180, 0, .18); border-radius: 50%;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .lf-header-mobile-bell .lf-nav-count {
+        position: absolute; top: 0; right: -3px; min-width: 18px; height: 18px;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 3px; border-radius: 100px; background: #c72525;
+        color: white; font-size: .62rem; font-weight: 800;
+    }
+    .lf-header-mobile-bell:focus-visible, .lf-mobile-group-switch a:focus-visible {
+        outline: 2px solid var(--amarillo); outline-offset: 2px;
+    }
+    .lf-mobile-tabs {
+        min-height: 76px;
+        padding: 6px max(4px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(4px, env(safe-area-inset-left, 0px));
+    }
+    body { padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important; }
+    .lf-mobile-tab { min-height: 64px; gap: 6px; padding: 5px 2px; font-size: .61rem; line-height: 1.15; }
+    .lf-mobile-tab i { font-size: 1.22rem; }
+    .lf-mobile-tab span { white-space: normal; overflow: visible; text-overflow: clip; max-width: 76px; }
+    .lf-mobile-group-switch {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+        position: fixed; top: var(--alto-navbar); left: 0; right: 0; z-index: 980;
+        gap: 8px; padding: 7px max(16px, env(safe-area-inset-left, 0px)) 8px;
+        background: rgba(6,6,6,.96); border-bottom: 1px solid rgba(255,180,0,.18);
+        -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    }
+    .lf-mobile-group-switch a {
+        min-width: 0; display: flex; justify-content: center; align-items: center;
+        gap: 8px; padding: 11px 6px; border-radius: 9px;
+        color: #ddd; background: #151515; border: 1px solid #2a2a2a;
+        text-align: center; font-size: .78rem; font-weight: 650; text-decoration: none;
+    }
+    .lf-mobile-group-switch a.active { color: #090909; background: var(--amarillo); border-color: var(--amarillo); }
+    /* Espacio exacto para el selector sin generar una franja negra vacía. */
+    body.lf-has-mobile-switch main.carta,
+    body.lf-has-mobile-switch main.carrito-pagina,
+    body.lf-has-mobile-switch main.galeria,
+    body.lf-has-mobile-switch main.resenas-page,
+    body.lf-has-mobile-switch main.reserva,
+    body.lf-has-mobile-switch main.contacto {
+        padding-top: calc(var(--alto-navbar) + 59px) !important;
+    }
+}
+@media (max-width: 380px) {
+    .lf-mobile-tab { font-size: .55rem; }
+    .lf-mobile-tab i { font-size: 1.1rem; }
 }
