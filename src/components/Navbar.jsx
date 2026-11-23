@@ -8,7 +8,8 @@ const desktopLinks = [
     ['/paginas/menu/carta/', 'CARTA', 'nav-carta'],
     ['/paginas/menu/galeria/', 'GALERÍA', 'nav-galeria'],
     ['/paginas/resenas/', 'RESEÑAS', 'nav-resenas'],
-    ['/paginas/contacto/', 'CONTÁCTANOS', 'nav-contactanos']
+    ['/paginas/contacto/', 'CONTÁCTANOS', 'nav-contactanos'],
+    ['/paginas/reservas/nueva-reserva/', 'RESERVAR MESA', 'nav-reservar']
 ];
 
 // Cinco accesos; los tres centrales agrupan rutas que ya existían.

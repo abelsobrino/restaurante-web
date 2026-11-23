@@ -35,7 +35,7 @@ test('rutas nuevas: admin protegido y bandeja exclusiva de cliente',()=>{
  assert.match(read('src/App.jsx'),/route\.cliente/);assert.match(read('src/components/Navbar.jsx'),/lf_notificaciones_contar/);
 });
 test('contrato SQL: tablas nuevas cerradas, roles del servidor, lectura propia y respuesta atómica',()=>{
- const sql=read('integracion-mensajes/01_mensajes.sql');
+ const sql=read('tests/fixtures/sql/01_mensajes.sql');
  for(const t of ['lf_contactos','lf_notificaciones','lf_preferencias_notificaciones','lf_envios_promociones'])assert.match(sql,new RegExp(`alter table public\\.${t} enable row level security`));
  assert.doesNotMatch(sql,/\b(?:alter|drop|truncate) table public\.(?:clientes|usuarios|reservas_web|mesas|pedidos|platos)\b/i);
  assert.match(sql,/public\.web_login\(p_email=>trim\(p_email\),p_password=>p_password\)/);

@@ -665,3 +665,10 @@
     .lf-mobile-tab { font-size: .55rem; }
     .lf-mobile-tab i { font-size: 1.1rem; }
 }
+
+/* Una opción adicional de reservas en escritorio sin reducir la legibilidad. */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .nav-list { gap: clamp(8px, 1.35vw, 16px); }
+    .nav-link { font-size: clamp(.69rem, .88vw, .82rem); }
+    .header-container { padding-inline: clamp(12px, 1.4vw, 24px); }
+}

@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { routes, normalizePath, findRoute } from '../src/routes.js';
 import { createPageScope } from '../src/runtime/scope.js';
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
-const inventory = JSON.parse(read('docs/inventario-rutas.json'));
+const inventory = JSON.parse(read('tests/fixtures/inventario-rutas.json'));
 
 test('24 rutas históricas conservadas y dos rutas nuevas', () => {
     assert.equal(routes.length, 26);
@@ -24,7 +24,7 @@ test('ocho módulos admin protegidos y llamadas RPC históricas conservadas', ()
     const fileList = [...new Set(inventory.flatMap(r => r.controllers))].map(s => 'src/controllers/' + s);
     const files = [...fileList, 'src/services/auth.js', 'src/services/db.js'];
     const found = new Set(files.flatMap(f => [...read(f).matchAll(/(?:\.rpc|\brpc)\s*\(\s*["']([^"']+)/g)].map(m => m[1])));
-    const audit = JSON.parse(read('docs/inventario-rpc.json'));
+    const audit = JSON.parse(read('tests/fixtures/inventario-rpc.json'));
     assert.deepEqual([...found].sort(), audit.rpc);
     assert.match(read('src/App.jsx'), /session\.rol !== 'ADMIN'/);
     assert.match(read('src/App.jsx'), /session\.modo !== 'ADMIN'/);

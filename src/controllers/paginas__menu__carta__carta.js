@@ -1,3 +1,4 @@
+import { configurarCarritoFlotante } from "../services/floating-cart.js";
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
     const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
@@ -2305,16 +2306,9 @@ function configurarEventosCarta() {
         aplicarFiltros
     );
 
-    document.getElementById(
-        "mobile-cart-toggle"
-    ).addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "/paginas/pedidos/carrito/";
-
-        }
+    configurarCarritoFlotante(
+        document.getElementById("mobile-cart-toggle"),
+        scope
     );
 
 }

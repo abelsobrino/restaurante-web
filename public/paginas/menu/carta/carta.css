@@ -743,14 +743,20 @@
     position:
         fixed;
 
+    /* Por defecto sobre los accesos móviles. JS limita cualquier arrastre. */
     right:
-        25px;
+        calc(14px + env(safe-area-inset-right, 0px));
 
     bottom:
-        25px;
+        calc(92px + env(safe-area-inset-bottom, 0px));
 
     z-index:
-        1500;
+        960;
+
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 
     width:
         58px;

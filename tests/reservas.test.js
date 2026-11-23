@@ -36,7 +36,7 @@ test('un error de consulta no se presenta como una agenda vacía',async()=>{
  const e=entorno(async()=>{throw new Error('offline');});mis(e.scope);e.ready.forEach(f=>f());await new Promise(r=>setImmediate(r));assert.match(e.element('reservas-estado').textContent,/No se pudieron consultar/);assert.equal(e.element('reservas-resumen').hidden,true);
 });
 test('contrato SQL compartido: RPC y campos, sin persistencia local de reservas',()=>{
- const sql=readFileSync(new URL('../integracion-reservas/01_reservas.sql',import.meta.url),'utf8');
+ const sql=readFileSync(new URL('../tests/fixtures/sql/01_reservas.sql',import.meta.url),'utf8');
  for(const fn of ['lf_crear_reserva','lf_mis_reservas','lf_cancelar_reserva'])assert.match(sql,new RegExp(`create or replace function public\\.${fn}\\(`));
  for(const col of ['cliente_id','nombre','telefono','fecha','hora','personas','descripcion','estado','mesa_id','pedido_id'])assert.match(sql,new RegExp(`\\b${col}\\b`));
  for(const f of ['nueva-reserva','mis-reservas']){const src=readFileSync(new URL(`../src/controllers/paginas__reservas__${f}__${f}.js`,import.meta.url),'utf8');assert.doesNotMatch(src,/localStorage|la_fonda_reservas/);}
