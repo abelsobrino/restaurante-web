@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useInsertionEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import { findRoute } from './routes.js';
-import { activateStyles, prepareRoute } from './runtime/resources.js';
+import { activateStyles, prepareRoute, stylesReady } from './runtime/resources.js';
 
 function internalURL(value) {
     try {
@@ -50,35 +50,50 @@ export default function App() {
         setPending(true);
         prepareRoute(route).then(prepared => {
             if (cancelled) return;
-            // Activar el CSS ANTES de montar los controladores de la siguiente
-            // página. Su medición del DOM (p. ej. el carrito flotante) requiere
-            // tamaños y posiciones calculados con los estilos definitivos.
-            activateStyles(prepared.styles);
-            // Forzar un recálculo de estilos antes del montaje evita el FOUC.
-            void document.documentElement.offsetHeight;
+            // El CSS de la página anterior debe permanecer activo hasta el
+            // MISMO commit en que se monta la nueva. Desactivarlo aquí causaba
+            // un frame sin estilos en Safari durante la navegación.
             setDisplay({ ...prepared, target, key: loc.key + ':' + retry });
-            // pending se retira tras dos frames en el efecto de layout.
+            // El siguiente commit activa los nuevos estilos de forma atómica.
         }).catch(error => { if (!cancelled) { setPending(false); onError(error); } });
         return () => { cancelled = true; };
     }, [loc.pathname, loc.search, loc.hash, loc.key, target, retry, navigate, onError]);
-    // La página entrante queda cubierta durante la activación del CSS. Esto
-    // también evita mostrar controles sin formato en Safari/iOS entre rutas.
+    // useInsertionEffect activa las hojas ANTES de los useLayoutEffect hijos
+    // (PageView inicializa allí los controladores y mide sus posiciones).
+    // Durante la preparación sigue visible el CSS de la página anterior.
+    useInsertionEffect(() => {
+        if (display && display.target === target) activateStyles(display.styles);
+    }, [display, target]);
+
     useLayoutEffect(() => {
-        if (!display) { activateStyles([]); return; }
-        if (display.target !== target) return;
-        activateStyles(display.styles);
+        if (!display || display.target !== target) return;
         document.title = display.title;
         const hash = new URL(display.target, window.location.origin).hash;
         if (hash) { try { document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView(); } catch {} }
         else window.scrollTo({ top: 0, behavior: 'instant' });
-        // No descubrir la nueva sección hasta que el navegador haya tenido
-        // oportunidad de calcular y pintar los estilos de la ruta.
-        let frame1 = 0;
-        let frame2 = 0;
-        frame1 = window.requestAnimationFrame(() => {
-            frame2 = window.requestAnimationFrame(() => setPending(false));
-        });
-        return () => { window.cancelAnimationFrame(frame1); window.cancelAnimationFrame(frame2); };
+
+        // Nunca destapar el contenido antes de que el navegador haya aplicado
+        // y calculado los estilos de todas las hojas de esta ruta.
+        let frame = 0;
+        let attempts = 0;
+        let cancelled = false;
+        const reveal = () => {
+            if (cancelled) return;
+            // El CSS puede aparecer como descargado antes de aplicarse en iOS.
+            if (!stylesReady(display.styles) && attempts++ < 30) {
+                frame = window.requestAnimationFrame(reveal);
+                return;
+            }
+            // Forzar recálculo y dejar pasar dos ciclos de renderizado.
+            void document.documentElement.offsetHeight;
+            frame = window.requestAnimationFrame(() => {
+                frame = window.requestAnimationFrame(() => {
+                    if (!cancelled) setPending(false);
+                });
+            });
+        };
+        frame = window.requestAnimationFrame(reveal);
+        return () => { cancelled = true; window.cancelAnimationFrame(frame); };
     }, [display, target]);
     useEffect(() => {
         const link = event => event.target instanceof Element ? event.target.closest('a[href]') : null;
@@ -99,8 +114,8 @@ export default function App() {
             const url = routeLink(link(event));
             if (url) { const route = findRoute(url.pathname); if (!route.admin || window.LaFondaAuth?.isAdmin()) prepareRoute(route).catch(() => {}); }
         };
-        document.addEventListener('click', click); document.addEventListener('pointerover', prefetch); document.addEventListener('focusin', prefetch);
-        return () => { document.removeEventListener('click', click); document.removeEventListener('pointerover', prefetch); document.removeEventListener('focusin', prefetch); };
+        document.addEventListener('click', click); document.addEventListener('pointerover', prefetch); document.addEventListener('pointerdown', prefetch); document.addEventListener('focusin', prefetch);
+        return () => { document.removeEventListener('click', click); document.removeEventListener('pointerover', prefetch); document.removeEventListener('pointerdown', prefetch); document.removeEventListener('focusin', prefetch); };
     }, [navigate]);
     const Page = display?.Component;
     const transitioning = !failure && (pending || (display && display.target !== target));
@@ -109,7 +124,9 @@ export default function App() {
         <Navbar navigate={navigate} className={display?.navClass}/>
 
         {failure && <section role="alert" className="container" style={{paddingBlock:24}}><p>{failure.message}</p><button type="button" onClick={retryRoute}>Reintentar</button>{' '}<button type="button" onClick={() => navigate('/')}>Volver al inicio</button></section>}
-        {Page ? <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/> : !failure && <main aria-busy="true" className="container lf-route-loader lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span role="status">Cargando La Fonda...</span></main>}
+        {Page ? <div className="lf-route-scene" style={{ visibility: transitioning ? 'hidden' : 'visible' }} aria-hidden={transitioning}>
+            <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/>
+        </div> : !failure && <main aria-busy="true" className="container lf-route-loader lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span role="status">Cargando La Fonda...</span></main>}
         {transitioning && Page && <div className="lf-route-transition" role="status" aria-live="polite" aria-label="Preparando sección">
             <div className="lf-brand-loader"><img src="/imagenes/logo/logo.webp" alt=""/><span>Preparando La Fonda...</span></div>
         </div>}

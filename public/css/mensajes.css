@@ -32,3 +32,8 @@
     .lf-route-transition { bottom: calc(82px + env(safe-area-inset-bottom, 0px)); }
     body.lf-has-mobile-switch .lf-route-transition { top: calc(var(--alto-navbar, 68px) + 59px); }
 }
+
+/* Resguardo visual definitivo: aunque Safari pinte un frame intermedio,
+   el contenido de ruta nunca puede mostrarse sin sus estilos. */
+.lf-route-scene { display: contents; }
+.lf-route-scene[aria-hidden="true"] { visibility: hidden !important; }

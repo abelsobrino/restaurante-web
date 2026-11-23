@@ -76,10 +76,10 @@ test('el botón se mueve y se limita al área segura sin navegar al arrastrarlo'
     }
 });
 
-test('la navegación muestra reservar mesa en escritorio sin añadir otra pestaña móvil', () => {
+test('la navegación muestra RESERVAR en escritorio sin añadir otra pestaña móvil', () => {
     const nav = leer('src/components/Navbar.jsx');
     const desktop = nav.split('const desktopLinks =')[1].split('const mobileTabs =')[0];
-    assert.match(desktop, /RESERVAR MESA/);
+    assert.match(desktop, /'RESERVAR', 'nav-reservar'/);
     assert.match(desktop, /\/paginas\/reservas\/nueva-reserva\//);
     assert.match(nav, /aria-label="Accesos rápidos móviles"/);
     assert.match(nav, /'Reserva y contacto'/);

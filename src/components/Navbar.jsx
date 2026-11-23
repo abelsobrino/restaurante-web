@@ -9,7 +9,7 @@ const desktopLinks = [
     ['/paginas/menu/galeria/', 'GALERÍA', 'nav-galeria'],
     ['/paginas/resenas/', 'RESEÑAS', 'nav-resenas'],
     ['/paginas/contacto/', 'CONTÁCTANOS', 'nav-contactanos'],
-    ['/paginas/reservas/nueva-reserva/', 'RESERVAR MESA', 'nav-reservar']
+    ['/paginas/reservas/nueva-reserva/', 'RESERVAR', 'nav-reservar']
 ];
 
 // Cinco accesos; los tres centrales agrupan rutas que ya existían.
@@ -107,10 +107,10 @@ export default function Navbar({ navigate, className = '' }) {
     return <div id="global-nav" className={className}>
         <header className="main-header"><div className="container header-container">
             <div className="logo"><Link to="/" className="logo-link" aria-label="Ir al inicio" onClick={close}><img src="/imagenes/logo/logo.webp" alt="La Fonda" className="logo-img" /></Link></div>
-            <Link className="lf-header-mobile-bell" to={bellHref} aria-label={bellTitle} title={bellTitle} onClick={close}>
+            {session && <Link className="lf-header-mobile-bell" to={bellHref} aria-label={bellTitle} title={bellTitle} onClick={close}>
                 <i className="fa-regular fa-bell" aria-hidden="true"/>
                 {role === 'CLIENTE' && unread > 0 && <span className="lf-nav-count">{unread > 99 ? '99+' : unread}</span>}
-            </Link>
+            </Link>}
             <nav className="main-nav" aria-label="Navegación principal de escritorio">
                 <ul className="nav-list" id="nav-menu-list">
                     {desktopLinks.map(([to,label,id]) => <li key={id}><Link to={to} id={id} className={active(to)} aria-current={active(to).includes('active') ? 'page' : undefined} onClick={close}>{label}</Link></li>)}
