@@ -22,7 +22,8 @@
     }
 
     function writeSession(session, password) {
-        const { password: ignored, ...publicSession } = session;
+        const publicSession = { ...session };
+        delete publicSession.password;
         if (typeof password !== "string" || !password) {
             throw new Error("Se requiere iniciar sesión nuevamente.");
         }

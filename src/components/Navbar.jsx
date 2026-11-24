@@ -79,7 +79,7 @@ export default function Navbar({ navigate, className = '', visiblePath }) {
             } catch { if (alive) setUnread(null); }
             finally { running = false; }
         };
-        refresh();
+        void refresh();
         const timer = window.setInterval(refresh, 60000);
         window.addEventListener('lafonda-notificaciones-change', refresh);
         document.addEventListener('visibilitychange', refresh);
@@ -122,9 +122,9 @@ export default function Navbar({ navigate, className = '', visiblePath }) {
                             <li><Link id="dropdown-profile" to={mobileAccountHref} onClick={close}><i className="fa-regular fa-user"/><span>{session ? 'Mi perfil' : 'Iniciar sesión'}</span></Link></li>
                             <li id="dropdown-pedidos-row" hidden={role !== 'CLIENTE'}><Link id="dropdown-pedidos" to="/paginas/pedidos/mis-pedidos/" onClick={close}><i className="fa-solid fa-box"/><span>Mis pedidos</span></Link></li>
                             <li id="dropdown-reservas-row" hidden={role !== 'CLIENTE'}><Link id="dropdown-reservas" to="/paginas/reservas/mis-reservas/" onClick={close}><i className="fa-regular fa-calendar"/><span>Mis reservas</span></Link></li>
-                            <li id="dropdown-mode-row" hidden={!isAdmin}><a href="#" id="dropdown-mode" onClick={changeMode}><i className={isAdminMode ? 'fa-solid fa-store' : 'fa-solid fa-shield-halved'}/><span>{isAdminMode ? 'Ver como usuario' : 'Volver a administración'}</span></a></li>
+                            <li id="dropdown-mode-row" hidden={!isAdmin}><button type="button" id="dropdown-mode" onClick={changeMode}><i className={isAdminMode ? 'fa-solid fa-store' : 'fa-solid fa-shield-halved'}/><span>{isAdminMode ? 'Ver como usuario' : 'Volver a administración'}</span></button></li>
                             <li id="dropdown-divider-row" hidden={!session}><hr className="dropdown-divider"/></li>
-                            <li id="dropdown-logout-row" hidden={!session}><a href="#" id="dropdown-logout" className="logout-link" onClick={logout}><i className="fa-solid fa-right-from-bracket"/><span>Cerrar sesión</span></a></li>
+                            <li id="dropdown-logout-row" hidden={!session}><button type="button" id="dropdown-logout" className="logout-link" onClick={logout}><i className="fa-solid fa-right-from-bracket"/><span>Cerrar sesión</span></button></li>
                         </ul>
                     </li>
                 </ul>

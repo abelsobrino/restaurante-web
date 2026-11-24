@@ -1,8 +1,6 @@
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window } = scope;
 const contenidoState = {
 
     galeria: [],
@@ -571,7 +569,7 @@ function configurarAccionesGaleria() {
                     "click",
                     () => {
 
-                        moderarFoto(
+                        void moderarFoto(
                             boton
                         );
 
@@ -1104,7 +1102,7 @@ function configurarAccionesResenas() {
                     "click",
                     () => {
 
-                        moderarResena(
+                        void moderarResena(
                             boton
                         );
 

@@ -247,7 +247,14 @@
     list-style: none;
 }
 
-.user-dropdown li a {
+.user-dropdown li a,
+.user-dropdown li button {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
     display: flex;
     align-items: center;
 
@@ -266,7 +273,8 @@
         color 0.2s ease;
 }
 
-.user-dropdown li a:hover {
+.user-dropdown li a:hover,
+.user-dropdown li button:hover {
     background:
         rgba(255, 180, 0, 0.08);
 
@@ -515,7 +523,8 @@
         animation: none;
     }
 
-    .user-dropdown li a {
+    .user-dropdown li a,
+.user-dropdown li button {
         padding:
             8px 12px;
 
@@ -600,7 +609,8 @@
     font-size: 0.65rem;
 }
 
-.user-dropdown li a i {
+.user-dropdown li a i,
+.user-dropdown li button i {
     width: 18px;
     text-align: center;
     flex-shrink: 0;

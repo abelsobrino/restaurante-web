@@ -1,9 +1,8 @@
 import { fechaLima } from '../services/horarios.js';
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window, setTimeout } = scope;
+    const { L } = window;
 const configuracionState = {
 
     delivery: null,
@@ -1108,8 +1107,8 @@ async function guardarExcepcion(borrar = false) {
 }
 function configurarEventosExcepciones() {
     document.getElementById('lf-excepcion-fecha').min = fechaLima();
-    document.getElementById('lf-excepciones-form').addEventListener('submit', evento => { evento.preventDefault(); guardarExcepcion(false); });
-    document.getElementById('lf-excepcion-borrar').addEventListener('click', () => guardarExcepcion(true));
+    document.getElementById('lf-excepciones-form').addEventListener('submit', evento => { evento.preventDefault(); void guardarExcepcion(false); });
+    document.getElementById('lf-excepcion-borrar').addEventListener('click', () => { void guardarExcepcion(true); });
     document.getElementById('lf-excepcion-cerrado').addEventListener('change', evento => {
         document.getElementById('lf-excepcion-apertura').disabled = evento.target.checked;
         document.getElementById('lf-excepcion-cierre').disabled = evento.target.checked;

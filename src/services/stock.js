@@ -12,7 +12,7 @@
     };
 
     function tienePropiedad(objeto, nombre) {
-        return Boolean(objeto) && Object.prototype.hasOwnProperty.call(objeto, nombre);
+        return Boolean(objeto) && Object.hasOwn(objeto, nombre);
     }
 
     function aBooleano(valor) {
@@ -101,7 +101,7 @@
     function limpiarRechazo(id) {
         const datos = leerRechazos();
         const clave = String(Number(id));
-        if (Object.prototype.hasOwnProperty.call(datos, clave)) {
+        if (Object.hasOwn(datos, clave)) {
             delete datos[clave];
             sessionStorage.setItem(RECHAZOS_KEY, JSON.stringify(datos));
         }
@@ -393,7 +393,7 @@
         const ids = new Set();
         const patrones = [
             /plato\s+(\d+)/gi,
-            /plato[_\s-]?id\s*[:#]?\s*(\d+)/gi,
+            /plato[_\s-]?id(?:\s*[:#])?\s*(\d+)/gi,
             /producto\s+(\d+)/gi
         ];
 

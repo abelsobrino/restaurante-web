@@ -2,9 +2,8 @@ import { mostrarAviso } from '../services/avisos.js';
 import { configurarCarritoFlotante } from "../services/floating-cart.js";
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window, setTimeout } = scope;
+    const { LaFondaDB } = window;
 (function () {
 const CARRITO_KEY =
     "lafonda_carrito";
@@ -314,32 +313,27 @@ function extraerPorcion(nombre) {
             nombre || ""
         ).trim();
 
-    const coincidencia =
-        texto.match(
-            /^(.*?)\s*(?:[-–—]\s*)?(?:x|×)\s*(\d+)\s*$/i
-        );
-
-    if (!coincidencia) {
-
-        return null;
-
+    // Recorrer el sufijo numérico evita retroceso de regex con nombres largos.
+    let inicioNumero = texto.length;
+    while (inicioNumero > 0) {
+        const codigo = texto.charCodeAt(inicioNumero - 1);
+        if (codigo < 48 || codigo > 57) break;
+        inicioNumero--;
     }
+    if (inicioNumero === texto.length) return null;
 
-    const base =
-        String(
-            coincidencia[1] ||
-            ""
-        )
-            .replace(
-                /[-–—]\s*$/,
-                ""
-            )
-            .trim();
+    const prefijo = texto.slice(0, inicioNumero).trimEnd();
+    const separador = prefijo.at(-1);
+    if (separador !== 'x' && separador !== 'X' && separador !== '×') return null;
 
-    const porcion =
-        Number(
-            coincidencia[2]
-        );
+    let base = prefijo.slice(0, -1).trimEnd();
+    // El formato original admite hasta dos separadores antes de la cantidad.
+    for (let n = 0; n < 2; n++) {
+        if (!['-', '–', '—'].includes(base.at(-1))) break;
+        base = base.slice(0, -1).trimEnd();
+    }
+    base = base.trim();
+    const porcion = Number(texto.slice(inicioNumero));
 
     if (
         !base ||

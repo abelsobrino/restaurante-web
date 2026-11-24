@@ -15,19 +15,6 @@
 
     }
 
-    function mostrar(elemento, mostrarElemento) {
-
-        if (!elemento) {
-
-            return;
-
-        }
-
-        elemento.hidden =
-            !mostrarElemento;
-
-    }
-
     // El encabezado de React escucha los cambios de sesión.
     function actualizarNavbarSesion() {
         window.dispatchEvent(new Event("lafonda-navbar-refresh"));

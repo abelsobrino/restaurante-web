@@ -38,9 +38,12 @@ export const tiposNotificacion = Object.freeze({
 });
 export function prepararNotificacion({tipo,categoria,titulo,mensaje,audiencia,destinatario}) {
     const t=String(titulo||'').trim(), m=String(mensaje||'').trim(), cat=String(categoria||'').trim(), d=String(destinatario||'').trim();
-    if (!Object.hasOwn(tiposNotificacion,tipo)||tipo==='RESPUESTA'||!['SUSCRITOS','INDIVIDUAL','ACTIVOS'].includes(audiencia)||t.length<2||t.length>120||m.length<2||m.length>1500) throw Error('Revisa los datos de la notificación');
-    if(tipo==='PERSONALIZADA'&&(cat.length<2||cat.length>40)) throw Error('Indica una categoría de 2 a 40 caracteres');
-    if(audiencia==='ACTIVOS'&&tipo!=='AVISO') throw Error('Todos los activos se reserva para avisos de servicio');
-    if(audiencia==='INDIVIDUAL'&&(d.length>150||!/^\S+@\S+\.\S+$/.test(d))) throw Error('Indica el correo del cliente');
+    if (!Object.hasOwn(tiposNotificacion,tipo)||tipo==='RESPUESTA'||!['SUSCRITOS','INDIVIDUAL','ACTIVOS'].includes(audiencia)||t.length<2||t.length>120||m.length<2||m.length>1500) throw new Error('Revisa los datos de la notificación');
+    if(tipo==='PERSONALIZADA'&&(cat.length<2||cat.length>40)) throw new Error('Indica una categoría de 2 a 40 caracteres');
+    if(audiencia==='ACTIVOS'&&tipo!=='AVISO') throw new Error('Todos los activos se reserva para avisos de servicio');
+    const arroba = d.indexOf('@'), punto = d.lastIndexOf('.');
+    const emailCorrecto = arroba > 0 && arroba === d.lastIndexOf('@')
+        && punto > arroba + 1 && punto < d.length - 1 && !/\s/.test(d);
+    if(audiencia==='INDIVIDUAL'&&(d.length>150||!emailCorrecto)) throw new Error('Indica el correo del cliente');
     return {p_tipo:tipo,p_categoria:tipo==='PERSONALIZADA'?cat:null,p_titulo:t,p_mensaje:m,p_audiencia:audiencia,p_destinatario:audiencia==='INDIVIDUAL'?d.toLowerCase():null};
 }

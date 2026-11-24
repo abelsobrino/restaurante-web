@@ -1,8 +1,7 @@
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window, setInterval } = scope;
+    const { LaFondaAuth, LaFondaEmail } = window;
 function mostrarEstadoRegistro(mensaje, tipo = "") {
     const estado = document.getElementById("register-status");
     estado.textContent = mensaje;

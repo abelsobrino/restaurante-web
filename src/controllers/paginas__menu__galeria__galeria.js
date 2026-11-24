@@ -1,9 +1,8 @@
 import { safeGalleryImageURL } from '../services/safe-image-url.js';
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window, setTimeout } = scope;
+    const { LaFondaAuth, LaFondaDB, LaFondaImages } = window;
 (function () {
 
 

@@ -1,8 +1,7 @@
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window, setInterval } = scope;
+    const { LaFondaAuth, LaFondaDB } = window;
 
 
 let reservaPendienteCancelar =
@@ -728,7 +727,7 @@ function escucharCambiosReservas() {
                     "la_fonda_user"
             ) {
 
-                renderizarMisReservas();
+                void renderizarMisReservas();
 
             }
 
@@ -745,8 +744,8 @@ document.addEventListener(
 
         escucharCambiosReservas();
 
-        renderizarMisReservas();
-        setInterval(renderizarMisReservas, 30000);
+        void renderizarMisReservas();
+        setInterval(() => { void renderizarMisReservas(); }, 30000);
 
     }
 );

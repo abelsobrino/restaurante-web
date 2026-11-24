@@ -1,9 +1,8 @@
 import { fechaLima, proximosHorarios, siguientesTurnos, evaluarReserva, minutosAHora, horarioDeFecha } from '../services/horarios.js';
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window, setTimeout } = scope;
+    const { LaFondaAuth, LaFondaDB } = window;
 (function () {
 let enviandoReserva = false;
 let horariosPublicos = null;
@@ -123,8 +122,12 @@ function emailReservaValido(
     email
 ) {
 
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        .test(email);
+    const valor = String(email ?? "");
+    const arroba = valor.indexOf("@");
+    const punto = valor.lastIndexOf(".");
+    return arroba > 0 && arroba === valor.lastIndexOf("@")
+        && punto > arroba + 1 && punto < valor.length - 1
+        && !/\s/.test(valor);
 
 }
 
@@ -551,7 +554,7 @@ function iniciarPaginaReserva() {
     configurarFechaReserva();
     completarDatosReserva();
     configurarEventosReserva();
-    cargarHorariosReserva();
+    void cargarHorariosReserva();
 }
 
 

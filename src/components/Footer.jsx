@@ -56,7 +56,7 @@ export default function Footer({ className = "" }) { return <div id="global-foot
 
     <div className="container footer-info">
         <p>
-            &copy; 2026
+            &copy; 2026{' '}
             <span className="highlight">La Fonda</span>.
             Todos los derechos reservados.
         </p>

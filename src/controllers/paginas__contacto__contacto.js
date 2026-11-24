@@ -1,12 +1,16 @@
 import { mensajeRPC, confirmarID, errorMensajes } from "../services/mensajes.js";
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
-    const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
-    const { LaFondaAuth, LaFondaDB, LaFondaStock, LaFondaImages, LaFondaEmail, LaFondaSesion, L } = window;
-    const LaFondaAdmin = window.LaFondaAdmin;
+    const { document, window } = scope;
+    const { LaFondaAuth } = window;
 (function () {
 function contactoEmailValido(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const valor = String(email ?? "");
+    const arroba = valor.indexOf("@");
+    const punto = valor.lastIndexOf(".");
+    return arroba > 0 && arroba === valor.lastIndexOf("@")
+        && punto > arroba + 1 && punto < valor.length - 1
+        && !/\s/.test(valor);
 }
 
 function mostrarEstadoContacto(mensaje, tipo = "") {
@@ -39,26 +43,6 @@ function completarDatosContacto() {
     if (email) email.value = sesion.email || "";
     if (nombre && sesion.rol === "CLIENTE") nombre.readOnly = true;
     if (email && sesion.rol === "CLIENTE") email.readOnly = true;
-}
-
-function cambiarTabContacto(id) {
-    document.querySelectorAll(".contacto-tab").forEach((boton) => {
-        const activo = boton.dataset.tab === id;
-        boton.classList.toggle("active", activo);
-        boton.setAttribute("aria-selected", String(activo));
-    });
-
-    document.querySelectorAll(".contacto-tab-panel").forEach((panel) => {
-        const activo = panel.id === id;
-        panel.classList.toggle("active", activo);
-        panel.hidden = !activo;
-    });
-}
-
-function configurarTabsContacto() {
-    document.querySelectorAll(".contacto-tab").forEach((boton) => {
-        boton.addEventListener("click", () => cambiarTabContacto(boton.dataset.tab));
-    });
 }
 
 let enviando = false;
