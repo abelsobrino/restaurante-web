@@ -73,7 +73,7 @@
     border-radius: 50%;
 
     background:
-        rgba(72, 199, 116, 0.12);
+        #122218;
 
     border:
         1px solid
@@ -277,7 +277,8 @@
 
     line-height: 1.4;
 
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .comprobante-item-info small {

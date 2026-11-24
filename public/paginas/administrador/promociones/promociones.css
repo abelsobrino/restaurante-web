@@ -326,7 +326,7 @@
 
 .coupon-pill.active {
     background:
-        rgba(70, 190, 100, 0.1);
+        #111d14;
 
     color:
         #71d58f;
@@ -334,7 +334,7 @@
 
 .coupon-pill.inactive {
     background:
-        rgba(255, 80, 80, 0.1);
+        #231212;
 
     color:
         #ff7777;
@@ -342,7 +342,7 @@
 
 .coupon-pill.public {
     background:
-        rgba(80, 150, 255, 0.1);
+        #121923;
 
     color:
         #75afff;

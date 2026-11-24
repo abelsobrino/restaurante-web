@@ -316,7 +316,7 @@ function extraerPorcion(nombre) {
     // Recorrer el sufijo numérico evita retroceso de regex con nombres largos.
     let inicioNumero = texto.length;
     while (inicioNumero > 0) {
-        const codigo = texto.charCodeAt(inicioNumero - 1);
+        const codigo = texto.codePointAt(inicioNumero - 1);
         if (codigo < 48 || codigo > 57) break;
         inicioNumero--;
     }

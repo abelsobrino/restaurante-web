@@ -142,10 +142,10 @@
     text-transform: uppercase;
 }
 
-.gestion-estado.ok { color: #79db98; background: rgba(107,209,141,.08); }
-.gestion-estado.off { color: #ff7474; background: rgba(255,116,116,.08); }
-.gestion-estado.neutro { color: #c8c8c8; background: rgba(255,255,255,.05); }
-.gestion-estado.alerta { color: #ffc857; background: rgba(255,200,87,.08); }
+.gestion-estado.ok { color: #79db98; background: #131b15; }
+.gestion-estado.off { color: #ff7474; background: #1f1313; }
+.gestion-estado.neutro { color: #c8c8c8; background: #171717; }
+.gestion-estado.alerta { color: #ffc857; background: #1f1a11; }
 
 .gestion-fuente {
     color: var(--gris);

@@ -1080,7 +1080,8 @@ async function cargarExcepciones() {
         if (!Array.isArray(datos) || datos.length === 0) { lista.textContent = 'No hay días especiales configurados.'; return; }
         for (const item of datos) {
             const fila = document.createElement('p');
-            fila.textContent = `${item.fecha}: ${item.cerrado ? 'Cerrado' : `${String(item.hora_apertura).slice(0,5)} – ${String(item.hora_cierre).slice(0,5)}`}`;
+            const intervalo = `${String(item.hora_apertura).slice(0,5)} – ${String(item.hora_cierre).slice(0,5)}`;
+            fila.textContent = `${item.fecha}: ${item.cerrado ? 'Cerrado' : intervalo}`;
             lista.appendChild(fila);
         }
     } catch (error) { if (scope.active) lista.textContent = 'No se pudieron cargar las excepciones. Instala primero la migración SQL de v2.0.12.'; }

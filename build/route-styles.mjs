@@ -10,7 +10,9 @@ function findCssFiles(directory) {
     return readdirSync(directory, { withFileTypes: true })
         .flatMap(entry => {
             const file = resolve(directory, entry.name);
-            return entry.isDirectory() ? findCssFiles(file) : entry.isFile() && entry.name.endsWith('.css') ? [file] : [];
+            if (entry.isDirectory()) return findCssFiles(file);
+            if (entry.isFile() && entry.name.endsWith('.css')) return [file];
+            return [];
         })
         .sort();
 }

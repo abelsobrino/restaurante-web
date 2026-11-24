@@ -97,7 +97,7 @@ export default function App() {
         </section>}
         {Page ? <Page key={display.key} routeUrl={display.target} navigate={navigate} onError={onError}/>
             : !failure && <main aria-busy="true" className="container lf-route-loader lf-brand-loader">
-                <img src="/imagenes/logo/logo.webp" alt=""/><span role="status">Cargando La Fonda...</span>
+                <img src="/imagenes/logo/logo.webp" alt=""/><output>Cargando La Fonda...</output>
             </main>}
         <Footer className={display?.footerClass}/>
     </>;

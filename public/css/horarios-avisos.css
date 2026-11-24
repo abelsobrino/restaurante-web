@@ -2,7 +2,7 @@
 .lf-horario-overlay { position:fixed; inset:0; z-index:100050; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; padding:20px; }
 .lf-horario-dialogo { width:min(100%,380px); max-height:min(79vh,650px); overflow:auto; position:relative; padding:25px 23px; background:#151515; color:#f7f3ec; border:1px solid rgba(230,177,51,.34); border-radius:17px; box-shadow:0 14px 55px rgba(0,0,0,.45); }
 .lf-horario-cerrar { position:absolute; right:15px; top:12px; border:0; background:transparent; color:#e6ddcb; font-size:1.2rem; cursor:pointer; min-width:35px; min-height:35px; }
-.lf-horario-icono { width:39px; height:39px; display:grid; place-items:center; border-radius:10px; background:rgba(230,177,51,.13); color:#e6b133; margin-bottom:11px; }
+.lf-horario-icono { width:39px; height:39px; display:grid; place-items:center; border-radius:10px; background:#272110; color:#e6b133; margin-bottom:11px; }
 .lf-horario-dialogo h2 { font-size:1.2rem; margin:0 25px 9px 0; color:#fff; }
 .lf-horario-mensaje { font-size:.91rem; color:#eee5d9; line-height:1.5; }
 .lf-horario-detalle { font-size:.83rem; color:#c9bfae; line-height:1.5; margin-top:9px; }

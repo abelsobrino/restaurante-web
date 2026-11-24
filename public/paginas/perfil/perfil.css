@@ -135,7 +135,8 @@
 
     font-size: 0.85rem;
 
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .perfil-rol {
@@ -253,7 +254,8 @@
 
     line-height: 1.45;
 
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .perfil-nota {

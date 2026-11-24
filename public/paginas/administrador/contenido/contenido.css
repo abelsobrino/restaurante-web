@@ -303,10 +303,10 @@
 
 .moderation-state.publicada {
     background:
-        rgba(56, 180, 90, 0.88);
+        #33a051;
 
     color:
-        #ffffff;
+        #09200f;
 }
 
 .moderation-state.rechazada {
@@ -435,7 +435,7 @@
 
 .moderation-actions .approve {
     background:
-        rgba(66, 190, 102, 0.1);
+        #101d14;
 
     color:
         #70d890;
@@ -447,7 +447,7 @@
 
 .moderation-actions .reject {
     background:
-        rgba(220, 70, 70, 0.08);
+        #1c1010;
 
     color:
         #ff7777;
@@ -542,7 +542,7 @@
 
 .review-admin-status.publicada {
     background:
-        rgba(60, 190, 100, 0.1);
+        #101d14;
 
     color:
         #6bd18d;
@@ -550,7 +550,7 @@
 
 .review-admin-status.oculta {
     background:
-        rgba(255, 80, 80, 0.08);
+        #1f1111;
 
     color:
         #ff7777;
@@ -599,7 +599,7 @@
 
 .review-admin-actions .publish {
     background:
-        rgba(60, 190, 100, 0.1);
+        #101d14;
 
     color:
         #71d58f;
@@ -611,7 +611,7 @@
 
 .review-admin-actions .hide {
     background:
-        rgba(220, 70, 70, 0.08);
+        #1c1010;
 
     color:
         #ff7777;

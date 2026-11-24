@@ -597,11 +597,11 @@ async function guardarPlato(
                 parametrosBase
             );
 
-        } catch (errorFirma) {
+        } catch (error_) {
 
             const mensajeFirma =
                 String(
-                    errorFirma?.message ||
+                    error_?.message ||
                     ""
                 ).toLowerCase();
 
@@ -611,7 +611,7 @@ async function guardarPlato(
                 );
 
             if (!requiereFirmaStock) {
-                throw errorFirma;
+                throw error_;
             }
 
             const original =
@@ -1406,6 +1406,7 @@ function editarCombo(id) {
             ]
         )
             .map(Number);
+    const diasSeleccionados = new Set(dias);
 
     document
         .querySelectorAll(
@@ -1415,7 +1416,7 @@ function editarCombo(id) {
             input => {
 
                 input.checked =
-                    dias.includes(
+                    diasSeleccionados.has(
                         Number(
                             input.value
                         )

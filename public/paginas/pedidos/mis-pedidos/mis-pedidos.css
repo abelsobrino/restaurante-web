@@ -316,7 +316,7 @@
 
 .pedido-estado.preparando {
     background:
-        rgba(33, 150, 243, 0.14);
+        #0e1e2b;
 
     color:
         #64b5f6;
@@ -324,7 +324,7 @@
 
 .pedido-estado.listo {
     background:
-        rgba(156, 39, 176, 0.14);
+        #1f0f22;
 
     color:
         #ce93d8;
@@ -332,7 +332,7 @@
 
 .pedido-estado.completado {
     background:
-        rgba(0, 200, 83, 0.14);
+        #092515;
 
     color:
         #4bd27b;
@@ -340,7 +340,7 @@
 
 .pedido-estado.cancelado {
     background:
-        rgba(255, 51, 51, 0.14);
+        #2d1111;
 
     color:
         #ff6666;

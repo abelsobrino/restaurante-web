@@ -139,7 +139,7 @@ function renderGestion() {
                 </td>
                 <td>
                     <span class="gestion-estado ${info.clase}">
-                        <i class="fa-solid ${info.clase === "ok" ? "fa-circle-check" : info.clase === "off" ? "fa-circle-xmark" : info.clase === "alerta" ? "fa-triangle-exclamation" : "fa-circle-info"}"></i>
+                        <i class="fa-solid ${({ok: "fa-circle-check", off: "fa-circle-xmark", alerta: "fa-triangle-exclamation"})[info.clase] || "fa-circle-info"}"></i>
                         ${Admin.esc(info.texto)}
                     </span>
                 </td>
@@ -199,7 +199,7 @@ function configurarGestionEventos() {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const Admin = GestionAdmin();
-    if (!Admin || !Admin.verificarAcceso()) return;
+    if (!Admin?.verificarAcceso()) return;
 
     configurarGestionEventos();
     await cargarGestion();

@@ -828,7 +828,7 @@
         0 5px;
 
     background:
-        #e53935;
+        #c62828;
 
     color:
         #ffffff;
@@ -1187,7 +1187,7 @@
 .horario-banner {
     margin-bottom: 20px;
     padding: 14px 16px;
-    background: rgba(255, 59, 59, 0.08);
+    background: #1f0f0f;
     color: #ff8c8c;
     border: 1px solid rgba(255, 59, 59, 0.28);
     border-radius: 9px;
@@ -1212,7 +1212,7 @@
     align-items: center;
     margin-left: 6px;
     padding: 3px 7px;
-    background: rgba(255, 80, 80, 0.1);
+    background: #231212;
     color: #ff7a7a;
     border: 1px solid rgba(255, 80, 80, 0.22);
     border-radius: 999px;

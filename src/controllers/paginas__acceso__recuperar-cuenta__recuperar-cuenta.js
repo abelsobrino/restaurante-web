@@ -83,7 +83,7 @@ async function verificarCodigoRecuperacion(evento) {
 function contraseñaRecuperacionValida(password) {
     return password.length >= 8 && password.length <= 72 &&
         /[A-Z]/.test(password) && /[a-z]/.test(password) &&
-        /[0-9]/.test(password) && /[^A-Za-z0-9\s]/.test(password);
+        /\d/.test(password) && /[^A-Za-z0-9\s]/.test(password);
 }
 
 async function guardarContrasenaRecuperacion(evento) {

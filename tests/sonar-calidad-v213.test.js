@@ -50,10 +50,10 @@ test('Sonar v2.0.13: las animaciones respetan movimiento reducido', () => {
     assert.match(read('public/css/general.css'), /@media \(prefers-reduced-motion: reduce\)/);
 });
 
-test('Sonar v2.0.13: números y versiones consistentes', () => {
+test('Sonar v2.0.13: números y versiones consistentes (v2.0.14)', () => {
     const pkg = JSON.parse(read('package.json'));
     const lock = JSON.parse(read('package-lock.json'));
-    assert.equal(pkg.version, '2.0.13');
-    assert.equal(lock.version, '2.0.13');
-    assert.equal(lock.packages[''].version, '2.0.13');
+    assert.equal(pkg.version, '2.0.14');
+    assert.equal(lock.version, '2.0.14');
+    assert.equal(lock.packages[''].version, '2.0.14');
 });

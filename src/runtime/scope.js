@@ -38,7 +38,8 @@ export function createPageScope(host, routeUrl, navigate, onError = console.erro
     }
     const scopedStyle = new Proxy({}, {
         get(_, prop) { const value = realDoc.body.style[prop]; return typeof value === 'function' ? value.bind(realDoc.body.style) : value; },
-        set(_, prop, value) { if (active) realDoc.body.style[prop] = value; return true; }
+        set(_, prop, value) { if (active) { realDoc.body.style[prop] = value; }
+            return true; }
     });
     const body = new Proxy({}, {
         get(_, prop) {
@@ -60,7 +61,8 @@ export function createPageScope(host, routeUrl, navigate, onError = console.erro
             const value = realDoc[prop];
             return typeof value === 'function' ? value.bind(realDoc) : value;
         },
-        set(_, prop, value) { if (active) realDoc[prop] = value; return true; }
+        set(_, prop, value) { if (active) { realDoc[prop] = value; }
+            return true; }
     });
     // Los únicos globales escritos por los módulos son locales a esta visita.
     const scopedDb = realWindow.LaFondaDB && {

@@ -146,7 +146,7 @@ function configurarReporteEventos() {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const Admin = ReporteAdmin();
-    if (!Admin || !Admin.verificarAcceso()) return;
+    if (!Admin?.verificarAcceso()) return;
     configurarReporteEventos();
     await cargarReporte();
 });

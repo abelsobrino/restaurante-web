@@ -83,18 +83,7 @@
 
         }
 
-        if (
-            String(
-                sesion.rol
-            ).toUpperCase() !==
-            "CLIENTE"
-        ) {
-
-            return false;
-
-        }
-
-        return true;
+        return String(sesion.rol).toUpperCase() === "CLIENTE";
 
     }
 

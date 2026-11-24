@@ -5,6 +5,6 @@ export function safeGalleryImageURL(value) {
     const url = String(value ?? '').trim();
     if (/^data:image\/(?:png|jpeg|webp|gif);base64,[a-z0-9+/=]+$/i.test(url)) return url;
     if (/^https:\/\/[^\s"'<>]+$/i.test(url)) return url;
-    if (/^\/(?!\/)[a-z0-9_\/%\.\-~]+$/i.test(url)) return url;
+    if (/^\/(?!\/)[a-z0-9_/%.\-~]+$/i.test(url)) return url;
     return '/imagenes/logo/logo.webp';
 }

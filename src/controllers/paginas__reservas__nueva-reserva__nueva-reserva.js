@@ -197,11 +197,17 @@ function actualizarTurnosReserva() {
     if (turnos.includes(previo)) select.value = previo;
     const info = document.getElementById('reserva-hora-ayuda');
     const h = fecha && horariosCargados ? horarioDeFecha(horariosPublicos, fecha) : null;
-    info.textContent = !horariosCargados ? 'Cargando horarios del restaurante...' :
-        !fecha ? 'Selecciona primero una fecha.' :
-        !h || h.cerrado ? 'Este día está cerrado o no tiene horarios de reserva.' :
-        !turnos.length ? 'Ya no hay horas futuras disponibles para esta fecha.' :
-        `Horario de ${minutosAHora(h.apertura)} a ${minutosAHora(h.ultima)}; turnos cada 30 minutos.`;
+    if (!horariosCargados) {
+        info.textContent = 'Cargando horarios del restaurante...';
+    } else if (!fecha) {
+        info.textContent = 'Selecciona primero una fecha.';
+    } else if (!h || h.cerrado) {
+        info.textContent = 'Este día está cerrado o no tiene horarios de reserva.';
+    } else if (!turnos.length) {
+        info.textContent = 'Ya no hay horas futuras disponibles para esta fecha.';
+    } else {
+        info.textContent = `Horario de ${minutosAHora(h.apertura)} a ${minutosAHora(h.ultima)}; turnos cada 30 minutos.`;
+    }
 }
 
 async function cargarHorariosReserva() {

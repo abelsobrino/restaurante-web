@@ -22,7 +22,7 @@ const reglasPassword = [
     { id: "longitud", cumple: valor => valor.length >= 8 && valor.length <= 72 },
     { id: "mayuscula", cumple: valor => /[A-Z]/.test(valor) },
     { id: "minuscula", cumple: valor => /[a-z]/.test(valor) },
-    { id: "numero", cumple: valor => /[0-9]/.test(valor) },
+    { id: "numero", cumple: valor => /\d/.test(valor) },
     { id: "simbolo", cumple: valor => /[^A-Za-z0-9\s]/.test(valor) }
 ];
 
@@ -36,7 +36,7 @@ function normalizarNombre(valor) {
 
 function errorRegistro(id) {
     const valor = valorRegistro(id);
-    const nombreValido = /^[\p{L}]+(?:[ '\-’][\p{L}]+)*$/u;
+    const nombreValido = /^\p{L}+(?:[ '\-’][\p{L}]+)*$/u;
 
     if (id === "reg-nombre" || id === "reg-apellido") {
         const nombre = normalizarNombre(valor);
@@ -99,12 +99,14 @@ function actualizarReglasPassword() {
 
     const barra = document.getElementById("registro-password-progreso");
     barra.style.width = `${aprobadas * 20}%`;
-    barra.dataset.nivel = aprobadas < 3 ? "bajo" : aprobadas < 5 ? "medio" : "alto";
+    barra.dataset.nivel = "alto";
+    if (aprobadas < 3) barra.dataset.nivel = "bajo";
+    else if (aprobadas < 5) barra.dataset.nivel = "medio";
 
-    document.getElementById("registro-password-indicador").textContent =
-        !password ? "Requisitos de seguridad" :
-        aprobadas === 5 ? "Contraseña válida" :
-        `${aprobadas} de 5 requisitos cumplidos`;
+    let estadoPassword = `${aprobadas} de 5 requisitos cumplidos`;
+    if (!password) estadoPassword = "Requisitos de seguridad";
+    else if (aprobadas === 5) estadoPassword = "Contraseña válida";
+    document.getElementById("registro-password-indicador").textContent = estadoPassword;
 }
 
 function configurarVisibilidadPassword(idInput, idBoton) {
@@ -213,7 +215,10 @@ async function confirmarRegistro(evento) {
         const destino = sessionStorage.getItem("lafonda_return_to");
         sessionStorage.removeItem("lafonda_return_to");
         const valido = destino && destino.startsWith("/") && !destino.startsWith("//") && !destino.includes("/acceso/");
-        window.location.replace(sesion.rol === "ADMIN" ? "/paginas/acceso/elegir-modo/" : valido ? destino : "/index.html");
+        let siguientePagina = "/index.html";
+        if (sesion.rol === "ADMIN") siguientePagina = "/paginas/acceso/elegir-modo/";
+        else if (valido) siguientePagina = destino;
+        window.location.replace(siguientePagina);
     } catch (error) {
         estadoCodigoRegistro(error.message || "No se pudo verificar el correo.", "error");
     } finally {

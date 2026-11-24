@@ -466,7 +466,7 @@
 
 .status-pill.ok {
     background:
-        rgba(70, 190, 100, 0.1);
+        #111d14;
 
     color:
         #7bd88f;
@@ -474,7 +474,7 @@
 
 .status-pill.off {
     background:
-        rgba(255, 80, 80, 0.1);
+        #231212;
 
     color:
         #ff7b7b;
@@ -807,7 +807,7 @@
     gap: 10px;
     margin-top: 4px;
     padding: 12px 14px;
-    background: rgba(255, 180, 0, 0.06);
+    background: #1a150a;
     color: #bdbdbd;
     border: 1px solid rgba(255, 180, 0, 0.18);
     border-radius: 8px;

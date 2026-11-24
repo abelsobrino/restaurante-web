@@ -100,8 +100,18 @@ export default function Navbar({ navigate, className = '', visiblePath }) {
         if (window.LaFondaAuth.setMode(mode)) navigate(mode === 'ADMIN' ? '/paginas/administrador/panel/' : '/');
     };
     const logout = event => { event.preventDefault(); close(); window.LaFondaAuth.logout(); };
-    const bellHref = role === 'CLIENTE' ? '/paginas/notificaciones/' : isAdminMode ? '/paginas/administrador/contacto/' : isAdmin ? '/paginas/acceso/elegir-modo/' : '/paginas/acceso/iniciar-sesion/';
-    const bellTitle = role === 'CLIENTE' ? (unread === null ? 'Notificaciones' : `Notificaciones: ${unread} sin leer`) : isAdmin ? 'Mensajes del administrador' : 'Iniciar sesión para ver notificaciones';
+    let bellHref = '/paginas/acceso/iniciar-sesion/';
+    let bellTitle = 'Iniciar sesión para ver notificaciones';
+    if (role === 'CLIENTE') {
+        bellHref = '/paginas/notificaciones/';
+        bellTitle = unread === null ? 'Notificaciones' : `Notificaciones: ${unread} sin leer`;
+    } else if (isAdminMode) {
+        bellHref = '/paginas/administrador/contacto/';
+        bellTitle = 'Mensajes del administrador';
+    } else if (isAdmin) {
+        bellHref = '/paginas/acceso/elegir-modo/';
+        bellTitle = 'Mensajes del administrador';
+    }
     const mobileAccountHref = session ? '/paginas/perfil/' : '/paginas/acceso/iniciar-sesion/';
     const mobileAccountPaths = [...mobileTabs[4].paths, ...(isAdmin ? ['/paginas/administrador/panel/', '/paginas/administrador/contacto/'] : [])];
     return <div id="global-nav" className={className}>
