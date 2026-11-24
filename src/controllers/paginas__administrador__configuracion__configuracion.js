@@ -1,3 +1,4 @@
+import { fechaLima } from '../services/horarios.js';
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
     const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
@@ -1070,6 +1071,51 @@ function configurarEventosHorario() {
 
 }
 
+// Excepciones: se guardan con RPC que vuelve a autenticar al administrador en SQL.
+async function cargarExcepciones() {
+    const lista = document.getElementById('lf-excepciones-listado');
+    try {
+        const datos = await configuracionAdmin().rpc('lf_admin_excepciones_v1');
+        if (!scope.active) return;
+        lista.replaceChildren();
+        if (!Array.isArray(datos) || datos.length === 0) { lista.textContent = 'No hay días especiales configurados.'; return; }
+        for (const item of datos) {
+            const fila = document.createElement('p');
+            fila.textContent = `${item.fecha}: ${item.cerrado ? 'Cerrado' : `${String(item.hora_apertura).slice(0,5)} – ${String(item.hora_cierre).slice(0,5)}`}`;
+            lista.appendChild(fila);
+        }
+    } catch (error) { if (scope.active) lista.textContent = 'No se pudieron cargar las excepciones. Instala primero la migración SQL de v2.0.12.'; }
+}
+async function guardarExcepcion(borrar = false) {
+    const fecha = document.getElementById('lf-excepcion-fecha').value;
+    const estado = document.getElementById('lf-excepciones-estado');
+    if (!fecha) { estado.textContent = 'Selecciona una fecha.'; return; }
+    const cerrado = document.getElementById('lf-excepcion-cerrado').checked;
+    const apertura = document.getElementById('lf-excepcion-apertura').value;
+    const cierre = document.getElementById('lf-excepcion-cierre').value;
+    if (!borrar && !cerrado && (!apertura || !cierre || apertura >= cierre)) { estado.textContent = 'La hora de cierre debe ser posterior a la apertura.'; return; }
+    const guardar = document.getElementById('lf-excepcion-guardar');
+    guardar.disabled = true;
+    try {
+        await configuracionAdmin().rpc('lf_admin_guardar_excepcion_v1', {
+            p_fecha: fecha, p_cerrado: cerrado, p_hora_apertura: apertura, p_hora_cierre: cierre, p_borrar: borrar
+        });
+        if (!scope.active) return;
+        estado.textContent = borrar ? 'Excepción eliminada.' : 'Día especial guardado correctamente.';
+        await cargarExcepciones();
+    } catch (error) { if (scope.active) estado.textContent = `No se pudo guardar: ${error.message}`; }
+    finally { if (scope.active) guardar.disabled = false; }
+}
+function configurarEventosExcepciones() {
+    document.getElementById('lf-excepcion-fecha').min = fechaLima();
+    document.getElementById('lf-excepciones-form').addEventListener('submit', evento => { evento.preventDefault(); guardarExcepcion(false); });
+    document.getElementById('lf-excepcion-borrar').addEventListener('click', () => guardarExcepcion(true));
+    document.getElementById('lf-excepcion-cerrado').addEventListener('change', evento => {
+        document.getElementById('lf-excepcion-apertura').disabled = evento.target.checked;
+        document.getElementById('lf-excepcion-cierre').disabled = evento.target.checked;
+    });
+}
+
 document.addEventListener(
     "DOMContentLoaded",
     async () => {
@@ -1091,10 +1137,12 @@ document.addEventListener(
         configurarEventosDelivery();
 
         configurarEventosHorario();
+        configurarEventosExcepciones();
 
         await Promise.all([
             cargarDelivery(),
-            cargarHorario()
+            cargarHorario(),
+            cargarExcepciones()
         ]);
 
         setTimeout(

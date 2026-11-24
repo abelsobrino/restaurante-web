@@ -111,25 +111,42 @@
         sessionStorage.removeItem(RECHAZOS_KEY);
     }
 
-    // El frontend NO debe leer directamente las tablas internas de inventario.
-    // Supabase deniega esas lecturas a anon (42501) por seguridad.
-    // La RPC publica web_catalogo es la unica fuente de datos mostrables;
-    // info() interpreta sus campos de stock cuando estan disponibles.
-    // La verificacion definitiva de existencias corresponde a las RPC de pedido.
+    // La disponibilidad se expone mediante una RPC de lectura mínima. Las tablas
+    // y vistas internas NO reciben permisos SELECT para anon.
     async function prepararLecturaCatalogo() {
         lecturaState.intentada = true;
         lecturaState.fecha = fechaLima();
         lecturaState.stockDiarioLegible = false;
-        lecturaState.recetasLegibles = false;
         lecturaState.ultimoErrorStock = "";
-        lecturaState.ultimoErrorRecetas = "";
-        return { lectura: null };
+        if (!window.LaFondaDB?.rpc) return { lectura: null };
+        try {
+            const datos = await window.LaFondaDB.rpc('lf_web_disponibilidad_v1', {});
+            if (!Array.isArray(datos)) throw new Error('Respuesta de stock no válida.');
+            lecturaState.stockDiarioLegible = true;
+            return { lectura: datos };
+        } catch (error) {
+            // El sitio sigue mostrando el catálogo sin divulgar datos internos;
+            // la validación definitiva permanece en el servidor del pedido.
+            lecturaState.ultimoErrorStock = String(error?.message || error);
+            return { lectura: null };
+        }
     }
 
     async function enriquecerCatalogo(catalogo, preparacion) {
-        // Mantiene la interfaz usada por Carta, Carrito y Pagos.
-        // No inventa stock ni consulta tablas privadas con la clave anon.
-        if (preparacion) await preparacion;
+        const resultado = preparacion ? await preparacion : await prepararLecturaCatalogo();
+        const filas = Array.isArray(resultado?.lectura) ? resultado.lectura : null;
+        if (!filas || !Array.isArray(catalogo?.platos)) return catalogo;
+        const inventario = new Map(filas.map(item => [Number(item.id), item]));
+        for (const plato of catalogo.platos) {
+            const registro = inventario.get(Number(plato.id));
+            if (!registro) continue;
+            if (registro.stock_hoy !== null && registro.stock_hoy !== undefined) {
+                const cantidad = Number(registro.stock_hoy);
+                if (Number.isFinite(cantidad)) plato.stock_hoy = Math.max(0, cantidad);
+            }
+            if (typeof registro.disponible_hoy === 'boolean') plato.disponible_hoy = registro.disponible_hoy;
+            plato.stock_fecha = fechaLima();
+        }
         return catalogo;
     }
 

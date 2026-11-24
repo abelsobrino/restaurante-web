@@ -1,3 +1,4 @@
+import { mostrarAviso } from '../services/avisos.js';
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
     const { document, window, setTimeout, clearTimeout, setInterval, clearInterval } = scope;
@@ -746,6 +747,10 @@ async function cargarConfiguracionCarrito() {
             catalogo;
 
         if (!scope.active) return;
+        if (!carritoTiendaAbierta() && !avisoCierreMostrado) {
+            avisoCierreMostrado = true;
+            avisarHorarioPedidos();
+        }
         configurarMapa();
 
         renderizarCarrito();
@@ -1322,6 +1327,13 @@ function mostrarEstadoCarrito(
 
 }
 
+let avisoCierreMostrado = false;
+function avisarHorarioPedidos() {
+    mostrarAviso({ titulo: 'Pedidos fuera de horario',
+        mensaje: mensajeHorarioCarrito() || 'El restaurante no recibe pedidos en este momento.',
+        detalle: 'Puedes seguir revisando la carta y volver durante el horario de atención.' });
+}
+
 function carritoTiendaAbierta() {
 
     const horario =
@@ -1384,20 +1396,22 @@ async function continuarAlPago(
     }
 
     if (!carritoTiendaAbierta()) {
-
-        mostrarEstadoCarrito(
-            mensajeHorarioCarrito(),
-            "error"
-        );
-
+        avisarHorarioPedidos();
+        mostrarEstadoCarrito(mensajeHorarioCarrito(), "error");
         return;
-
     }
 
     try {
 
         const validacionStock =
             await refrescarYValidarStockCarrito();
+        // Una venta NO se basa en el horario cacheado al abrir el carrito:
+        // comprueba el horario fresco del servidor antes de pasar al pago.
+        if (!carritoTiendaAbierta()) {
+            avisarHorarioPedidos();
+            mostrarEstadoCarrito(mensajeHorarioCarrito(), 'error');
+            return;
+        }
 
         if (!validacionStock.ok) {
 

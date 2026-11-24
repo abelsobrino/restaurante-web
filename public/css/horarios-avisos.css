@@ -1,0 +1,30 @@
+/* Tarjetas compactas de horarios y avisos — La Fonda */
+.lf-horario-overlay { position:fixed; inset:0; z-index:100050; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; padding:20px; }
+.lf-horario-dialogo { width:min(100%,380px); max-height:min(79vh,650px); overflow:auto; position:relative; padding:25px 23px; background:#151515; color:#f7f3ec; border:1px solid rgba(230,177,51,.34); border-radius:17px; box-shadow:0 14px 55px rgba(0,0,0,.45); }
+.lf-horario-cerrar { position:absolute; right:15px; top:12px; border:0; background:transparent; color:#e6ddcb; font-size:1.2rem; cursor:pointer; min-width:35px; min-height:35px; }
+.lf-horario-icono { width:39px; height:39px; display:grid; place-items:center; border-radius:10px; background:rgba(230,177,51,.13); color:#e6b133; margin-bottom:11px; }
+.lf-horario-dialogo h2 { font-size:1.2rem; margin:0 25px 9px 0; color:#fff; }
+.lf-horario-mensaje { font-size:.91rem; color:#eee5d9; line-height:1.5; }
+.lf-horario-detalle { font-size:.83rem; color:#c9bfae; line-height:1.5; margin-top:9px; }
+.lf-horario-aceptar, .lf-ver-horarios { border:0; border-radius:9px; background:#e6b133; color:#211806; font-weight:700; padding:10px 16px; cursor:pointer; }
+.lf-horario-aceptar { width:100%; margin-top:18px; }
+.lf-ver-horarios { font-size:.84rem; margin-top:8px; }
+.lf-horarios-lista { padding:0; margin:15px 0 4px; list-style:none; display:grid; gap:3px; }
+.lf-horarios-lista li { display:flex; justify-content:space-between; gap:10px; padding:9px 1px; border-bottom:1px solid rgba(255,255,255,.08); font-size:.88rem; }
+.lf-horarios-lista .lf-horario-dia { color:#eee6d9; font-weight:600; }
+.lf-horarios-lista .lf-horario-cerrado { color:#db9c85; }
+.lf-horarios-ayuda { color:#aea498; font-size:.78rem; line-height:1.5; }
+.lf-reserva-horario-ayuda { font-size:.78rem; color:#bcae91; margin:6px 0 0; }
+.lf-horario-error { font-size:.83rem; color:#dfaa91; }
+.lf-excepciones-admin { margin-top:22px; }
+.lf-excepciones-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.lf-excepciones-form label { display:grid; gap:5px; color:#ccc; font-size:.85rem; }
+.lf-excepciones-form input { width:100%; min-width:0; padding:9px; background:#151515; color:#fff; border:1px solid #494038; border-radius:6px; }
+.lf-excepciones-form .lf-excepcion-ancho { grid-column:1/-1; }
+.lf-excepciones-form button { cursor:pointer; padding:10px 12px; border-radius:8px; }
+.lf-excepciones-listado { margin-top:14px; color:#ccc; font-size:.85rem; }
+@media(max-width:420px) { .lf-horario-dialogo { padding:22px 17px; } }
+
+.lf-excepciones-form label.lf-excepcion-ancho { display:flex; align-items:center; gap:10px; }
+.lf-excepciones-form input[type="checkbox"] { width:18px; height:18px; accent-color:#e6b133; }
+.lf-excepciones-form button:disabled { opacity:.6; cursor:not-allowed; }

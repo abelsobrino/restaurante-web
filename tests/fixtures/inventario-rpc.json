@@ -1,8 +1,11 @@
 {
   "rpc": [
+    "lf_admin_excepciones_v1",
+    "lf_admin_guardar_excepcion_v1",
     "lf_cancelar_reserva",
     "lf_crear_reserva",
     "lf_mis_reservas",
+    "lf_web_horarios_v1",
     "web_admin_combos",
     "web_admin_cupones",
     "web_admin_delivery",

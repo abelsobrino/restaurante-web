@@ -12703,6 +12703,7 @@ input:checked +
 }
 
 .reserva-campo input,
+.reserva-campo select,
 .reserva-campo textarea {
     width: 100%;
 
@@ -12740,6 +12741,7 @@ input:checked +
 }
 
 .reserva-campo input:focus,
+.reserva-campo select:focus,
 .reserva-campo textarea:focus {
     background:
         #202020;

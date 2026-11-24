@@ -5,28 +5,30 @@ import {setup as nueva} from '../src/controllers/paginas__reservas__nueva-reserv
 import {setup as mis} from '../src/controllers/paginas__reservas__mis-reservas__mis-reservas.js';
 const cliente={email:'prueba@example.invalid',nombre:'Cliente Prueba',telefono:'999000111',rol:'CLIENTE'};
 const cred={email:cliente.email,password:'solo-prueba'};
+const horarioMock={activo:true,dias:Array.from({length:7},(_,i)=>({dia_semana:i+1,hora_apertura:'12:00',hora_cierre:'23:00',cerrado:false})),excepciones:[]};
 function entorno(rpc){
  const el=new Map(), ready=[], timers=[], listeners={};
  const element=id=>{if(!el.has(id)){el.set(id,{value:'',textContent:'',innerHTML:'',hidden:false,disabled:false,dataset:{},style:{},className:'',classList:{add(){},remove(){}},setAttribute(){},reset(){},listeners:{},addEventListener(k,f){this.listeners[k]=f;}})} return el.get(id);};
- const window={LaFondaAuth:{getSession:()=>cliente,credentials:r=>{assert.equal(r,'CLIENTE');return cred;}},LaFondaDB:{rpc},location:{pathname:'/reservas/'},addEventListener(k,f){listeners[k]=f;}};
+ const window={LaFondaAuth:{getSession:()=>cliente,credentials:r=>{assert.equal(r,'CLIENTE');return cred;}},LaFondaDB:{rpc: (name,params)=> name==='lf_web_horarios_v1' ? Promise.resolve(horarioMock) : rpc(name,params)},location:{pathname:'/reservas/'},addEventListener(k,f){listeners[k]=f;}};
  const document={getElementById:element,querySelector:element,querySelectorAll:()=>[],body:{style:{}},addEventListener(k,f){if(k==='DOMContentLoaded')ready.push(f);}};
- const scope={window,document,active:true,setTimeout:f=>timers.push(f),setInterval(){},clearTimeout(){},clearInterval(){}};
+ const scope={window,document,active:true,setTimeout:f=>timers.push(f),setInterval(){},clearTimeout(){},clearInterval(){},onDispose(){}};
  return {scope,element,ready,timers,listeners};
 }
-function formulario(e){
+async function formulario(e){
  nueva(e.scope);e.ready.forEach(f=>f());
+ await new Promise(resolve=>setImmediate(resolve));
  for(const [k,v] of Object.entries({nombre:'Cliente Prueba',email:cliente.email,telefono:'999000111',fecha:'2099-11-17',hora:'19:00',sillas:'4',descripcion:'Prueba'}))e.element('res-'+k).value=v;
  return ()=>e.element('reserva-form').listeners.submit({preventDefault(){}});
 }
 test('la nueva reserva usa RPC y confirma solamente un ID válido; no se reenvía',async()=>{
  let llamadas=0;const e=entorno(async (fn,p)=>{llamadas++;assert.equal(fn,'lf_crear_reserva');assert.deepEqual(p,{p_email:cred.email,p_password:cred.password,p_nombre:'Cliente Prueba',p_telefono:'999000111',p_fecha:'2099-11-17',p_hora:'19:00',p_personas:4,p_descripcion:'Prueba'});return 123;});
- const enviar=formulario(e);await enviar();await enviar();assert.equal(llamadas,1);assert.match(e.element('reserva-estado').textContent,/Solicitud enviada/);e.timers[0]();assert.match(e.scope.window.location.href,/mis-reservas/);
+ const enviar=await formulario(e);await enviar();await enviar();assert.equal(llamadas,1);assert.match(e.element('reserva-estado').textContent,/Solicitud enviada/);e.timers[0]();assert.match(e.scope.window.location.href,/mis-reservas/);
 });
 test('si falla Supabase no se informa éxito ni se borra el formulario',async()=>{
- const e=entorno(async()=>{throw new Error('schema cache lf_crear_reserva');});const enviar=formulario(e);await enviar();assert.match(e.element('reserva-estado').textContent,/no está habilitado/);assert.equal(e.element('res-fecha').value,'2099-11-17');assert.equal(e.timers.length,0);assert.equal(e.element('#reserva-form button[type="submit"]').disabled,false);
+ const e=entorno(async()=>{throw new Error('schema cache lf_crear_reserva');});const enviar=await formulario(e);await enviar();assert.match(e.element('reserva-estado').textContent,/no está habilitado/);assert.equal(e.element('res-fecha').value,'2099-11-17');assert.equal(e.timers.length,0);assert.equal(e.element('#reserva-form button[type="submit"]').disabled,false);
 });
 test('una respuesta sin identificador no genera una confirmación',async()=>{
- const e=entorno(async()=>null);await formulario(e)();assert.doesNotMatch(e.element('reserva-estado').textContent,/Solicitud enviada/);assert.equal(e.timers.length,0);
+ const e=entorno(async()=>null);await (await formulario(e))();assert.doesNotMatch(e.element('reserva-estado').textContent,/Solicitud enviada/);assert.equal(e.timers.length,0);
 });
 test('mis reservas consulta Supabase y muestra estado y mesa del servidor',async()=>{
  const e=entorno(async(fn,p)=>{assert.equal(fn,'lf_mis_reservas');assert.deepEqual(p,{p_email:cred.email,p_password:cred.password});return [{id:'1',nombre:'Cliente Prueba',telefono:'999000111',fecha:'2099-11-17',hora:'19:00',sillas:4,descripcion:'Prueba',estado:'ASIGNADA',mesa_numero:7}];});

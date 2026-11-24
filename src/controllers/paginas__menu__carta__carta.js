@@ -1,3 +1,4 @@
+import { mostrarAviso } from '../services/avisos.js';
 import { configurarCarritoFlotante } from "../services/floating-cart.js";
 // Controlador original adaptado al ciclo de vida de cada ruta React.
 export function setup(scope) {
@@ -10,9 +11,10 @@ const CARRITO_KEY =
 
 const MAX_PER_ITEM =
     10;
+let avisoHorarioMostrado = false;
 
 const CATALOGO_CACHE_KEY =
-    "lafonda_catalogo_cache_v1";
+    "lafonda_catalogo_cache_v2";
 
 const CATALOGO_CACHE_TTL_MS =
     5 * 60 * 1000;
@@ -36,6 +38,7 @@ const cartaState = {
     grupos: [],
 
     gruposFiltrados: [],
+    consultandoStock: true,
 
     carrito: [],
 
@@ -112,17 +115,20 @@ function guardarCatalogoCache(resultado) {
 
         }
 
+        // Caché solo del catálogo. La disponibilidad diaria nunca debe
+        // heredarse de una visita anterior: se obtiene por la RPC al abrir.
+        const copia = JSON.parse(JSON.stringify(resultado));
+        for (const plato of copia.platos || []) {
+            for (const campo of ['stock_hoy','stock_actual_hoy','stock_diario',
+                'stock_disponible_hoy','disponible_hoy_cantidad','cantidad_hoy',
+                'stock_habilitado_hoy','stock_activo_hoy','gestiona_stock_hoy',
+                'control_stock_hoy','disponible_hoy','stock_fecha','fecha_stock']) {
+                delete plato[campo];
+            }
+        }
         storage.setItem(
             CATALOGO_CACHE_KEY,
-            JSON.stringify({
-
-                updatedAt:
-                    Date.now(),
-
-                data:
-                    resultado
-
-            })
+            JSON.stringify({ updatedAt: Date.now(), data: copia })
         );
 
     }
@@ -172,7 +178,7 @@ function aplicarResultadoCatalogo(resultado) {
 
     renderHorarioBanner();
 
-    mostrarPromocionDisponible();
+    if (tiendaAbierta()) mostrarPromocionDisponible();
 
 }
 
@@ -973,9 +979,10 @@ async function cargarCatalogo() {
 
         }
 
-        // La lectura del inventario no depende de la respuesta del catálogo.
+        // La lectura segura de inventario avanza en paralelo con el catálogo.
         const lectura = window.LaFondaStock?.prepararLecturaCatalogo?.();
         const resultado = await LaFondaDB.rpc("web_catalogo", {});
+        guardarCatalogoCache(resultado);
 
         if (
             window.LaFondaStock?.enriquecerCatalogo
@@ -990,13 +997,15 @@ async function cargarCatalogo() {
 
         if (!scope.active) return;
 
-        guardarCatalogoCache(
-            resultado
-        );
-
+        cartaState.consultandoStock = false;
         aplicarResultadoCatalogo(
             resultado
         );
+        if (!tiendaAbierta() && !avisoHorarioMostrado) {
+            avisoHorarioMostrado = true;
+            mostrarAviso({ titulo: 'Pedidos fuera de horario', mensaje: mensajeHorario(),
+                detalle: 'Puedes consultar la carta. Los pedidos se habilitan cuando el restaurante abre.' });
+        }
 
         estado.hidden =
             true;
@@ -1330,6 +1339,10 @@ function aplicarFiltros() {
 
     }
 
+    // La disponibilidad siempre prevalece sobre el orden de precio o nombre.
+    // En agrupaciones por porción, basta con que exista una variante disponible.
+    grupos.sort((a, b) => Number(b.variantes.some(stockDisponible)) - Number(a.variantes.some(stockDisponible)));
+
     cartaState.gruposFiltrados =
         grupos;
 
@@ -1574,11 +1587,11 @@ function renderizarCatalogo() {
                                     <span
                                         class="stock-badge"
                                         data-group-stock="${indice}"
-                                        ${disponible
+                                        ${disponible && !cartaState.consultandoStock
                                             ? "hidden"
                                             : ""}
                                     >
-                                        Agotado
+                                        ${cartaState.consultandoStock ? "Verificando..." : "Agotado"}
                                     </span>
 
                                 </h3>
@@ -1621,7 +1634,7 @@ function renderizarCatalogo() {
                                         aria-label="Agregar ${escaparCarta(
                                             variante.nombre
                                         )}"
-                                        ${disponible
+                                        ${disponible && !cartaState.consultandoStock
                                             ? ""
                                             : "disabled"}
                                     >
@@ -1899,6 +1912,10 @@ function configurarBotonesAgregarPlatos() {
 
                         }
 
+                        if (cartaState.consultandoStock) {
+                            toast('Estamos verificando la disponibilidad. Inténtalo en un momento.', 'error');
+                            return;
+                        }
                         if (!tiendaAbierta()) {
 
                             toast(
@@ -1988,13 +2005,16 @@ function renderizarCombos() {
     seccion.hidden =
         false;
 
+    const listaOrdenada = [...combos].sort((a, b) =>
+        Number(window.LaFondaStock?.validarProducto({tipo:'COMBO', id:b.id, cantidad:1}, cartaState.catalogo)?.ok !== false) -
+        Number(window.LaFondaStock?.validarProducto({tipo:'COMBO', id:a.id, cantidad:1}, cartaState.catalogo)?.ok !== false));
     grid.innerHTML =
-        combos
+        listaOrdenada
             .map(
                 combo => `
 
                     <article
-                        class="menu-item combo-card"
+                        class="menu-item combo-card${!cartaState.consultandoStock && window.LaFondaStock?.validarProducto({ tipo:'COMBO', id:combo.id, cantidad:1 }, cartaState.catalogo)?.ok === false ? ' agotado' : ''}"
                         data-combo-id="${Number(
                             combo.id
                         )}"
@@ -2019,7 +2039,7 @@ function renderizarCombos() {
                                 ${escaparCarta(
                                     combo.nombre
                                 )}
-
+                                ${cartaState.consultandoStock ? '<span class="stock-badge">Verificando...</span>' : (window.LaFondaStock?.validarProducto({ tipo:'COMBO', id:combo.id, cantidad:1 }, cartaState.catalogo)?.ok === false ? '<span class="stock-badge">Agotado</span>' : '')}
                             </h3>
 
                             <p>
@@ -2076,6 +2096,7 @@ function renderizarCombos() {
                                 <button
                                     type="button"
                                     class="btn-add"
+                                    ${cartaState.consultandoStock || window.LaFondaStock?.validarProducto({ tipo:'COMBO', id:combo.id, cantidad:1 }, cartaState.catalogo)?.ok === false ? 'disabled title="Verificando disponibilidad o agotado"' : ''}
                                     data-add-combo="${Number(
                                         combo.id
                                     )}"
@@ -2137,6 +2158,10 @@ function configurarBotonesCombos() {
 
                         }
 
+                        if (cartaState.consultandoStock) {
+                            toast('Estamos verificando la disponibilidad. Inténtalo en un momento.', 'error');
+                            return;
+                        }
                         if (!tiendaAbierta()) {
 
                             toast(
@@ -2148,6 +2173,10 @@ function configurarBotonesCombos() {
 
                         }
 
+                        if (window.LaFondaStock?.validarProducto({ tipo:'COMBO', id:combo.id, cantidad:1 }, cartaState.catalogo)?.ok === false) {
+                            toast('Este combo está agotado.', 'error');
+                            return;
+                        }
                         agregarAlCarrito({
 
                             tipo:
